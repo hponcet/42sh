@@ -14,7 +14,7 @@ NAME = 21sh
 
 CC = gcc
 
-CFLAGS = -Wall -Wall -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 SRC =	ft_ast.c \
 		ft_chain.c \
