@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/11/07 16:45:31 by fkoehler         ###   ########.fr        #
+#*   Updated: 2016/11/07 21:00:22 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
-		@gcc $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -ltermcap -o $@
+		@gcc $(FLAGS) -L$(LIBDIR) $(OBJ) -lft -ltermcap -o $@
 		@echo "\033[0;32m21sh compilation done !\033[0;m"
 
 $(LIB):
