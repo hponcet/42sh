@@ -6,13 +6,12 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/07 19:35:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:10:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-// recupere le x a partir de la position du curseur dans la liste + longueur prompt
 size_t	get_cursor_x_pos(t_input *input, t_input *pos, size_t p_len)
 {
 	size_t	i;
