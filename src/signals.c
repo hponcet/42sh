@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/08 20:24:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/10 12:36:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	sig_winch_handler(t_shell *shell)
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);
 	shell->col = w.ws_col;
+	shell->row = w.ws_row;
+	shell->winsize = shell->col * shell->row;
 	if (shell->input)
 	{
 		tputs(tgetstr("cl", NULL), shell->fd[3], &putchar);
