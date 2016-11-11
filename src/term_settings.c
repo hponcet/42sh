@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/22 19:24:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/10 14:47:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,15 @@ static int	check_termcaps(void)
 		return (-1);
 	if (!(tgetstr("nd", NULL)))
 		return (-1);
+	if (!(tgetstr("cr", NULL)))
+		return (-1);
 	if (!(tgetstr("cd", NULL)))
+		return (-1);
+	if (!(tgetstr("cl", NULL)))
+		return (-1);
+	if (!(tgetstr("sc", NULL)))
+		return (-1);
+	if (!(tgetstr("rc", NULL)))
 		return (-1);
 	if (!(tgetstr("mr", NULL)))
 		return (-1);
@@ -56,6 +64,8 @@ void		init_term(t_shell *shell)
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);
 	shell->col = w.ws_col;
+	shell->row = w.ws_row;
+	shell->winsize = shell->col * shell->row;
 	if (check_termcaps() == -1)
 		quit_error(8);
 }

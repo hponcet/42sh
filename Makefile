@@ -6,7 +6,11 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
+<<<<<<< HEAD
 #*   Updated: 2016/11/07 21:00:22 by hponcet          ###   ########.fr       *#
+=======
+#    Updated: 2016/11/09 14:55:39 by fkoehler         ###   ########.fr        #
+>>>>>>> Flav
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +76,13 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
+<<<<<<< HEAD
 		@gcc $(FLAGS) -L$(LIBDIR) $(OBJ) -lft -ltermcap -o $@
 		@echo "\033[0;32m21sh compilation done !\033[0;m"
+=======
+		@gcc $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -ltermcap -o $@
+		@echo "\033[0;32m42sh compilation done !\033[0;m"
+>>>>>>> Flav
 
 $(LIB):
 	@make -C $(LIBDIR)

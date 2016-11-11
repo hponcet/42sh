@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 12:44:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/10 17:53:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int			putchar(int c)
 	return (0);
 }
 
-static void	print_eol(t_shell *shell, char *buf, size_t p_len)
+static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
 {
 	t_input *tmp;
 	int		i;
 
 	i = 0;
-	tmp = shell->curs_pos;
+	tmp = overflow ? shell->input : shell->curs_pos;
 	while (tmp)
 	{
 		i++;
@@ -41,17 +41,47 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len)
 	}
 	else
 		ft_putstr_fd(buf, shell->fd[1]);
-	while (--i)
+	if (!overflow)
+	{
+		while (--i)
+			replace_cursor(shell, 1, 1);
+	}
+	else
 		replace_cursor(shell, 1, 1);
 }
 
-void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
+static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)
 {
 	int		i;
+	int		overflow;
 	char	buf[shell->input_len + 1];
 	t_input	*tmp;
 
 	i = 0;
+	overflow = 0;
+	ft_bzero((void *)buf, shell->input_len + 1);
+	if ((lst_len(shell->curs_pos) + shell->col) >= shell->winsize)
+	{
+		overflow++;
+		tmp = shell->input;
+		tputs(tgetstr("sc", NULL), shell->fd[3], &putchar);
+		tputs(tgetstr("cl", NULL), shell->fd[3], &putchar);
+		print_prompt(shell, 0);
+	}
+	else
+	{
+		tmp = curs_pos;
+		tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
+	}
+	while (tmp && (buf[i++] = tmp->c))
+		tmp = tmp->next;
+	print_eol(shell, buf, p_len, overflow);
+	if (overflow)
+		tputs(tgetstr("rc", NULL), shell->fd[3], &putchar);
+}
+
+void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
+{
 	if (!curs_pos->next &&
 		((get_cursor_x_pos(shell->input, curs_pos, p_len) % shell->col) == 0))
 	{
@@ -61,15 +91,5 @@ void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
 	else if (!curs_pos->next)
 		ft_putchar_fd(curs_pos->c, shell->fd[1]);
 	else
-	{
-		tmp = curs_pos;
-		ft_bzero((void *)buf, shell->input_len + 1);
-		tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
-		while (tmp)
-		{
-			buf[i++] = tmp->c;
-			tmp = tmp->next;
-		}
-		print_eol(shell, buf, p_len);
-	}
+		clear_and_print(shell, curs_pos, p_len);
 }

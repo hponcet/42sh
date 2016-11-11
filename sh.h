@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/07 20:16:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/10 15:07:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct			s_shell
 {
 	int					fd[4]; // stin, stdout, stderr, tty
 	size_t				col; // nb colonnes fenetre
+	size_t				row; // nb lignes
+	size_t				winsize; // lignes * colonnes
 	size_t				input_len; // longueur de l'input
 	size_t				p_len; // longueur du prompt
 	t_env				*env_lst;
@@ -124,7 +126,7 @@ t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0
 int						putchar(int c); // petit putchar des familles, la baaaase !
 int						strrchr_outside_quotes(char *s, char c, char quote); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
-int						is_str_quoted(char *s); // check si s entre quote
+int						is_str_quoted(char *s); // check si s est entre quote
 char					*strdup_remove_quotes(char *s); // "exemple" ==> exemple (free s)
 char					*str_replace_var(char *s, int start); // jesuis$USER ==> jesuistonpere
 char					**strsplit_args(char const *s); // split arguments

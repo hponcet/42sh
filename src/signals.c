@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/25 20:53:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/10 12:36:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,23 @@ static void	sig_int_handler(t_shell *shell)
 
 static void	sig_winch_handler(t_shell *shell)
 {
-	struct winsize	w;
+	int		i;
+	struct 	winsize	w;
 
+	i = shell->p_len;
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);
 	shell->col = w.ws_col;
+	shell->row = w.ws_row;
+	shell->winsize = shell->col * shell->row;
+	if (shell->input)
+	{
+		tputs(tgetstr("cl", NULL), shell->fd[3], &putchar);
+		print_prompt(shell, 0);
+		shell->curs_pos = shell->input;
+		print_input(shell, shell->input, shell->p_len);
+		move_line_end(shell);
+	}
 }
 
 void		sig_handler(int signum)
