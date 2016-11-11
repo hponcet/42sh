@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/07 20:16:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 19:55:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct			s_shell
 {
 	int					fd[4]; // stin, stdout, stderr, tty
 	size_t				col; // nb colonnes fenetre
+	size_t				row; // nb lignes
+	size_t				winsize; // lignes * colonnes
 	size_t				input_len; // longueur de l'input
 	size_t				p_len; // longueur du prompt
 	t_env				*env_lst;
@@ -124,7 +126,7 @@ t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0
 int						putchar(int c); // petit putchar des familles, la baaaase !
 int						strrchr_outside_quotes(char *s, char c, char quote); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
-int						is_str_quoted(char *s); // check si s entre quote
+int						is_str_quoted(char *s); // check si s est entre quote
 char					*strdup_remove_quotes(char *s); // "exemple" ==> exemple (free s)
 char					*str_replace_var(char *s, int start); // jesuis$USER ==> jesuistonpere
 char					**strsplit_args(char const *s); // split arguments
@@ -196,6 +198,8 @@ char					**parse_cmd(t_btree *cmd); // split en char**, appel des fonctions d'in
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
+int						replace_backslash(char **s, int i);
+int						replace_tilde(char **s, int i);
 int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre binaire pour execution
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 14:49:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 19:52:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,14 @@
 static char	*replace_special_char(char *s)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
-	tmp = NULL;
 	while (s[i])
 	{
 		if (s[i] == '\\')
-		{
-			tmp = ft_replace_str(s, i, 1, "");
-			free(s);
-			s = tmp;
-			if (s[i] == '\\' || s[i] == '$')
-				i++;
-		}
+			i += replace_backslash(&s, i);
+		else if (s[i] == '~')
+			i += replace_tilde(&s, i);
 		else
 		{
 			if (s[i] == '$' && (i == 0 || (s[i - 1] != '\\')))
