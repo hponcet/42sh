@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/10 17:53:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 18:44:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
 	}
 	else
 		ft_putstr_fd(buf, shell->fd[1]);
-	if (!overflow)
+	if (overflow)
+	{
+		tputs(tgetstr("rc", NULL), shell->fd[3], &putchar);
+		replace_cursor(shell, 1, 0);
+	}
+	else
 	{
 		while (--i)
 			replace_cursor(shell, 1, 1);
 	}
-	else
-		replace_cursor(shell, 1, 1);
 }
 
 static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)
@@ -76,8 +79,6 @@ static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)
 	while (tmp && (buf[i++] = tmp->c))
 		tmp = tmp->next;
 	print_eol(shell, buf, p_len, overflow);
-	if (overflow)
-		tputs(tgetstr("rc", NULL), shell->fd[3], &putchar);
 }
 
 void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)

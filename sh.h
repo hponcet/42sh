@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/10 15:07:23 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 19:55:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ char					**parse_cmd(t_btree *cmd); // split en char**, appel des fonctions d'in
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
+int						replace_backslash(char **s, int i);
+int						replace_tilde(char **s, int i);
 int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre binaire pour execution
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd

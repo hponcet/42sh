@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/11/09 14:55:39 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/11/11 18:50:40 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC = buffer.c \
 	  redirection.c \
 	  setenv.c \
 	  signals.c \
+	  special_char.c \
 	  str_tools.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
