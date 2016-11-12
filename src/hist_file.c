@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/11 21:00:36 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/12 17:08:32 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ void	input_to_hist(t_shell *shell, t_input *input)
 	else
 	{
 		tmp = shell->hist;
-		while (tmp->next)
-			tmp = tmp->next;
+		while (tmp->prev)
+			tmp = tmp->prev;
 		hist->input = input;
-		hist->prev = tmp;
-		hist->next = NULL;
-		tmp->next = hist;
+		hist->prev = NULL;
+		hist->next = tmp;
+		tmp->prev = hist;
 	}
 }
 
