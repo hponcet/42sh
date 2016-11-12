@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 15:12:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 17:41:31 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_hist		*store_hist(t_shell *shell)
 		tmp1->next = new;
 		new->prev = tmp1;
 	}
+	hist_to_file(shell, new); // Ajout de l'historique dans un fichier
 	shell->hist_end = 1;
 	return (new);
 }
