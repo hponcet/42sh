@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 17:53:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 18:54:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char				*ft_ltoa_base(long nb, int base);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 
+char				*ft_joinf(char *format, ...);
 size_t				ft_strlen(const char *s);
 size_t				ft_multi_strlen(char **array);
 int					ft_str_isempty(char *s);

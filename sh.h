@@ -6,7 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2016/11/11 19:55:08 by fkoehler         ###   ########.fr       */
+=======
+/*   Updated: 2016/11/11 20:49:36 by hponcet          ###   ########.fr       */
+>>>>>>> Gus
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +104,7 @@ typedef struct			s_shell
 
 void					quit_error(int errnum); // termcaps, malloc.. + exit()
 int						exec_error(int errnum, char *arg); // cmd not found, fork, dup
+int						common_error(int errnum, char *value);
 int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);
@@ -186,6 +191,16 @@ int						paste_buffer(t_shell *shell);
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
 t_hist					*store_hist(t_shell *shell);
+int						hist_proc(t_hist *hist, char *histpath);
+int						hist_to_file(t_shell *shell, t_hist *hist);
+void					input_to_hist(t_shell *shell, t_input *input);
+void					file_to_hist(t_shell *shell);
+char					*hist_get_histpath(t_shell *shell);
+
+/////////// input_tools.c ///////////// (pour Gus)
+char					*input_to_char(t_input *input);
+t_input					*char_to_input(char *str);
+size_t					input_len(t_input *input);
 
 void					replace_cursor(t_shell *shell, int print, int back); // mouvement du curseur (g/d/h/b)
 size_t					get_cursor_x_pos(t_input *input,

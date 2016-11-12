@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/22 18:21:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/11 20:52:26 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		main(int ac, char **av, char **environ)
 	init_shell(shell);
 	init_term(shell);
 	store_environ(shell, environ);
+	file_to_hist(shell);
 	read_input(shell);
 	return (0);
 }

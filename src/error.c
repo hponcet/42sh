@@ -6,11 +6,27 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2016/11/11 19:54:10 by fkoehler         ###   ########.fr       */
+=======
+/*   Updated: 2016/11/11 18:02:53 by hponcet          ###   ########.fr       */
+>>>>>>> Gus
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+int		common_error(int errnum, char *value)
+{
+	int		fd;
+
+	fd = STDERR_FILENO;
+	if (errnum == 1)
+		ft_putstr_fd("42sh: unable to open history file\n", fd);
+	if (value)
+		free(value);
+	return (1);
+}
 
 void	quit_error(int errnum)
 {

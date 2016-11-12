@@ -6,7 +6,11 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2016/11/11 20:15:26 by fkoehler         ###   ########.fr        #
+=======
+#*   Updated: 2016/11/11 19:39:51 by hponcet          ###   ########.fr       *#
+>>>>>>> Gus
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +33,7 @@ SRC = buffer.c \
 	  env_tools.c \
 	  environ.c \
 	  error.c \
+	  hist_file.c \
 	  exec_bin.c \
 	  exit.c \
 	  fd_handling.c \
@@ -41,6 +46,7 @@ SRC = buffer.c \
 	  input_cut_copy.c \
 	  input_delete_keys.c \
 	  input_handling.c \
+	  input_tools.c \
 	  keys_parsing.c \
 	  line_moves_1.c \
 	  line_moves_2.c \
@@ -60,7 +66,7 @@ SRC = buffer.c \
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 
 LIBDIR = ./libft/
 
