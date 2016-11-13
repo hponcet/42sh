@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/12 16:43:00 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/13 12:55:19 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+# include <dirent.h>
+# include <sys/stat.h>
 
 // types de maillons de l'arbre binaire
 # define CMD 1 // commande
@@ -33,6 +35,17 @@
 # define DREDIR 2 // >>
 # define BREDIR 3 // <
 # define HEREDOC 4 // <<
+
+// completion
+typedef struct		s_compl
+{
+	int				type;
+	size_t			len;
+	size_t			id;
+	char			*name;
+	struct s_compl	*next;
+	struct s_compl	*prev;
+}					t_compl;
 
 // redirections
 typedef struct			s_redir
@@ -79,7 +92,7 @@ typedef struct			s_btree
 // structure generale
 typedef struct			s_shell
 {
-	int					fd[4]; // stin, stdout, stderr, tty
+	int					fd[4]; // stin, stdout, stderr, tty, tty fantome
 	size_t				col; // nb colonnes fenetre
 	size_t				row; // nb lignes
 	size_t				winsize; // lignes * colonnes
@@ -187,16 +200,7 @@ int						paste_buffer(t_shell *shell);
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
 t_hist					*store_hist(t_shell *shell);
-int						hist_proc(t_hist *hist, char *histpath);
-int						hist_to_file(t_shell *shell, t_hist *hist);
-void					input_to_hist(t_shell *shell, t_input *input);
-void					file_to_hist(t_shell *shell);
-char					*hist_get_histpath(t_shell *shell);
 
-/////////// input_tools.c ///////////// (pour Gus)
-char					*input_to_char(t_input *input);
-t_input					*char_to_input(char *str);
-size_t					input_len(t_input *input);
 
 void					replace_cursor(t_shell *shell, int print, int back); // mouvement du curseur (g/d/h/b)
 size_t					get_cursor_x_pos(t_input *input,
@@ -240,5 +244,94 @@ int						exec_bin(char *bin_path, char **argv, char **env);
 
 int						dup_std_fd(int *fd);
 void					close_and_reset_fd(int *fd);
+
+/*
+** /////////////////// GUS /////////////////////////////
+** //// FILE HISTORY ////
+** // hist_file.c
+** Lis le fichier .42_history situe dans le path $HOME
+** et remplis l'historique des commande au demarage
+** du shell.
+** Reecrit a chaque commande le fichier .42_history
+*/
+
+int						hist_proc(t_hist *hist, char *histpath);
+int						hist_to_file(t_shell *shell, t_hist *hist);
+void					input_to_hist(t_shell *shell, t_input *input);
+void					file_to_hist(t_shell *shell);
+char					*hist_get_histpath(t_shell *shell);
+
+/* //// INPUT TOOLS ////
+** // input_tools.c
+** Plusieurs commandes pour l'adaptaion du 42sh.
+*/
+char					*input_to_char(t_input *input);
+t_input					*char_to_input(char *str);
+size_t					input_len(t_input *input);
+
+/* //// COMPLETION ////
+** // compl_display.c
+** Affichage de la completion.
+** Contient une boucle while(42) qui attend certaine key
+** pour la completion.
+*/
+int						compl_initprompt(t_shell *shell, int i);
+int						compl_countfile(t_compl *print);
+void					compl_display(t_shell *shell, t_compl *print,
+						char *find);
+/* // compl_key.c
+** Adaptation de certaines touche speciales dans la
+** boucle de completion :
+** - fleche directionnelles droite et gauche
+** - chaque lettres ascii
+** - touche tabulation (pour faire defiler)
+** - delete
+** - touche esc/ctrl-d
+*/
+int						compl_key_dir(char *buf, t_compl **print, t_shell *shell,
+						int pos);
+int						compl_key(char *buf, t_compl **print, t_shell *shell,
+						int pos);
+/*
+** // compl_str.c
+** Gere l'affichage des differentes strings lors du
+** defilement avec la touche tab.
+*/
+void					compl_addstrend(t_shell *shell, char *str, int type);
+void					compl_addstr(t_shell *shell, char *str);
+int						compl_retstr(t_compl *tmp, t_shell *shell, int pos, int i);
+int						compl_retstrchar(t_compl *tmp, t_shell *shell, int pos,
+						char c);
+/*
+** // compl_getinfo.c
+** Fait une liste chainee avec les informations relative au
+** path courant de la completion.
+*/
+t_compl					*compl_makefile(struct dirent *s_dir, char *path);
+t_compl					*compl_makechain(char *path, t_compl *ret, char *find);
+void					compl_sortchain(t_compl **list, t_compl *file);
+char					*compl_getfind(char *str);
+
+/*
+** // compl.c
+** compl : Fonction a appeler pour la completion qui determine
+** si un binaire ou un path doit etre cherche.
+** compl_delchain : free la lc du path courant ou du binaire.
+*/
+int						compl_wis(char *str);
+void					compl_delchain(t_compl *chain);
+void					compl_file(t_shell *shell, char *str);
+void					compl_bin(t_shell *shell, char *str);
+void					compl(t_shell *shell);
+
+/*
+** // compl_getpath.c
+** Fonctions de gestion des paths. (ex: ~/42sh, /tmp,
+** 42sh, ./ls, /bin/ls)
+*/
+void					compl_getpath(char **ret);
+char					**compl_pathbin(t_shell *shell);
+
+//////////////////////////////////////////////////////
 
 #endif
