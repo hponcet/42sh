@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/11 18:55:20 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/13 17:35:49 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ vpath %.c ./src ./ft_printf
 SRC = ft_atoi.c \
 	  ft_atol.c \
 	  ft_bzero.c \
-	  ft_isalnum.c \
 	  ft_countwords.c \
+	  ft_cindex.c \
+	  ft_isalnum.c \
 	  ft_isalpha.c \
 	  ft_isascii.c \
 	  ft_isspace.c \

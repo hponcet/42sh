@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 18:45:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/13 12:43:21 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ int		parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 		store_input(shell, buf[0]);
 		print_input(shell, shell->curs_pos, p_len);
 	}
+	// Completion
+	else if (buf[0] == 9 && buf[1] == 0 && shell->input)
+		compl(shell);
+	//////////////
 	else
 		return (parse_keys3(shell, buf, buf_len));
 	return (0);

@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/11 19:39:51 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/13 12:41:09 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,12 @@ SRC = buffer.c \
 	  cmd_interpreting.c \
 	  cmd_parsing.c \
 	  cmd_storage.c \
+	  compl.c \
+	  compl_display.c \
+	  compl_getinfo.c \
+	  compl_getpath.c \
+	  compl_key.c \
+	  compl_str.c \
 	  cursor.c \
 	  echo.c \
 	  env.c \
@@ -61,7 +67,7 @@ SRC = buffer.c \
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 LIBDIR = ./libft/
 

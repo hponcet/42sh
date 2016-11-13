@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/11 18:54:48 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/13 17:35:11 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char				*ft_ltoa_base(long nb, int base);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 
-char				*ft_joinf(char *format, ...);
 size_t				ft_strlen(const char *s);
 size_t				ft_multi_strlen(char **array);
 int					ft_str_isempty(char *s);
@@ -107,5 +106,22 @@ void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+
+/* //////////// GUS /////////////
+**
+** // ft_joinf.c
+** Fonction permetant de faire des join massif, tres adapte
+** pour les path requierant deux variable et un slash var/var.
+** ex: ft_joinf("%s/%xs du blabla", str1, str2);
+** %s: variable a join
+** %xs: free la variable apres join
+*/
+char				*ft_joinf(char *format, ...);
+
+/* // ft_cindex.c
+** Recherche un caractere dans une str et renvoi son index.
+*/
+int					ft_cindex(char *str, char c);
+int					ft_cindex_rev(char *str, char c);
 
 #endif
