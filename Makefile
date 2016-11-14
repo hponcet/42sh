@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/13 12:55:48 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/14 17:24:36 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ SRC = buffer.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
+	  hash.c \
+	  hash_new.c \
+	  hash_bin.c \
 	  heredoc.c \
 	  hist_storage.c \
 	  history.c \
