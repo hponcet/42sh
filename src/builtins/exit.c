@@ -6,13 +6,19 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/21 20:39:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 15:39:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/14 18:13:16 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int			ft_exit(char **cmd)
+static void ft_exit_foot(t_shell *shell)
+{
+	restore_term(get_struct(0));
+	hash_delhtbl(shell->hash_bin, HASHLEN);
+}
+
+int			ft_exit(char **cmd, t_shell *shell)
 {
 	int		i;
 	int		ret;
@@ -37,6 +43,6 @@ int			ft_exit(char **cmd)
 	if (i > 15)
 		return (exit_error(2, cmd[1]));
 	ret = ft_atoi(cmd[1]);
-	restore_term(get_struct(0));
+	ft_exit_foot(shell);
 	exit(ret);
 }

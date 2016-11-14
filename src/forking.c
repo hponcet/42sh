@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 16:21:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/14 18:02:02 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 		if (dup_std_fd(shell->fd) != 0)
 			exit(EXIT_FAILURE);
 		if (is_builtin(cmd[0]))
-			builtins_cmd(cmd, shell->env_lst);
+			builtins_cmd(cmd, shell->env_lst, shell);
 		else
-			binary_cmd(cmd, env_array, shell->env_lst);
+			binary_cmd(cmd, env_array, shell->env_lst, shell->hash_bin);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
@@ -41,7 +41,7 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 	return (pid);
 }
 
-pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst)
+pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -49,7 +49,7 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
 	{
-		binary_cmd(cmd, env_array, env_lst);
+		binary_cmd(cmd, env_array, env_lst, shell->hash_bin);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)

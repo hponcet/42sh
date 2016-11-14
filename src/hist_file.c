@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 12:50:43 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/13 13:10:01 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		hist_proc(t_hist *hist, char *histpath)
 	char	*input;
 	int		fd;
 
-	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1 
+	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1
 			&& common_error(1, NULL))
 		return (-1);
 	input = NULL;

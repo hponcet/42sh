@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/13 12:44:15 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 17:29:19 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int		main(int ac, char **av, char **environ)
 	init_shell(shell);
 	init_term(shell);
 	store_environ(shell, environ);
+	// fichier ~/.42_history vers historique
 	file_to_hist(shell);
+	// binaires vers table de hash
+	shell->hash_bin = hash_bin(shell);
 	read_input(shell);
 	return (0);
 }
