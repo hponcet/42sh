@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 12:50:43 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 20:12:54 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,27 @@ int		hist_proc(t_hist *hist, char *histpath)
 {
 	t_hist	*tmp;
 	char	*input;
+	char	*timestamp;
 	int		fd;
 
-	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1 
+	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1
 			&& common_error(1, NULL))
 		return (-1);
-	input = NULL;
 	tmp = hist;
 	while (tmp->next)
 		tmp = tmp->next;
 	while (tmp)
 	{
 		input = input_to_char(tmp->input);
+		timestamp = ft_itoa(tmp->timestamp);
+		ft_putstr_fd(timestamp, fd);
+		ft_putstr_fd(": ", fd);
 		ft_putendl_fd(input, fd);
 		ft_strdel(&input);
+		ft_strdel(&timestamp);
 		tmp = tmp->prev;
 	}
 	close(fd);
-	tmp = NULL;
 	return (1);
 }
 
@@ -62,7 +65,7 @@ int		hist_to_file(t_shell *shell, t_hist *hist)
 	return (1);
 }
 
-void	input_to_hist(t_shell *shell, t_input *input)
+void	input_to_hist(t_shell *shell, t_input *input, char *timestamp)
 {
 	t_hist	*hist;
 	t_hist	*tmp;
@@ -72,6 +75,7 @@ void	input_to_hist(t_shell *shell, t_input *input)
 	if (!shell->hist)
 	{
 		hist->input = input;
+		hist->timestamp = (unsigned int)atoi(timestamp);
 		hist->prev = NULL;
 		hist->next = NULL;
 		shell->hist = hist;
@@ -83,6 +87,7 @@ void	input_to_hist(t_shell *shell, t_input *input)
 		while (tmp->prev)
 			tmp = tmp->prev;
 		hist->input = input;
+		hist->timestamp = (unsigned int)atoi(timestamp);
 		hist->prev = NULL;
 		hist->next = tmp;
 		tmp->prev = hist;
@@ -92,6 +97,7 @@ void	input_to_hist(t_shell *shell, t_input *input)
 void	file_to_hist(t_shell *shell)
 {
 	t_input	*input;
+	char	*timestamp;
 	char	*histpath;
 	char	*buf;
 	int		fd;
@@ -101,9 +107,11 @@ void	file_to_hist(t_shell *shell)
 		return ;
 	while (get_next_line(fd, &buf))
 	{
-		input = char_to_input(buf);
-		input_to_hist(shell, input);
+		timestamp = ft_strsub(buf, 0, 10);
+		input = char_to_input(buf + 12);
+		input_to_hist(shell, input, timestamp);
 		ft_strdel(&buf);
+		ft_strdel(&timestamp);
 	}
 	ft_strdel(&histpath);
 	close(fd);

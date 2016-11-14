@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 18:09:27 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 21:19:00 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <sys/param.h>
 # include <term.h>
+# include <time.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
 # include <dirent.h>
@@ -39,7 +40,7 @@
 // taille des tables de hashage en nb de cases
 # define HASHLEN 5000
 
-// table de hashage
+// Table de hashage
 typedef struct			s_hash
 {
 	char				*name;
@@ -48,15 +49,15 @@ typedef struct			s_hash
 }						t_hash;
 
 // completion
-typedef struct		s_compl
+typedef struct			s_compl
 {
-	int				type;
-	size_t			len;
-	size_t			id;
-	char			*name;
-	struct s_compl	*next;
-	struct s_compl	*prev;
-}					t_compl;
+	int					type;
+	size_t				len;
+	size_t				id;
+	char				*name;
+	struct s_compl		*next;
+	struct s_compl		*prev;
+}						t_compl;
 
 // redirections
 typedef struct			s_redir
@@ -85,6 +86,7 @@ typedef struct			s_input
 // historique
 typedef	struct			s_hist
 {
+	unsigned int		timestamp;
 	struct s_input		*input;
 	struct s_hist		*prev;
 	struct s_hist		*next;
@@ -111,7 +113,7 @@ typedef struct			s_shell
 	size_t				p_len; // longueur du prompt
 	t_env				*env_lst;
 	t_hist				*hist;
-	t_hash				**hash_bin; // table de hash pour les binaires.
+	t_hash				**hash_bin; // table de hashage pour les paths binaires
 	int					hist_end; // flag fin de l'historique (derniere commande)
 	t_input				*input;
 	t_input				*input_save; // sauvegarde commande incomplete (quotes, pipe...)
@@ -231,7 +233,8 @@ int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre bin
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd
 pid_t					redir_fork(char **cmd, t_shell *shell);
-pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell); // (gus: ajout de la var shell pour la table de hashage dans binary_cmd)
+pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst,
+						t_shell *shell); // (gus: ajout de la var shell pour la table de hashage dans binary_cmd)
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
@@ -259,7 +262,7 @@ void					close_and_reset_fd(int *fd);
 
 /*
 ** /////////////////// GUS /////////////////////////////
-** ///////////////// FILE HISTORY ///////////////////
+** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
 ** Lis le fichier .42_history situe dans le path $HOME
 ** et remplis l'historique des commande au demarage
@@ -269,11 +272,11 @@ void					close_and_reset_fd(int *fd);
 
 int						hist_proc(t_hist *hist, char *histpath);
 int						hist_to_file(t_shell *shell, t_hist *hist);
-void					input_to_hist(t_shell *shell, t_input *input);
+void					input_to_hist(t_shell *shell, t_input *input, char *ts);
 void					file_to_hist(t_shell *shell);
 char					*hist_get_histpath(t_shell *shell);
 
-/* ////////////////// INPUT TOOLS //////////////////
+/* /////////////// INPUT TOOLS ///////////////
 ** // input_tools.c
 ** Plusieurs commandes pour l'adaptaion du 42sh.
 */
@@ -281,7 +284,7 @@ char					*input_to_char(t_input *input);
 t_input					*char_to_input(char *str);
 size_t					input_len(t_input *input);
 
-/* /////////////////// COMPLETION ///////////////////
+/* ////////////// COMPLETION ////////////////
 ** // compl_display.c
 ** Affichage de la completion.
 ** Contient une boucle while(42) qui attend certaine key

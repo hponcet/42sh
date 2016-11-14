@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/14 17:24:36 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/14 21:19:51 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,9 @@ SRC = buffer.c \
 	  env_tools.c \
 	  environ.c \
 	  error.c \
+	  hash.c \
+	  hash_bin.c \
+	  hash_new.c \
 	  hist_file.c \
 	  exec_bin.c \
 	  exit.c \
@@ -88,6 +91,7 @@ $(NAME): $(LIB) $(OBJ)
 		@echo "\033[0;32m42sh compilation done !\033[0;m"
 
 $(LIB):
+	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
 	@make -C $(LIBDIR)
 
 %.o: %.c
@@ -100,5 +104,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;32mExecutable deleted !\033[0;m"
+	-@make fclean -C $(LIBDIR)
+	@echo "\033[0;32mLibft cleaned.\033[0;m"
 
 re: fclean all
