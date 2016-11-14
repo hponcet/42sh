@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/11 17:41:31 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 19:53:03 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	store_hist_input(char c, t_hist *hist)
+static void		store_hist_input(char c, t_hist *hist)
 {
 	t_input *new;
 	t_input *tmp;
@@ -33,17 +33,28 @@ static void	store_hist_input(char c, t_hist *hist)
 	}
 }
 
-t_hist		*store_hist(t_shell *shell)
+static t_hist	*new_hist(void)
 {
 	t_hist	*new;
-	t_hist	*tmp1;
-	t_input	*tmp2;
+	time_t	t;
 
+	time(&t);
 	if (!(new = (t_hist *)malloc(sizeof(*new))))
 		quit_error(9);
 	new->prev = NULL;
 	new->next = NULL;
 	new->input = NULL;
+	new->timestamp = (unsigned int)t;
+	return (new);
+}
+
+t_hist			*store_hist(t_shell *shell)
+{
+	t_hist	*new;
+	t_hist	*tmp1;
+	t_input	*tmp2;
+
+	new = new_hist();
 	tmp2 = shell->input;
 	while (tmp2)
 	{

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 18:55:15 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 20:10:52 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <sys/param.h>
 # include <term.h>
+# include <time.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
 # include <dirent.h>
@@ -48,15 +49,15 @@ typedef struct			s_hash
 }						t_hash;
 
 // completion
-typedef struct		s_compl
+typedef struct			s_compl
 {
-	int				type;
-	size_t			len;
-	size_t			id;
-	char			*name;
-	struct s_compl	*next;
-	struct s_compl	*prev;
-}					t_compl;
+	int					type;
+	size_t				len;
+	size_t				id;
+	char				*name;
+	struct s_compl		*next;
+	struct s_compl		*prev;
+}						t_compl;
 
 // redirections
 typedef struct			s_redir
@@ -85,6 +86,7 @@ typedef struct			s_input
 // historique
 typedef	struct			s_hist
 {
+	unsigned int		timestamp;
 	struct s_input		*input;
 	struct s_hist		*prev;
 	struct s_hist		*next;
@@ -267,7 +269,7 @@ void					close_and_reset_fd(int *fd);
 
 int						hist_proc(t_hist *hist, char *histpath);
 int						hist_to_file(t_shell *shell, t_hist *hist);
-void					input_to_hist(t_shell *shell, t_input *input);
+void					input_to_hist(t_shell *shell, t_input *input, char *ts);
 void					file_to_hist(t_shell *shell);
 char					*hist_get_histpath(t_shell *shell);
 
