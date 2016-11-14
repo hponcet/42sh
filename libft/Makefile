@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/13 17:35:49 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/14 18:59:51 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,7 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -f $(OBJ)
-	@echo "\033[0;32mObject files deleted !\033[0;m"
+	@echo "\033[0;32mLibrary object files deleted !\033[0;m"
 
 fclean: clean
 	@rm -f $(NAME)

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/13 12:45:02 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 18:55:15 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@
 # define DREDIR 2 // >>
 # define BREDIR 3 // <
 # define HEREDOC 4 // <<
+
+// Taille de la table de hashage
+# define HASHLEN 5000
+
+// Table de hashage
+typedef struct			s_hash
+{
+	char				*name;
+	char				*value;
+	struct s_hash		*next;
+}						t_hash;
 
 // completion
 typedef struct		s_compl
@@ -100,6 +111,7 @@ typedef struct			s_shell
 	size_t				p_len; // longueur du prompt
 	t_env				*env_lst;
 	t_hist				*hist;
+	t_hash				**hash_bin; // table de hashage pour les paths binaires
 	int					hist_end; // flag fin de l'historique (derniere commande)
 	t_input				*input;
 	t_input				*input_save; // sauvegarde commande incomplete (quotes, pipe...)
@@ -217,7 +229,7 @@ int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre bin
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd
 pid_t					redir_fork(char **cmd, t_shell *shell);
-pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst);
+pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell);
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
@@ -226,16 +238,16 @@ int						handle_redirs(t_shell *shell, t_btree *link,
 int						exec_redir_cmd(t_shell *shell, char **cmd);
 int						fill_heredoc(char *delimiter, int *fd);
 
-int						builtins_cmd(char **cmd, t_env *env_lst); // execution builtin
-int						ft_exit(char **cmd);
+int						builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell); // execution builtin
+int						ft_exit(char **cmd, t_shell *shell);
 int						ft_cd(char **cmd, t_env *env_lst);
 int						ft_echo(char **cmd);
-int						ft_env(char **cmd, t_env *env_lst, int i);
+int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
 
 int						binary_cmd(char **cmd, char **env_array,
-						t_env *env_lst); // execution binaire
+						t_env *env_lst, t_hash **htbl); // execution binaire
 char					*get_bin_path(char *cmd, t_env *env_lst);
 int						check_bin_path(char *bin_path, char *cmd);
 int						exec_bin(char *bin_path, char **argv, char **env);
@@ -245,7 +257,7 @@ void					close_and_reset_fd(int *fd);
 
 /*
 ** /////////////////// GUS /////////////////////////////
-** //// FILE HISTORY ////
+** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
 ** Lis le fichier .42_history situe dans le path $HOME
 ** et remplis l'historique des commande au demarage
@@ -259,7 +271,7 @@ void					input_to_hist(t_shell *shell, t_input *input);
 void					file_to_hist(t_shell *shell);
 char					*hist_get_histpath(t_shell *shell);
 
-/* //// INPUT TOOLS ////
+/* /////////////// INPUT TOOLS ///////////////
 ** // input_tools.c
 ** Plusieurs commandes pour l'adaptaion du 42sh.
 */
@@ -267,7 +279,7 @@ char					*input_to_char(t_input *input);
 t_input					*char_to_input(char *str);
 size_t					input_len(t_input *input);
 
-/* //// COMPLETION ////
+/* ////////////// COMPLETION ////////////////
 ** // compl_display.c
 ** Affichage de la completion.
 ** Contient une boucle while(42) qui attend certaine key
@@ -329,6 +341,29 @@ void					compl(t_shell *shell);
 */
 void					compl_getpath(char **ret);
 char					**compl_pathbin(t_shell *shell);
+
+/*
+** //////////////// TABLE DE HASHAGE /////////////////
+** // hash.c
+*/
+t_hash					**hash_addpath(t_hash **htbl, char *path, int nb_case);
+int						hash(char *name, int nb_case);
+t_hash					**hash_add(t_hash **htbl, char *name,
+						char *value, int nb_case);
+void					hash_delhtbl(t_hash **htbl, int nb_case);
+char					*hash_search(t_hash **htbl, char *name, int nb_case);
+
+/*
+** // ft_hash_new.c
+*/
+t_hash					**hash_newtbl(int nb_case);
+t_hash					*hash_newfile(char *name, char *value);
+
+/*
+** // ft_hash_bin.c
+*/
+t_hash					**hash_bin(t_shell *shell);
+
 
 //////////////////////////////////////////////////////
 
