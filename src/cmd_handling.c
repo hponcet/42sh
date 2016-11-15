@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 20:24:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 21:42:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell)
 {
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		shell->status = ft_cd(cmd, env_lst);
+	if (ft_strcmp(cmd[0], "history") == 0)
+		ft_history(cmd, shell); // ajouter valeur de retour
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		shell->status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "env") == 0)

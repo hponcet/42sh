@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_check.c                                   :+:      :+:    :+:   */
+/*   ft_strinstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/04 17:51:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 02:33:42 by hponcet          ###   ########.fr       */
+/*   Created: 2016/11/07 14:30:06 by hponcet           #+#    #+#             */
+/*   Updated: 2016/11/15 17:37:51 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "libft.h"
 
-int		is_builtin(char *cmd)
+int		ft_strinstr(char *orig, char *find)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") ||
-		!ft_strcmp(cmd, "history") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "setenv") || !ft_strcmp(cmd, "unsetenv") ||
-		!ft_strcmp(cmd, "exit"))
+	int		i;
+	int		j;
+
+	if (!find)
 		return (1);
+	if (!find[0])
+		return (1);
+	i = 0;
+	while (orig[i])
+	{
+		j = 0;
+		while (orig[i + j] == find[j])
+		{
+			j++;
+			if (!find[j])
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }
