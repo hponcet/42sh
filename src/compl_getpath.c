@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/15 14:37:08 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 11:18:50 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 20:57:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char		**compl_pathbin(t_shell *shell)
 	path = NULL;
 	joinpath = NULL;
 	if (!(pathbin = get_env_ptr(shell->env_lst, "PATH"))
-			&& cd_error(0, NULL) == -1)
+			&& cd_error(0, NULL) == 1)
 		return (NULL);
 	if ((joinpath = ft_strdup(pathbin->val)))
 		path = ft_strsplit(joinpath, ':');

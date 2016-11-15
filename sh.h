@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 21:19:00 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 20:08:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct			s_btree
 typedef struct			s_shell
 {
 	int					fd[4]; // stin, stdout, stderr, tty, tty fantome
+	int					status; // valeur de retour du dernier processus fils
 	size_t				col; // nb colonnes fenetre
 	size_t				row; // nb lignes
 	size_t				winsize; // lignes * colonnes
@@ -229,6 +230,7 @@ char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument 
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						replace_backslash(char **s, int i);
 int						replace_tilde(char **s, int i);
+int						replace_exit_value(char **s, int i);
 int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre binaire pour execution
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd
@@ -259,6 +261,7 @@ int						exec_bin(char *bin_path, char **argv, char **env);
 
 int						dup_std_fd(int *fd);
 void					close_and_reset_fd(int *fd);
+void					set_status(int *status, char **cmd);
 
 /*
 ** /////////////////// GUS /////////////////////////////

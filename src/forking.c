@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 18:02:02 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 19:28:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 			builtins_cmd(cmd, shell->env_lst, shell);
 		else
 			binary_cmd(cmd, env_array, shell->env_lst, shell->hash_bin);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 	{
 		close_and_reset_fd(shell->fd);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &shell->status, 0);
+		set_status(&shell->status, cmd);
 		free_tab(env_array);
 	}
 	return (pid);
@@ -50,10 +51,13 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell)
 	if (pid == 0)
 	{
 		binary_cmd(cmd, env_array, env_lst, shell->hash_bin);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
-		waitpid(pid, NULL, 0);
+	{
+		waitpid(pid, &shell->status, 0);
+		set_status(&shell->status, cmd);
+	}
 	return (pid);
 }
 
@@ -69,7 +73,10 @@ pid_t	pipe_fork_father(t_shell *shell, t_btree *link)
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
-		waitpid(pid, NULL, 0);
+	{
+		waitpid(pid, &shell->status, 0);
+		set_status(&shell->status, &link->left->str);
+	}
 	return (pid);
 }
 

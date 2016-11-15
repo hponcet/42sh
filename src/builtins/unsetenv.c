@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 03:41:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 20:39:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		ft_unsetenv(char **cmd, t_env **env_lst)
 	if (!cmd[1])
 	{
 		env_var_error(0, cmd[0], "");
-		return (-1);
+		return (1);
 	}
 	while (cmd[i])
 	{
@@ -58,7 +58,7 @@ int		ft_unsetenv(char **cmd, t_env **env_lst)
 		if (check_env_var(dup_var, cmd[0]) == -1)
 		{
 			free(dup_var);
-			return (-1);
+			return (1);
 		}
 		del_env_var(env_lst, dup_var);
 		i++;

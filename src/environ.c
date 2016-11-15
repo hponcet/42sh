@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 15:44:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 12:57:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	store_environ(t_shell *shell, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		if ((j = ft_strchr_index(environ[i], '=')) <= 0)
-			i++;
-		else
+		if ((j = ft_strchr_index(environ[i], '=')) > 0)
 		{
 			var = ft_strsub(environ[i], 0, j);
 			if (!(ft_strcmp(var, "SHLVL")))
@@ -47,11 +45,13 @@ void	store_environ(t_shell *shell, char **environ)
 				val = ft_strsub(environ[i], j + 1,
 						(ft_strlen(environ[i]) - j - 1));
 			store_env_var(&(shell->env_lst), var, val);
-			i++;
 		}
+		i++;
 	}
 	if (!(get_env_ptr(shell->env_lst, "SHLVL")))
 		store_env_var(&(shell->env_lst), ft_strdup("SHLVL"), ft_strdup("1"));
+	if (!(get_env_ptr(shell->env_lst, "PWD")))
+		set_new_pwd(shell->env_lst);
 }
 
 int		store_env_var(t_env **env_lst, char *var, char *val)

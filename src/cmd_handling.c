@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 18:17:10 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 20:24:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int		binary_cmd(char **cmd, char **env_array, t_env *env_lst, t_hash **htbl)
 int		builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell)
 {
 	if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd, env_lst);
+		shell->status = ft_cd(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		ft_echo(cmd);
+		shell->status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		ft_env(cmd, env_lst, 1, shell);
+		shell->status = ft_env(cmd, env_lst, 1, shell);
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
-		ft_setenv(++cmd, &env_lst, 0);
+		shell->status = ft_setenv(++cmd, &env_lst, 0);
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
-		ft_unsetenv(cmd, &env_lst);
+		shell->status = ft_unsetenv(cmd, &env_lst);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd, shell);
 	else

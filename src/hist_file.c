@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/14 20:12:54 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 21:04:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*hist_get_histpath(t_shell *shell)
 	char	*histpath;
 
 	if (!(homeenv = get_env_ptr(shell->env_lst, "HOME"))
-			&& cd_error(0, NULL) == -1)
+		   	&& cd_error(0, NULL) == 1)
 		return (NULL);
 	homepath = ft_strdup(homeenv->val);
 	histpath = ft_joinf("%s/.42sh_history", homepath);

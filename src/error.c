@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/12 16:43:39 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 20:33:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,19 @@ void	quit_error(int errnum)
 int		exec_error(int errnum, char *arg)
 {
 	int		fd;
+	t_shell	*shell;
 
 	fd = STDERR_FILENO;
+	shell = get_struct(0);
 	ft_putstr_fd("42sh: ", fd);
 	ft_putstr_fd(arg, fd);
 	if (errnum == 0)
 		ft_putstr_fd(": error on child process creation\n", fd);
-	else if (errnum == 1)
+	else if (errnum == 1 && (shell->status = 127))
 		ft_putstr_fd(": command not found\n", fd);
 	else if (errnum == 2)
 		ft_putstr_fd("environment variable PATH is not set or is empty\n", fd);
-	else if (errnum == 3)
+	else if (errnum == 3 && (shell->status = 126))
 		ft_putstr_fd(": permission denied\n", fd);
 	else if (errnum == 4)
 		ft_putstr_fd(": error on child process execution\n", fd);

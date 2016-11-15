@@ -38,6 +38,7 @@ SRC = buffer.c \
 	  hist_file.c \
 	  exec_bin.c \
 	  exit.c \
+	  exit_status.c \
 	  fd_handling.c \
 	  forking.c \
 	  free.c \
@@ -71,7 +72,7 @@ SRC = buffer.c \
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 LIBDIR = ./libft/
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 18:01:38 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 20:45:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell)
 			if ((j = parse_env_flags(cmd + i, &env_lst_cpy)) == -1)
 			{
 				free_env_lst(&env_lst_cpy);
-				return (0);
+				return (1);
 			}
 		}
 		else if (ft_strchr(cmd[i], '=') != NULL && ++j)

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 15:07:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 20:38:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	free_path_error_return(char *path)
 {
 	free(path);
-	return (-1);
+	return (1);
 }
 
 static void	put_pwd(t_env *home, char *path)

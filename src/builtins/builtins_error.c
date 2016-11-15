@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 13:32:34 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/07 15:39:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 20:43:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		cd_error(int errnum, char *arg)
 		ft_putstr_fd("switching the actual directory with 'chdir'\n", fd);
 	else if (errnum == 8)
 		ft_putstr_fd("checking the actual directory with 'getcwd'\n", fd);
-	return (-1);
+	return (1);
 }
 
 int		env_error(int errnum, int flag)

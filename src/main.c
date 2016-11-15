@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 17:29:19 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 15:46:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_shell(t_shell *shell)
 	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
 		quit_error(1);
 	shell->col = 0;
+	shell->status = 0;
 	shell->input_len = 0;
 	shell->p_len = 0;
 	shell->env_lst = NULL;
