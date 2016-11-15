@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/14 21:25:17 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/15 21:15:35 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ vpath %.c ./src ./src/builtins
 SRC = buffer.c \
 	  builtins_error.c \
 	  builtins_check.c \
+	  bltn_history.c \
+	  bltn_history_opt.c \
 	  cd.c \
 	  check_pipes.c \
 	  check_redir.c \
@@ -36,6 +38,7 @@ SRC = buffer.c \
 	  environ.c \
 	  error.c \
 	  hist_file.c \
+	  hist_check.c \
 	  exec_bin.c \
 	  exit.c \
 	  fd_handling.c \

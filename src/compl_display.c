@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 11:20:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 12:40:02 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/14 21:42:04 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ int			compl_countfile(t_compl *print)
 int			compl_initprompt(t_shell *shell, int i)
 {
 	if (i == 27)
+	{
 		tputs(tgetstr("cr", 0), 1, putchar);
+		print_prompt(shell, 1);
+		print_input(shell, shell->input, shell->p_len);
+		return (1);
+	}
 	if (i == 4)
 		tputs(tgetstr("do", 0), 1, putchar);
 	if (i == 0)
@@ -38,7 +43,8 @@ int			compl_initprompt(t_shell *shell, int i)
 		tputs(tgetstr("do", 0), 1, putchar);
 		return (1);
 	}
-	print_prompt(shell, 0);
+	print_prompt(shell, 1);
+	free_tmp_inputs(shell, 0);
 	tputs(tgetstr("cd", 0), 1, putchar);
 	return (1);
 }
