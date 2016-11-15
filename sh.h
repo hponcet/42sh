@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/14 20:10:52 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 17:23:59 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,21 @@ void					close_and_reset_fd(int *fd);
 
 /*
 ** /////////////////// GUS /////////////////////////////
+** ////////////// BUILTIN HISTORY /////////////
+** builtins/bltn_history.c
+** Affiche l'historique des commade.
+*/
+void					ft_history(char **cmd, t_shell *shell);
+/*
+** builtins/bltn_history_opt.c
+** Recherche dans l'historique par commande ou 
+** par event.
+*/
+int						bltn_hist_checkopt(char *cmd);
+t_hist					*bltn_hist_searchstr(char *cmd, t_shell *shell);
+t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
+
+/*
 ** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
 ** Lis le fichier .42_history situe dans le path $HOME
@@ -272,6 +287,11 @@ int						hist_to_file(t_shell *shell, t_hist *hist);
 void					input_to_hist(t_shell *shell, t_input *input, char *ts);
 void					file_to_hist(t_shell *shell);
 char					*hist_get_histpath(t_shell *shell);
+/*
+** // hist_check.c
+** Check les doublons dans l'historique de commandes
+*/
+int						hist_checkdouble(t_shell *shell);
 
 /* /////////////// INPUT TOOLS ///////////////
 ** // input_tools.c

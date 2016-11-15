@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/14 18:59:51 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/15 16:08:48 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC = ft_atoi.c \
 	  ft_strdel.c \
 	  ft_strdup.c \
 	  ft_strequ.c \
+	  ft_strinstr.c \
 	  ft_str_isempty.c \
 	  ft_striter.c \
 	  ft_striteri.c \

@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/13 17:35:11 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/15 16:08:30 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 ** %xs: free la variable apres join
 */
 char				*ft_joinf(char *format, ...);
+int					ft_strinstr(char *orig, char *find);
 
 /* // ft_cindex.c
 ** Recherche un caractere dans une str et renvoi son index.

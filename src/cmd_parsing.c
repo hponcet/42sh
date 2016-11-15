@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 17:23:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/15 04:36:20 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int			handle_input(t_shell *shell)
 	if (((ret = check_input_form(shell)) > 0) ||
 		(ft_str_isempty(cmd_str = lst_to_str(shell->input))))
 		return (free_and_return(shell, ret, cmd_str));
-	shell->hist = store_hist(shell);
+	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
+		shell->hist = store_hist(shell);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
 	restore_term(shell);
