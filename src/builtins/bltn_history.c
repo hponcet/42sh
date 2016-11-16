@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 02:31:17 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/15 21:12:43 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/16 17:42:56 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,18 @@ static void	ft_histproc(t_hist *hist)
 	}
 }
 
-void		ft_history(char **cmd, t_shell *shell)
+int			ft_history(char **cmd, t_shell *shell)
 {
 	t_hist	*hist;
 	int	 	index;
 	int		i;
 
 	if (!(shell->hist))
-		return ;
+		return (1);
 	if (cmd[1] && cmd[2])
 	{
 		ft_putendl("42sh: fc: too few arguments");
-		return ;
+		return (1);
 	}
 	i = 0;
 	index = bltn_hist_checkopt(cmd[1]);
@@ -111,6 +111,7 @@ void		ft_history(char **cmd, t_shell *shell)
 	if (index == -1)
 		hist = shell->hist->prev;
 	if (!hist)
-		return ;
+		return (1);
 	ft_histproc(hist);
+	return (0);
 }

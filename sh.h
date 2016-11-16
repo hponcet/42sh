@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/16 15:54:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/16 17:41:44 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ void					set_status(int *status, char **cmd);
 ** builtins/bltn_history.c
 ** Affiche l'historique des commade.
 */
-void					ft_history(char **cmd, t_shell *shell);
+int						ft_history(char **cmd, t_shell *shell);
 /*
 ** builtins/bltn_history_opt.c
 ** Recherche dans l'historique par commande ou
