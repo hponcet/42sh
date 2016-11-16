@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 19:28:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:19:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 			builtins_cmd(cmd, shell->env_lst, shell);
 		else
 			binary_cmd(cmd, env_array, shell->env_lst, shell->hash_bin);
-		exit(EXIT_SUCCESS);
+		exit(shell->status);
 	}
 	else if (pid > 0)
 	{
@@ -51,7 +51,7 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell)
 	if (pid == 0)
 	{
 		binary_cmd(cmd, env_array, env_lst, shell->hash_bin);
-		exit(EXIT_SUCCESS);
+		exit(shell->status);
 	}
 	else if (pid > 0)
 	{
@@ -70,7 +70,7 @@ pid_t	pipe_fork_father(t_shell *shell, t_btree *link)
 	if (pid == 0)
 	{
 		pipe_fork_child(shell, link);
-		exit(EXIT_SUCCESS);
+		exit(shell->status);
 	}
 	else if (pid > 0)
 	{
@@ -96,7 +96,7 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		close(fd[0]);
 		link->left->type == PIP ? pipe_fork_child(shell, link->left) : (0);
 		link->left->type == CMD ? handle_cmd(shell, link->left, 1) : (0);
-		exit(EXIT_SUCCESS);
+		exit(shell->status);
 	}
 	else if (pid > 0)
 	{

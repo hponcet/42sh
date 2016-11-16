@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 21:42:37 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 16:07:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/16 20:36:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,19 @@ char		*get_bin_path(char *cmd, t_env *env_lst)
 
 int			check_bin_path(char *bin_path, char *cmd)
 {
+	struct stat	buf;
+
+	if (ft_strlen(bin_path) > MAXPATHLEN)
+		return (exec_error(4, cmd));
 	if (access(bin_path, F_OK) == -1)
 		return (1);
 	if (access(bin_path, X_OK) == -1)
 		return (exec_error(3, cmd));
+	if (lstat(bin_path, &buf) == 0)
+	{
+		if (!S_ISREG(buf.st_mode))
+			return (exec_error(3, cmd));
+	}
 	return (0);
 }
 
