@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 11:20:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/14 21:42:04 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/16 19:39:23 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void		compl_display(t_shell *shell, t_compl *print, char *find)
 	pos = ft_strlen(find);
 	tputs(tgetstr("sc", 0), 1, putchar);
 	tmp = print;
-	tputs(tgetstr("rc", 0), 1, putchar);
 	ft_putstr(print->name + pos);
 	tputs(tgetstr("ce", 0), 1, putchar);
 	buf = ft_strnew(4);
+	signal(SIGINT, SIG_IGN);
 	while (42)
 	{
 		if (compl_key(buf, &tmp, shell, pos) == 1)
