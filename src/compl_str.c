@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 16:40:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 12:38:13 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/16 17:04:23 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int			compl_retstrchar(t_compl *tmp, t_shell *shell, int pos, char c)
 	i = 0;
 	str = tmp->name + pos;
 	tputs(tgetstr("rc", 0), 1, putchar);
-	tputs(tgetstr("ce", 0), 1, putchar);
+	tputs(tgetstr("cd", 0), 1, putchar);
 	compl_addstr(shell, str);
 	store_input(shell, c);
 	ft_putchar(c);

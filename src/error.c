@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 20:33:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/16 15:34:49 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int		common_error(int errnum, char *value)
 	fd = STDERR_FILENO;
 	if (errnum == 1)
 		ft_putstr_fd("42sh: unable to open history file\n", fd);
+	if (errnum == 2)
+		ft_putstr_fd("42sh: Environnement variable $PATH not found\n", fd);
+	if (errnum == 3)
+		ft_putstr_fd("42sh: Environnement variable $HOME not found\n", fd);
 	if (value)
 		free(value);
 	return (1);

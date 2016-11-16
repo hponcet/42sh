@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/15 21:43:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:29:20 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		hist_proc(t_hist *hist, char *histpath)
 	char	*timestamp;
 	int		fd;
 
-	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1
-			&& common_error(1, NULL))
+	if ((fd = open(histpath, O_CREAT | O_WRONLY, 0644)) == -1)
 		return (-1);
 	tmp = hist;
 	while (tmp->next)
@@ -46,8 +45,7 @@ char	*hist_get_histpath(t_shell *shell)
 	char	*homepath;
 	char	*histpath;
 
-	if (!(homeenv = get_env_ptr(shell->env_lst, "HOME"))
-		   	&& cd_error(0, NULL) == 1)
+	if (!(homeenv = get_env_ptr(shell->env_lst, "HOME")))
 		return (NULL);
 	homepath = ft_strdup(homeenv->val);
 	histpath = ft_joinf("%s/.42sh_history", homepath);

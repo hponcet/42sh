@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/15 14:37:08 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/15 20:57:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:24:31 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,32 @@ static void	getpath(char **ret, char *pwd)
 	ret[1] = find;
 }
 
-void		compl_getpath(char **ret)
+static void gethomepath(t_shell *shell, char **cmd)
 {
-	char	*pwd;
+	t_env	*homeenv;
+	char	*tmp;
+	char	*homepath;
+	char	*find;
 	int		i;
+
+	if (!(homeenv = get_env_ptr(shell->env_lst, "HOME")))
+		homepath = ft_strdup("/Users/");
+	else
+		homepath = ft_strdup(homeenv->val);
+	i = ft_cindex_rev(cmd[1], '/');
+	find = ft_strsub(cmd[1], i + 1, ft_strlen(cmd[1]) - i);
+	tmp = ft_strsub(cmd[1], 1, i);
+	free(cmd[1]);
+	cmd[0] = ft_joinf("%s%s", homepath, tmp);
+	cmd[1] = find;
+	ft_strdel(&tmp);
+	ft_strdel(&homepath);
+}
+
+void		compl_getpath(t_shell *shell, char **ret)
+{
+	int		i;
+	char	*pwd;
 
 	pwd = NULL;
 	pwd = getcwd(pwd, MAXPATHLEN);
@@ -83,7 +105,9 @@ void		compl_getpath(char **ret)
 		return ;
 	}
 	i = ft_cindex_rev(ret[1], '/');
-	if (i == 0)
+	if (ret[1][0] == '~' && ret[1][1] == '/')
+		gethomepath(shell, ret);
+	else if (i == 0)
 		getroot(ret);
 	else if (ret[1][0] == '/' && i > 0)
 		getpathroot(ret);
@@ -103,7 +127,7 @@ char		**compl_pathbin(t_shell *shell)
 	path = NULL;
 	joinpath = NULL;
 	if (!(pathbin = get_env_ptr(shell->env_lst, "PATH"))
-			&& cd_error(0, NULL) == 1)
+			&& common_error(2, NULL) == 1)
 		return (NULL);
 	if ((joinpath = ft_strdup(pathbin->val)))
 		path = ft_strsplit(joinpath, ':');

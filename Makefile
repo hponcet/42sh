@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/15 21:15:35 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/16 14:55:16 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ SRC = buffer.c \
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g 
 
 LIBDIR = ./libft/
 
@@ -106,6 +106,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;32mExecutable deleted !\033[0;m"
 	-@make fclean -C $(LIBDIR)
+	-@rm -rf 42sh.dSYM
 	@echo "\033[0;32mLibft cleaned.\033[0;m"
 
 re: fclean all
