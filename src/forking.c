@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/16 17:19:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:40:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 pid_t	redir_fork(char **cmd, t_shell *shell)
 {
-	int		i;
 	pid_t	pid;
 	char	**env_array;
 
-	i = 0;
 	env_array = env_lst_to_array(shell->env_lst);
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));

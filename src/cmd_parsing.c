@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/16 20:17:12 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 18:14:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,12 @@ char		**parse_cmd(t_btree *link)
 	return (cmd_tab);
 }
 
-static int	free_and_return(t_shell *shell, int ret, char *s)
+static int	free_and_return(t_shell *shell, int ret)
 {
 	if (ret == 0)
 		free_tmp_inputs(shell, 1);
 	else
 		free_tmp_inputs(shell, 0);
-	if (s)
-		free(s);
 	return (ret);
 }
 
@@ -91,11 +89,12 @@ int			handle_input(t_shell *shell)
 		return (0);
 	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
 		return (free_and_return(shell, ret, cmd_str));
-	if (((ret = check_input_form(shell)) > 0) ||
-		(ft_str_isempty(cmd_str = lst_to_str(shell->input))))
-		return (free_and_return(shell, ret, cmd_str));
+	if (((ret = check_input_form(shell)) > 0)) // ajouter fonction liste vide
+		return (free_and_return(shell, ret));
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
 		shell->hist = store_hist(shell);
+	// back quote
+	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
 	restore_term(shell);

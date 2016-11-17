@@ -75,7 +75,7 @@ SRC = buffer.c \
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g 
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 LIBDIR = ./libft/
 

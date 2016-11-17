@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 16:00:54 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/17 16:10:26 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define CMD 1 // commande
 # define SEM 2 // point-virgule
 # define PIP 3 // pipe
+# define AND 4 // &&
+# define OR 5 // ||
 
 // types de redirection
 # define REDIR 1 // >

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:55:44 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/17 16:16:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ int		handle_cmd(t_shell *shell, t_btree *link, int already_forked)
 
 int		handle_btree(t_shell *shell, t_btree *link)
 {
-	if (link->type == SEM)
+	if (link->type == SEM || link->type == AND || link->type == OR)
 	{
 		handle_btree(shell, link->left);
+		if (link->type == SEM || (link->type == AND && shell->status == 0)
+			|| (link->type == OR && shell->status != 0))
 		handle_btree(shell, link->right);
 	}
 	else if (link->type == PIP)

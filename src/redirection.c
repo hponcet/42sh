@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/25 18:05:04 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 13:17:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	parse_redir(t_redir *redir, int *fd, int fd1, int i)
 	else
 	{
 		redir->s[i] == '&' ? i++ : (0);
-		file = ft_strtrim(redir->s + i);
+		file = strdup_remove_quotes(ft_strtrim(redir->s + i));
 		fd2 = open_file(file, redir->type, fd);
 		free(file);
 		if (fd2 != -1)
