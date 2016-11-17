@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 16:10:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 19:36:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct			s_shell
 	struct termios		term_save; // sauvegarde termcaps
 }						t_shell;
 
+/// ERREURS ///
 int						ft_put_error(char *error, int action);
 int						exec_error(int errnum, char *arg); // cmd not found, fork, dup
 int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir
@@ -137,6 +138,7 @@ int						env_error(int errnum, int flag);
 void					env_var_error(int errnum, char *cmd, char *arg);
 int						exit_error(int errnum, char *arg);
 
+/// FREE ///
 void					free_input_list(t_input **input, size_t *nb_elem); // free tout ou partie d'input, nb_elem optionnel
 void					free_tmp_inputs(t_shell *shell, int reset_save); // free input, buffers, input_save (optionnel), replace l'historique sur la derniere commande
 void					free_env_var(t_env *env_var);
@@ -144,6 +146,7 @@ void					free_env_lst(t_env **env_lst);
 void					free_redirs(t_redir **redirs);
 void					free_btree(t_btree *tree);
 
+/// INIT ET SIGNAUX ///
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
 void					restore_term(t_shell *shell);
@@ -154,6 +157,7 @@ void					sig_handler_heredoc(int signum);
 void					set_sig_handler(void);
 t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0 en param)
 
+/// OUTILS ///
 int						putchar(int c); // petit putchar des familles, la baaaase !
 int						strrchr_outside_quotes(char *s, char c, char quote); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
@@ -162,12 +166,14 @@ char					*strdup_remove_quotes(char *s); // "exemple" ==> exemple (free s)
 char					*str_replace_var(char *s, int start); // jesuis$USER ==> jesuistonpere
 char					**strsplit_args(char const *s); // split arguments
 char					**str_subsplit_arg(char const *s); // split des quotes pour interpretation
+int						lst_is_empty(t_input *lst);
 size_t					lst_len(t_input *lst);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst); // retourne le dernier caractere de l'input
 int						is_builtin(char *cmd); // gros if de porc (desole micka)
 
+/// ENVIRONNEMENT ///
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
 int						del_env_var(t_env **env_lst, char *var);
@@ -179,10 +185,12 @@ int						check_env_var(char *env_var, char *cmd);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);
 
+/// PROMPT ///
 char					*get_prompt(t_env *env_lst); // retourne le path pour le prompt
 char					*get_special_prompt(char c); // retourne le prompt associe a c (quote, hook..)
 void					print_prompt(t_shell *shell, int special_prompt); // affiche un prompt tout mignon
 
+/// INPUT ///
 void					read_input(t_shell *shell); // boucle de lecture
 void					print_input(t_shell *shell, t_input *curs_pos, // affiche l'input a partir du maillon curs_pos
 						size_t p_len);
@@ -193,6 +201,7 @@ void					delete_input(t_input **lst, t_input *input,
 						t_shell *shell, int back); // supprime un caractere, shell et back optionnels
 void					clear_input(t_shell *shell); // replace le curseur en debut de commande et supprime l'input
 
+/// TOUCHES EDITION LIGNE ///
 int						parse_keys1(t_shell *shell, char *buf);
 int						parse_keys2(t_shell *shell, char *buf);
 int						parse_keys3(t_shell *shell, char *buf, size_t buf_len);
@@ -219,11 +228,13 @@ int						history_next(t_shell *shell);
 t_hist					*store_hist(t_shell *shell);
 
 
+/// CURSEUR ///
 void					replace_cursor(t_shell *shell, int print, int back); // mouvement du curseur (g/d/h/b)
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len); // renvoie le x du curseur (p_len = longueur du prompt)
 
-int						handle_input(t_shell *shell); // touche return : 1ers cas d'erreurs + appel des fonctions de traitement de la cmd
+/// TRAITEMENT COMMANDE ///
+int						handle_input(t_shell *shell); // touche return
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
 char					**parse_cmd(t_btree *cmd); // split en char**, appel des fonctions d'interpretation
@@ -247,6 +258,7 @@ int						handle_redirs(t_shell *shell, t_btree *link,
 int						exec_redir_cmd(t_shell *shell, char **cmd);
 int						fill_heredoc(char *delimiter, int *fd);
 
+/// BUILTINS ///
 int						builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell); // execution builtin
 int						ft_exit(char **cmd, t_shell *shell);
 int						ft_cd(char **cmd, t_env *env_lst);
@@ -255,12 +267,14 @@ int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
 
+/// EXECUCTION BINAIRES ///
 int						binary_cmd(char **cmd, char **env_array,
 						t_env *env_lst, t_hash **htbl); // execution binaire (gus: ajout de htbl pour rechercher dans la table de hashage)
 char					*get_bin_path(char *cmd, t_env *env_lst);
 int						check_bin_path(char *bin_path, char *cmd);
 int						exec_bin(char *bin_path, char **argv, char **env);
 
+/// FILE DESCRIPTOR ET RETOUR CMD ///
 int						dup_std_fd(int *fd);
 void					close_and_reset_fd(int *fd);
 void					set_status(int *status, char **cmd);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 18:14:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 19:50:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			handle_input(t_shell *shell)
 		return (0);
 	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
 		return (free_and_return(shell, ret, cmd_str));
-	if (((ret = check_input_form(shell)) > 0)) // ajouter fonction liste vide
+	if (((ret = check_input_form(shell)) > 0) || lst_is_empty(shell->input))
 		return (free_and_return(shell, ret));
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
 		shell->hist = store_hist(shell);

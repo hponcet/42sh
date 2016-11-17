@@ -6,11 +6,24 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:39:43 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/17 19:26:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+int		lst_is_empty(t_input *lst)
+{
+	if (!lst)
+		return (0);
+	while (lst)
+	{
+		if (!ft_isspace(lst->c))
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 size_t	lst_len(t_input *lst)
 {
