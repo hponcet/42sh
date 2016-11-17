@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/22 19:06:23 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:34:25 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			fill_heredoc(char *delimiter, int *fd)
 			ft_putstr_fd("heredoc> ", fd[3]);
 	}
 	if (gnl == -1)
-		quit_error(7);
+		ft_put_error(ER_READ, 1);
 	close(file_fd);
 	file_fd = open(file_name, O_RDONLY);
 	free(file_name);

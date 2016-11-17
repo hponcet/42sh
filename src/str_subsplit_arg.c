@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/22 19:09:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:41:35 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		**str_subsplit_arg(char const *s)
 	j = 0;
 	nb_arg_part = count_arg_part(s, 0, 0);
 	if (!(ret = (char **)malloc(sizeof(char *) * (nb_arg_part + 1))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	while (s[i])
 	{
 		start = i;

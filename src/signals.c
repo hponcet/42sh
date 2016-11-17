@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/11 18:44:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:00:17 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static void	sig_int_handler(t_shell *shell)
 static void	sig_winch_handler(t_shell *shell)
 {
 	t_input	*curs_pos_save;
-	struct 	winsize	w;
+	struct	winsize	w;
 
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
-		quit_error(10);
+		ft_put_error(ER_IOCTL, 1);
 	shell->col = w.ws_col;
 	shell->row = w.ws_row;
 	shell->winsize = shell->col * shell->row;

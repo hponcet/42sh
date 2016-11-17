@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/16 17:41:44 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 16:00:54 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SH_H
 
 # include <libft.h>
+# include <error.h>
 # include <ft_printf.h>
 # include <signal.h>
 # include <sys/stat.h>
@@ -126,9 +127,8 @@ typedef struct			s_shell
 	struct termios		term_save; // sauvegarde termcaps
 }						t_shell;
 
-void					quit_error(int errnum); // termcaps, malloc.. + exit()
+int						ft_put_error(char *error, int action);
 int						exec_error(int errnum, char *arg); // cmd not found, fork, dup
-int						common_error(int errnum, char *value);
 int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);

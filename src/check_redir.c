@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/09 15:07:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:57:45 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	add_redir(char *redir, int type, t_btree *link)
 	t_redir	*tmp;
 
 	if (!(new = (t_redir *)malloc(sizeof(*new))))
-		quit_error(6);
+		ft_put_error(ER_MEM, 1);
 	new->type = type;
 	new->s = redir;
 	new->next = NULL;

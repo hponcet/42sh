@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/16 17:29:20 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 15:35:14 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	input_to_hist(t_shell *shell, t_input *input, char *timestamp)
 	t_hist	*tmp;
 
 	if (!(hist = (t_hist *)malloc(sizeof(t_hist))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	if (!shell->hist)
 	{
 		hist->input = input;

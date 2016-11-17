@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 04:32:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 15:36:24 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		store_hist_input(char c, t_hist *hist)
 	t_input *tmp;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	new->c = (c == '\n') ? ' ' : c;
 	new->prev = NULL;
 	new->next = NULL;
@@ -40,7 +40,7 @@ static t_hist	*new_hist(void)
 
 	time(&t);
 	if (!(new = (t_hist *)malloc(sizeof(*new))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	new->prev = NULL;
 	new->next = NULL;
 	new->input = NULL;

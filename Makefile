@@ -36,7 +36,6 @@ SRC = buffer.c \
 	  env.c \
 	  env_tools.c \
 	  environ.c \
-	  error.c \
 	  hist_file.c \
 	  hist_check.c \
 	  exec_bin.c \
@@ -71,7 +70,8 @@ SRC = buffer.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \
-	  unsetenv.c
+	  unsetenv.c \
+	  ft_error.c
 
 NAME = 42sh
 

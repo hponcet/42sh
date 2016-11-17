@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/13 12:43:21 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 15:37:52 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	store_input(t_shell *shell, char c)
 	t_input	*new;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	new->c = c;
 	new->prev = shell->curs_pos != NULL ? shell->curs_pos : NULL;
 	if (!(shell->input))
@@ -77,7 +77,7 @@ void	read_input(t_shell *shell)
 	{
 		ft_bzero((void *)buf, 7);
 		if (read(0, buf, 7) == -1)
-			quit_error(7);
+			ft_put_error(ER_READ, 1);
 		signal(SIGINT, &sig_handler1);
 		if ((buf_len = ft_strlen(buf)) > 0)
 		{

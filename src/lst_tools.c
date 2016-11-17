@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 17:11:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:39:43 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*lst_to_str(t_input *lst)
 	i = 0;
 	len = lst_len(lst);
 	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	while (len--)
 	{
 		str[i] = lst->c;

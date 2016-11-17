@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 19:38:35 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/11 20:47:50 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/17 15:39:07 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_input	*char_to_input(char *str)
 		return (NULL);
 	i = 1;
 	if (!(input = (t_input*)malloc(sizeof(t_input))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	input->c = str[0];
 	input->prev = NULL;
 	input->next = NULL;
@@ -48,7 +48,7 @@ t_input	*char_to_input(char *str)
 	while (str[i])
 	{
 		if (!(new = (t_input*)malloc(sizeof(t_input))))
-			quit_error(9);
+			ft_put_error(ER_MEM, 1);
 		new->c = str[i++];
 		new->prev = tmp;
 		tmp->next = new;

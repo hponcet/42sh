@@ -1,59 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/16 20:35:51 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/11/17 13:39:14 by MrRobot           #+#    #+#             */
+/*   Updated: 2016/11/17 15:59:46 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		common_error(int errnum, char *value)
+int		ft_put_error(char *error, int action)
 {
-	int		fd;
+	int fd;
 
 	fd = STDERR_FILENO;
-	if (errnum == 1)
-		ft_putstr_fd("42sh: unable to open history file\n", fd);
-	if (errnum == 2)
-		ft_putstr_fd("42sh: Environnement variable $PATH not found\n", fd);
-	if (errnum == 3)
-		ft_putstr_fd("42sh: Environnement variable $HOME not found\n", fd);
-	if (value)
-		free(value);
+	ft_putstr_fd(error, fd);
+	if (action == 1)
+		exit(EXIT_FAILURE);
 	return (1);
-}
-
-void	quit_error(int errnum)
-{
-	int		fd;
-
-	fd = STDERR_FILENO;
-	if (errnum == 1)
-		ft_putstr_fd("42sh: unable to open the terminal device file\n", fd);
-	else if (errnum == 2)
-		ft_putstr_fd("42sh: no entry found for the specified terminal\n", fd);
-	else if (errnum == 3)
-		ft_putstr_fd("42sh: unable to find the terminfo database\n", fd);
-	else if (errnum == 4)
-		ft_putstr_fd("42sh: unable to retrieve the terminal parameters\n", fd);
-	else if (errnum == 5)
-		ft_putstr_fd("tcsetattr: unable to set the terminal parameters\n", fd);
-	else if (errnum == 6)
-		ft_putstr_fd("malloc: memory allocation has failed\n", fd);
-	else if (errnum == 7)
-		ft_putstr_fd("read: an error occured while reading the input\n", fd);
-	else if (errnum == 8)
-		ft_putstr_fd("42sh: terminal capabilities not supported\n", fd);
-	else if (errnum == 9)
-		ft_putstr_fd("42sh: memory allocation has failed\n", fd);
-	else if (errnum == 10)
-		ft_putstr_fd("ioctl: unable to get the terminal state infos\n", fd);
-	exit(EXIT_FAILURE);
 }
 
 int		exec_error(int errnum, char *arg)

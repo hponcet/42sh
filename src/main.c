@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 15:46:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:40:09 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_shell(t_shell *shell)
 	shell->fd[1] = STDOUT_FILENO;
 	shell->fd[2] = STDERR_FILENO;
 	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
-		quit_error(1);
+		ft_put_error(ER_OFD, 1);
 	shell->col = 0;
 	shell->status = 0;
 	shell->input_len = 0;
@@ -52,9 +52,8 @@ int		main(int ac, char **av, char **environ)
 
 	(void)ac;
 	(void)av;
-	(void)environ;
 	if (!(shell = (t_shell *)malloc(sizeof(*shell))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	set_sig_handler();
 	init_shell(shell);
 	init_term(shell);

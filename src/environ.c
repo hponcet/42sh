@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 12:57:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:33:07 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		store_env_var(t_env **env_lst, char *var, char *val)
 		return (0);
 	}
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
-		quit_error(6);
+		ft_put_error(ER_MEM, 1);
 	new->var = var;
 	new->val = val;
 	new->next = NULL;
@@ -97,7 +97,7 @@ char	**env_lst_to_array(t_env *env_lst)
 	while (tmp_env && ++i)
 		tmp_env = tmp_env->next;
 	if (!(array = (char **)malloc(sizeof(char *) * (i + 1))))
-		quit_error(9);
+		ft_put_error(ER_MEM, 1);
 	tmp_env = env_lst;
 	i = 0;
 	while (tmp_env)
