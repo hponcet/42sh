@@ -20,7 +20,7 @@ int		lst_is_empty(t_input *lst)
 	{
 		if (!ft_isspace(lst->c))
 			return (0);
-		tmp = tmp->next;
+		lst = lst->next;
 	}
 	return (1);
 }

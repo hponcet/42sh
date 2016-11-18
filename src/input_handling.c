@@ -68,10 +68,8 @@ void	read_input(t_shell *shell)
 {
 	int		parse;
 	char	buf[7];
-	char	*prompt;
 	size_t	buf_len;
 
-	prompt = NULL;
 	print_prompt(shell, 0);
 	while (42)
 	{

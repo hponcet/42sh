@@ -92,7 +92,6 @@ int			ft_history(char **cmd, t_shell *shell)
 {
 	t_hist	*hist;
 	int	 	index;
-	int		i;
 
 	if (!(shell->hist))
 		return (1);
@@ -101,7 +100,6 @@ int			ft_history(char **cmd, t_shell *shell)
 		ft_putendl("42sh: fc: too few arguments");
 		return (1);
 	}
-	i = 0;
 	index = bltn_hist_checkopt(cmd[1]);
 	hist = NULL;
 	if (index == 1)

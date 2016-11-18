@@ -88,7 +88,7 @@ int			handle_input(t_shell *shell)
 	if (!shell->input && !shell->input_save)
 		return (0);
 	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
-		return (free_and_return(shell, ret, cmd_str));
+		return (free_and_return(shell, ret));
 	if (((ret = check_input_form(shell)) > 0) || lst_is_empty(shell->input))
 		return (free_and_return(shell, ret));
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
