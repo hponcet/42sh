@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 02:31:17 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/16 17:42:56 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/19 16:51:55 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,12 @@ static void	ft_histproc(t_hist *hist)
 	while (tmp != hist->next)
 	{
 		nb = nb_to_str(i);
-		ft_putstr(nb);
-		ft_strdel(&nb);
-		ft_putstr("  ");
 		time = timestamp_to_str(tmp->timestamp);
-		ft_putstr(time);
-		ft_strdel(&time);
 		input = input_to_char(tmp->input);
-		ft_putendl(input);
+		ft_printf("%s  %s%s\n", nb, time, input);
 		ft_strdel(&input);
+		ft_strdel(&time);
+		ft_strdel(&nb);
 		tmp = tmp->next;
 		i++;
 	}
@@ -96,16 +93,13 @@ int			ft_history(char **cmd, t_shell *shell)
 	if (!(shell->hist))
 		return (1);
 	if (cmd[1] && cmd[2])
-	{
-		ft_putendl("42sh: fc: too few arguments");
-		return (1);
-	}
+		return (history_error(0, NULL));
 	index = bltn_hist_checkopt(cmd[1]);
 	hist = NULL;
 	if (index == 1)
 		hist = bltn_hist_searchindex(cmd[1], shell);
-	if (index == 0)
-		hist = bltn_hist_searchstr(cmd[1], shell);
+	if (index == 0 && !(hist = bltn_hist_searchstr(cmd[1], shell)))
+		return (history_error(1, cmd[1]));
 	if (index == -1)
 		hist = shell->hist->prev;
 	if (!hist)

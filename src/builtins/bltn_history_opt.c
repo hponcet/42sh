@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 16:43:39 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/15 17:48:15 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/19 16:29:59 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ t_hist	*bltn_hist_searchstr(char *cmd, t_shell *shell)
 		}
 		ft_strdel(&input);
 		hist = hist->prev;
-	}
-	if (!hist)
-	{
-		ft_putstr("42sh: fc: event not found: ");
-		ft_putendl(cmd);
 	}
 	return (hist);
 }

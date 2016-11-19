@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 19:36:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/19 17:44:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,7 @@ void					set_status(int *status, char **cmd);
 ** /////////////////// GUS /////////////////////////////
 ** ////////////// BUILTIN HISTORY /////////////
 ** builtins/bltn_history.c
-** Affiche l'historique des commade.
+** Affiche l'historique des commande.
 */
 int						ft_history(char **cmd, t_shell *shell);
 /*
@@ -296,6 +296,18 @@ t_hist					*bltn_hist_searchstr(char *cmd, t_shell *shell);
 t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
 
 /*
+** builtins/bltn_hsearch.c
+** Recherche dans l'historique avec une commande 
+** commencant par '!' et constituee d'un event ou
+** d'un chiffre.
+*/
+void					bltn_hsearch(t_shell *shell);
+int						bltn_hsearch_key(t_shell *shell, char *buf);
+int						bltn_hsearch_addchar(t_shell *shell, char *buf);
+int						bltn_hsearch_ret(t_shell *shell);
+void					bltn_hsearch_display(t_shell *shell, t_hist *hist,
+						char *srch);
+/*
 ** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
 ** Lis le fichier .42_history situe dans le path $HOME
@@ -303,7 +315,7 @@ t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
 ** du shell.
 ** Reecrit a chaque commande le fichier .42_history
 */
-
+int						history_error(int errnum, char *arg);
 int						hist_proc(t_hist *hist, char *histpath);
 int						hist_to_file(t_shell *shell, t_hist *hist);
 void					input_to_hist(t_shell *shell, t_input *input, char *ts);

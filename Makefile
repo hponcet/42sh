@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/16 14:55:16 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/19 17:45:16 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = buffer.c \
 	  builtins_check.c \
 	  bltn_history.c \
 	  bltn_history_opt.c \
+	  bltn_hsearch.c \
 	  cd.c \
 	  check_pipes.c \
 	  check_redir.c \
