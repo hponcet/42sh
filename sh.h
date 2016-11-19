@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/19 17:44:48 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/19 19:23:25 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,8 +305,7 @@ void					bltn_hsearch(t_shell *shell);
 int						bltn_hsearch_key(t_shell *shell, char *buf);
 int						bltn_hsearch_addchar(t_shell *shell, char *buf);
 int						bltn_hsearch_ret(t_shell *shell);
-void					bltn_hsearch_display(t_shell *shell, t_hist *hist,
-						char *srch);
+void					bltn_hsearch_display(t_shell *shell, t_hist *hist);
 /*
 ** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
@@ -334,6 +333,7 @@ int						hist_checkdouble(t_shell *shell);
 char					*input_to_char(t_input *input);
 t_input					*char_to_input(char *str);
 size_t					input_len(t_input *input);
+void					free_input_from(t_input *input);
 
 /* ////////////// COMPLETION ////////////////
 ** // compl_display.c

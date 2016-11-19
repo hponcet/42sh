@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/19 17:53:07 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/19 18:40:56 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 		parse_keys1(shell, buf);
 	else if (buf_len == 6)
 		parse_keys2(shell, buf);
-	else if (buf[0] == '!' && !(shell->input)) // recherceh dans l'historique avec !...
+	else if (buf[0] == '!') // recherche dans l'historique avec !...
 		bltn_hsearch(shell);
 	else if (buf_len == 1 && ft_isprint(buf[0]))
 	{
