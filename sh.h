@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/19 19:23:25 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 01:16:32 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ int						hist_checkdouble(t_shell *shell);
 char					*input_to_char(t_input *input);
 t_input					*char_to_input(char *str);
 size_t					input_len(t_input *input);
-void					free_input_from(t_input *input);
+void					free_input_from(t_shell *shell, t_input *input);
 
 /* ////////////// COMPLETION ////////////////
 ** // compl_display.c

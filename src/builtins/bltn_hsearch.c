@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/18 17:49:22 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/19 19:28:44 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 01:45:07 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 void		bltn_hsearch_display(t_shell *shell, t_hist *hist)
 {
-	t_input		*tmp;
 	char		*str;
+	char		*ostr;
+	char		*tmp;
+	int			i;
 
 	str = NULL;
 	if (!hist)
 		return ;
 	else
 	{
-		tmp = shell->input;
-		while (tmp && tmp->c != '!')
-			tmp = tmp->next;
-		if (!tmp)
-			return ;
 		str = input_to_char(hist->input);
-		free_input_from(tmp);
+		ostr = input_to_char(shell->input);
+		i = ft_cindex_rev(ostr, '!');
+		tmp = ft_strsub(ostr, 0, i);
+		free_tmp_inputs(shell, 0);
+		compl_addstr(shell, tmp);
 		tputs(tgetstr("rc", 0), 1, putchar);
 		tputs(tgetstr("cd", 0), 1, putchar);
 		compl_addstr(shell, str);
 		ft_strdel(&str);
+		ft_strdel(&ostr);
+		ft_strdel(&tmp);
 	}
 }
 

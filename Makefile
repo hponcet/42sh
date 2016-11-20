@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/19 17:45:16 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/20 01:10:04 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;32mExecutable deleted !\033[0;m"
 	-@make fclean -C $(LIBDIR)
-	-@rm -rf 42sh.dSYM
 	@echo "\033[0;32mLibft cleaned.\033[0;m"
 
 re: fclean all

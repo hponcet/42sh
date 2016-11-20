@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 19:38:35 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/19 19:19:16 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 01:23:16 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,6 @@ t_input	*char_to_input(char *str)
 		tmp = new;
 	}
 	return (input);
-}
-
-void	free_input_from(t_input *input)
-{
-	t_input	*tmp;
-	t_input	*prev;
-
-	if (!input)
-		return ;
-	tmp = input;
-	if (tmp->prev)
-		tmp->prev->next = NULL;
-	while (tmp)
-	{
-		prev = tmp;
-		tmp = tmp->next;
-		free(prev);
-	}
 }
 
 char	*input_to_char(t_input *input)
