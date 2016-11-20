@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 16:43:39 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/19 16:29:59 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 14:13:16 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		bltn_hist_checkopt(char *cmd)
 	return (1);
 }
 
-t_hist	*bltn_hist_searchstr(char *cmd, t_shell *shell)
+t_hist	*bltn_hist_searchstr(char *cmd, t_shell *shell, int opt)
 {
 	t_hist	*hist;
 	char	*input;
@@ -38,7 +38,13 @@ t_hist	*bltn_hist_searchstr(char *cmd, t_shell *shell)
 	while (hist)
 	{
 		input = input_to_char(hist->input);
-		if (ft_strinstr(input, cmd) == 1
+		if (opt == 0 && ft_strinstr(input, cmd) == 1
+				&& ft_strncmp(input, "history ", 8) != 0)
+		{
+			ft_strdel(&input);
+			break ;
+		}
+		if (opt == 1 && ft_strncmp(input, cmd, ft_strlen(cmd)) == 0
 				&& ft_strncmp(input, "history ", 8) != 0)
 		{
 			ft_strdel(&input);

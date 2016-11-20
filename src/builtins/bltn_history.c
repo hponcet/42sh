@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 02:31:17 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/19 16:51:55 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 14:15:06 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			ft_history(char **cmd, t_shell *shell)
 	hist = NULL;
 	if (index == 1)
 		hist = bltn_hist_searchindex(cmd[1], shell);
-	if (index == 0 && !(hist = bltn_hist_searchstr(cmd[1], shell)))
+	if (index == 0 && !(hist = bltn_hist_searchstr(cmd[1], shell, 0)))
 		return (history_error(1, cmd[1]));
 	if (index == -1)
 		hist = shell->hist->prev;

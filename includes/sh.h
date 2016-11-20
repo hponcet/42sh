@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 01:16:32 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 14:13:53 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,8 @@ int						ft_history(char **cmd, t_shell *shell);
 ** par event.
 */
 int						bltn_hist_checkopt(char *cmd);
-t_hist					*bltn_hist_searchstr(char *cmd, t_shell *shell);
+t_hist					*bltn_hist_searchstr(char *cmd, t_shell *shell,
+						int opt);
 t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
 
 /*
@@ -304,8 +305,8 @@ t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
 void					bltn_hsearch(t_shell *shell);
 int						bltn_hsearch_key(t_shell *shell, char *buf);
 int						bltn_hsearch_addchar(t_shell *shell, char *buf);
-int						bltn_hsearch_ret(t_shell *shell);
-void					bltn_hsearch_display(t_shell *shell, t_hist *hist);
+int						bltn_hsearch_ret(t_shell *shell, int c);
+void					bltn_hsearch_display(t_shell *shell, t_hist *hist, int c);
 /*
 ** /////////////// FILE HISTORY ///////////////
 ** // hist_file.c
