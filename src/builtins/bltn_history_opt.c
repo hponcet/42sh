@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 16:43:39 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/20 14:13:16 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 14:45:22 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ t_hist	*bltn_hist_searchstr(char *cmd, t_shell *shell, int opt)
 			ft_strdel(&input);
 			break ;
 		}
-		if (opt == 1 && ft_strncmp(input, cmd, ft_strlen(cmd)) == 0
-				&& ft_strncmp(input, "history ", 8) != 0)
+		if (opt == 1 && ft_strncmp(input, cmd, ft_strlen(cmd)) == 0)
 		{
 			ft_strdel(&input);
 			break ;
