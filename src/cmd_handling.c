@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/19 17:47:22 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/20 20:35:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell)
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 		shell->status = ft_unsetenv(cmd, &env_lst);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(cmd, shell);
+		shell->status = ft_exit(cmd, shell);
 	else
 		return (-1);
 	return (0);

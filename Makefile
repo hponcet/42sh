@@ -65,6 +65,7 @@ SRC = buffer.c \
 	  line_moves_2.c \
 	  lst_tools.c \
 	  main.c \
+	  main_parsing.c \
 	  print.c \
 	  prompt.c \
 	  redirection.c \

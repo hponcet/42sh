@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 13:39:14 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/17 15:59:46 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/20 18:10:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ int		exec_error(int errnum, char *arg)
 int		cmd_error(int errnum, char c, char *s)
 {
 	int		fd;
+	t_shell	*shell;
 
 	fd = STDERR_FILENO;
+	shell = get_struct(0);
+	shell->status = 1;
 	if (errnum == 0)
 	{
 		ft_putstr_fd("42sh: parse error near '", fd);

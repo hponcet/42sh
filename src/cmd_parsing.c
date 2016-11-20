@@ -6,40 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 19:50:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/20 18:37:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-static int	check_input_form(t_shell *shell)
-{
-	char			c;
-	t_input			*tmp;
-
-	c = 0;
-	if (shell->input_save)
-	{
-		shell->input_len += lst_len(shell->input_save);
-		tmp = get_last_elem(shell->input_save);
-		tmp->next = shell->input;
-		if (shell->input)
-			shell->input->prev = tmp;
-		shell->input = shell->input_save;
-	}
-	if ((c = valid_input(shell->input, c)) > 0)
-	{
-		c == '\\' ? delete_input(&(shell->input), shell->curs_pos, shell, 0)
-		: store_input(shell, '\n');
-		shell->input_save = shell->input;
-		shell->input = NULL;
-		shell->input_len = 0;
-		shell->curs_pos = NULL;
-	}
-	else
-		shell->input_save = NULL;
-	return ((int)c);
-}
 
 char		**parse_cmd(t_btree *link)
 {
@@ -48,8 +19,6 @@ char		**parse_cmd(t_btree *link)
 	char	**cmd_tab;
 
 	i = 0;
-	if ((strchr_redir(link)) == -1)
-		return (NULL);
 	tmp = remove_cmd_redir(ft_strtrim(link->str), link->redir);
 	free(link->str);
 	link->str = tmp;
@@ -67,15 +36,6 @@ char		**parse_cmd(t_btree *link)
 	return (cmd_tab);
 }
 
-static int	free_and_return(t_shell *shell, int ret)
-{
-	if (ret == 0)
-		free_tmp_inputs(shell, 1);
-	else
-		free_tmp_inputs(shell, 0);
-	return (ret);
-}
-
 int			handle_input(t_shell *shell)
 {
 	int		ret;
@@ -85,18 +45,19 @@ int			handle_input(t_shell *shell)
 	cmd_str = NULL;
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
-	if (!shell->input && !shell->input_save)
-		return (0);
-	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
-		return (free_and_return(shell, ret));
-	if (((ret = check_input_form(shell)) > 0) || lst_is_empty(shell->input))
-		return (free_and_return(shell, ret));
+	if ((ret = check_input(shell)) > 0)
+		return (ret);
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
 		shell->hist = store_hist(shell);
 	// back quote
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
+	if (check_btree(shell->tree) > 0)
+	{
+		free_btree(shell->tree);
+		return (ret);
+	}
 	restore_term(shell);
 	signal(SIGTSTP, SIG_DFL);
 	handle_btree(shell, shell->tree);

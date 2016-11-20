@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:57:45 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/20 19:04:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static int	check_valid_redir(char *s, int start, int i, t_btree *link)
 	i = (check_valid_redir_param(s, i)) - 1;
 	if (i > 0)
 		add_redir(ft_strsub(s, start, (i - start + 1)), type, link);
+	else
+		return (-1);
 	return (0);
 }
 
