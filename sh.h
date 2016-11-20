@@ -129,6 +129,7 @@ typedef struct			s_shell
 	struct termios		term_save; // sauvegarde termcaps
 }						t_shell;
 
+void					ft_back_quote(t_input **input, int *fd);
 int						ft_put_error(char *error, int action);
 int						exec_error(int errnum, char *arg); // cmd not found, fork, dup
 int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir

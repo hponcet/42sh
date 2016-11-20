@@ -93,8 +93,8 @@ int			handle_input(t_shell *shell)
 		return (free_and_return(shell, ret));
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
 		shell->hist = store_hist(shell);
-	ft_back_quote(shell->input);
-	ft_putstr(lst_to_str(shell->input)); //debug
+	ft_back_quote(&shell->input, shell->fd); // en attente
+//	ft_putstr(lst_to_str(shell->input)); //debug
 	exit(1); //debug
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
