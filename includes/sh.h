@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 15:58:11 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/21 19:48:27 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,10 @@ typedef struct			s_shell
 
 // fonction micka
 size_t					ft_list_size_index(t_input *start, t_input *end);
-void					ft_back_quote(t_input **input, int *fd);
-
+void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
+void					ft_back_quote(t_shell *shell);
+void					ft_launch_cmd(t_shell *shell, t_btree *tree);
+t_input					*ft_new_link(char c);
 /// ERREURS ///
 int						ft_put_error(char *error, int action);
 
