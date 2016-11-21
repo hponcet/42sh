@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/21 05:47:58 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/21 18:58:10 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,6 @@ SRC = buffer.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
-	  glob.c \
-	  glob_convert_tab.c \
-	  glob_make.c \
-	  glob_path.c \
-	  glob_sortchain.c \
 	  hash.c \
 	  hash_bin.c \
 	  hash_new.c \
@@ -70,6 +65,7 @@ SRC = buffer.c \
 	  line_moves_2.c \
 	  lst_tools.c \
 	  main.c \
+	  main_parsing.c \
 	  print.c \
 	  prompt.c \
 	  redirection.c \

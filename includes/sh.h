@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 05:49:44 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/21 21:33:06 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,11 +243,13 @@ size_t					get_cursor_x_pos(t_input *input,
 
 /// TRAITEMENT COMMANDE ///
 int						handle_input(t_shell *shell); // touche return
+int						check_input(t_shell *shell);
+int						check_btree(t_btree *link);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
-char					**parse_cmd(t_shell *shell, t_btree *cmd); // split en char**, appel des fonctions d'interpretation
+char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
-char					*interpret_cmd_arg(t_shell *shell, char *cmd_arg); // interpretation des sous-argument de la cmd
+char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						replace_backslash(char **s, int i);
 int						replace_tilde(char **s, int i);
@@ -306,7 +308,7 @@ t_hist					*bltn_hist_searchindex(char *cmd, t_shell *shell);
 
 /*
 ** builtins/bltn_hsearch.c
-** Recherche dans l'historique avec une commande 
+** Recherche dans l'historique avec une commande
 ** commencant par '!' et constituee d'un event ou
 ** d'un chiffre.
 */
@@ -382,6 +384,8 @@ int						compl_retstrchar(t_compl *tmp, t_shell *shell, int pos,
 ** Fait une liste chainee avec les informations relative au
 ** path courant de la completion.
 */
+char					*compl_name_wesp(char *str);
+char					*compl_path_noesp(char *str);
 t_compl					*compl_makefile(struct dirent *s_dir, char *path);
 t_compl					*compl_makechain(char *path, t_compl *ret, char *find);
 void					compl_sortchain(t_compl **list, t_compl *file);
@@ -444,28 +448,6 @@ t_hash					*hash_newfile(char *name, char *value);
 ** (t_hash**)shell->hash_bin
 */
 t_hash					**hash_bin(t_shell *shell);
-
-/*
-** /////////////////////// GLOBING /////////////////////
-** ft_glob.c
-*/
-char					**ft_glob(t_shell *shell, char **cmd);
-char					**glob_func(t_shell *shell, char *cmd);
-char					*glob_replace(t_shell *shell, char *cmd);
-t_glob					*glob_makefile(struct dirent *s_dir, char *path);
-char					*glob_tglobtostr(t_glob *lst);
-void					glob_sortchain(t_glob **ret, t_glob *file);
-char					*glob_makestr(char *path, char *find, char *absolute);
-int						glob_compare(char *s1, char *s2);
-int						glob_check(char *str);
-void					glob_path(t_shell *shell, char **ret);
-void					glob_delchain(t_glob *chain);
-
-
-int						tab_len(char **t);
-char					**tab_copy(char **t);
-char					**join_tab_to_tab(char **tab1, char **tab2);
-char					**join_str_to_tab(char **t, char *str);
 
 //////////////////////////////////////////////////////
 

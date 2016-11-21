@@ -6,11 +6,39 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:01:19 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/13 16:55:19 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/21 21:34:40 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+char		*compl_name_wesp(char *str)
+{
+	char	*ret;
+	int		i;
+	int		j;
+	int		nb;
+
+	i = 0;
+	nb = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' && i > 0 && str[i - 1] != '\\')
+			nb++;
+		i++;
+	}
+	ret = ft_strnew(ft_strlen(str) + nb);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if ((str[i] == ' ' && i > 0 && str[i - 1] != '\\')
+				|| (str[i] == ' ' && i == 0))
+			ret[j++] = '\\';
+		ret[j++] = str[i++];
+	}
+	return (ret);
+}
 
 t_compl		*compl_makefile(struct dirent *s_dir, char *path)
 {
@@ -21,7 +49,10 @@ t_compl		*compl_makefile(struct dirent *s_dir, char *path)
 	file = (t_compl*)malloc(sizeof(t_compl));
 	if (!file)
 		return (NULL);
-	file->name = ft_strdup(s_dir->d_name);
+	if (ft_cindex(s_dir->d_name, ' ') >= 0)
+		file->name = compl_name_wesp(s_dir->d_name);
+	else
+		file->name = ft_strdup(s_dir->d_name);
 	tmp = ft_joinf("%s/%s", path, file->name);
 	lstat(tmp, &s_stat);
 	if (S_ISDIR(s_stat.st_mode))
@@ -35,14 +66,37 @@ t_compl		*compl_makefile(struct dirent *s_dir, char *path)
 	return (file);
 }
 
+char		*compl_path_noesp(char *str)
+{
+	char	*ret;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	ret = ft_strnew(ft_strlen(str));
+	while (str[i])
+	{
+		if (str[i] == '\\' && str[i + 1] != '\\')
+			i++;
+		ret[j] = str[i];
+		i++;
+		j++;
+	}
+	return (ret);
+}
+
 t_compl		*compl_makechain(char *path, t_compl *ret, char *find)
 {
 	DIR				*dirp;
 	struct dirent	*s_dir;
 	t_compl			*file;
+	char			*realpath;
 
-	if ((dirp = opendir(path)) == NULL)
+	realpath = compl_path_noesp(path);
+	if ((dirp = opendir(realpath)) == NULL)
 		return (NULL);
+	ft_strdel(&realpath);
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
 		if (ft_strcmp(s_dir->d_name, "..") == 0 || ft_strcmp(s_dir->d_name, ".")
@@ -98,7 +152,8 @@ char		*compl_getfind(char *str)
 	j = i;
 	if (str[i] == ' ')
 		return (NULL);
-	while (i >= 0 && str[i] != ' ')
+	while (i >= 0 && (str[i] != ' ' ||
+				(i > 0 && str[i] == ' ' && str[i - 1] == '\\')))
 		i--;
 	i++;
 	if (str[i - 1] == ' ')

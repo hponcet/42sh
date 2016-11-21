@@ -1,2 +1,6 @@
 42sh
 42sh.dSYM
+.DS_Store
+._.DS_Store
+*.swp
+*.o
