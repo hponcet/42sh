@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 16:25:03 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/21 06:07:54 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/21 18:42:39 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,59 +54,32 @@ static char	*glob_nomatch(char *nm)
 	return (NULL);
 }
 
-char		**ft_glob(t_shell *shell, char **t)
+char		*ft_glob(char *tabl)
 {
 	int		i;
-	int		j;
-	char	**tmp;
-	char	**tamp;
-	char	**ret;
-
-	i = 0;
-	j = 0;
-	ret = NULL;
-	while (t[i])
-	{
-		if (glob_check(t[i]) == 1)
-		{
-			ft_putendl("yoyoyo");
-			tmp = glob_func(shell, t[i]);
-			tamp = join_tab_to_tab(ret, tmp);
-			free_tab(ret);
-			ret = tab_copy(tamp);
-			free_tab(tmp);
-			free_tab(tamp);
-		}
-		else
-		{
-			tamp = join_str_to_tab(ret, t[i]);
-			free_tab(ret);
-			ret = tamp;
-		}
-		i++;
-	}
-	return (ret);
-}
-
-char		**glob_func(t_shell *shell, char *str)
-{
+	char	**cmd;
 	char	*find;
-	char	**ret;
+	char	*ret;
 	char	*tmp;
 
+	i = 0;
+	ret = NULL;
 	tmp = NULL;
-	find = ft_strdup(str);
-	if (glob_check(str) == 1)
-		tmp = glob_replace(shell, str);
-	else if (glob_check(str) == 1 && !tmp)
+	cmd = ft_strsplit(tabl, ' ');
+	while (cmd[i])
 	{
-		glob_nomatch(find);
-		tmp = ft_strdup(str);
+		find = ft_strdup(cmd[i]);
+		if (ft_glob_check(cmd[i]) && (tmp = ft_glob_replace(cmd[i])))
+			ret = ft_joinf("%xs %s", ret, tmp);
+		else if (ft_glob_check(cmd[i]) && !tmp)
+			return (ft_glob_nomatch(cmd, NULL, find));
+		else
+			ret = ft_joinf("%xs %s", ret, cmd[i]);
+		ft_strdel(&tmp);
+		ft_strdel(&find);
+		i++;
 	}
-	ret = ft_strsplit(tmp, ' ');
-	ft_putendl(ret[0]);
-	ft_strdel(&tmp);
-	ft_strdel(&find);
+	free_tab(cmd);
 	return (ret);
 }
 
