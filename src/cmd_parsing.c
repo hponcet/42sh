@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 19:50:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/20 16:12:31 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_input_form(t_shell *shell)
 	return ((int)c);
 }
 
-char		**parse_cmd(t_btree *link)
+char		**parse_cmd(t_shell *shell, t_btree *link)
 {
 	int		i;
 	char	*tmp;
@@ -61,7 +61,7 @@ char		**parse_cmd(t_btree *link)
 	}
 	while (cmd_tab[i])
 	{
-		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
+		cmd_tab[i] = interpret_cmd_arg(shell, cmd_tab[i]);
 		i++;
 	}
 	return (cmd_tab);

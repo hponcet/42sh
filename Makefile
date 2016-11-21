@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/20 13:29:56 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/21 05:47:58 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,6 @@ SRC = buffer.c \
 	  env.c \
 	  env_tools.c \
 	  environ.c \
-	  hist_file.c \
-	  hist_check.c \
 	  exec_bin.c \
 	  exit.c \
 	  exit_status.c \
@@ -50,11 +48,18 @@ SRC = buffer.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
+	  glob.c \
+	  glob_convert_tab.c \
+	  glob_make.c \
+	  glob_path.c \
+	  glob_sortchain.c \
 	  hash.c \
 	  hash_bin.c \
 	  hash_new.c \
 	  heredoc.c \
 	  hist_storage.c \
+	  hist_file.c \
+	  hist_check.c \
 	  history.c \
 	  input_cut_copy.c \
 	  input_delete_keys.c \
