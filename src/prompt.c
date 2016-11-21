@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/13 16:54:38 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/21 16:08:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ char		*get_special_prompt(char c)
 		prompt = ft_strdup("pipe> ");
 	else if (c == '\\')
 		prompt = ft_strdup("> ");
+	else if (c == '&')
+		prompt = ft_strdup("cmdand> ");
+	else if (c == '+')
+		prompt = ft_strdup("cmdor> ");
 	return (prompt);
 }
 

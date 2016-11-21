@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 18:39:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/21 20:54:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_input(t_shell *shell); // touche return
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
-int						check_pipes(t_input *cmd, int reverse);
+int						check_separator(t_input *cmd, char c, int reverse);
 char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
 char					**parse_cmd(t_btree *cmd); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire

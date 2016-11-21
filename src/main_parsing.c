@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 17:50:57 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 19:04:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/21 17:17:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			check_input(t_shell *shell)
 	ret = 1;
 	if (!shell->input && !shell->input_save)
 		return (ret);
-	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
+	if ((check_separator(shell->input, '|', 1) == -1) && cmd_error(0, '|', NULL))
 		return (free_and_return(shell, ret));
 	if (((ret = check_input_form(shell)) > 0) || lst_is_empty(shell->input))
 		return (free_and_return(shell, ret));
