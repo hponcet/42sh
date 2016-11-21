@@ -51,7 +51,7 @@ t_btree			*store_cmd(char *str)
 	new = new_cmd_link();
 	if ((i = strrchr_outside_quotes(ft_strdup(str), ';', 0)) != -1)
 		new->type = SEM;
-	else if ((i = strrchr_logical_op(ft_strdup(str))) != -1)
+	else if ((i = strrchr_logical_op(str)) != -1)
 		new->type = (str[i] == '&') ? AND : OR;
 	else if ((i = strrchr_outside_quotes(ft_strdup(str), '|', 0)) != -1)
 		new->type = PIP;

@@ -60,9 +60,7 @@ int			compl_retstr(t_compl *tmp, t_shell *shell, int pos, int i)
 int			compl_retstrchar(t_compl *tmp, t_shell *shell, int pos, char c)
 {
 	char	*str;
-	int		i;
 
-	i = 0;
 	str = tmp->name + pos;
 	tputs(tgetstr("rc", 0), 1, putchar);
 	tputs(tgetstr("cd", 0), 1, putchar);

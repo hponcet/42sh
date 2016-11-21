@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/21 13:19:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 17:07:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/20 19:11:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	parse_near_pipe(t_input *cmd, int reverse)
 			return (-1);
 		while (cmd && cmd->c != ';' && cmd->c != '|' && cmd->c != '`')
 		{
-			if (!ft_isspace(cmd->c) && cmd->c != '>' && cmd->c != '<')
+			if (!ft_isspace(cmd->c))
 				return (0);
 			cmd = cmd->next;
 		}

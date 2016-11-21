@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <stdarg.h>
+# include <inttypes.h>
 
 # define BLACK	"\033[0;30m"
 # define RED	"\033[0;31m"

@@ -6,9 +6,13 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/16 14:55:16 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/20 13:29:56 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
+
+NAME = 42sh
+
+FLAGS = -Wall -Werror -Wextra -g
 
 vpath %.c ./src ./src/builtins
 
@@ -17,6 +21,7 @@ SRC = buffer.c \
 	  builtins_check.c \
 	  bltn_history.c \
 	  bltn_history_opt.c \
+	  bltn_hsearch.c \
 	  cd.c \
 	  check_pipes.c \
 	  check_redir.c \
@@ -60,6 +65,7 @@ SRC = buffer.c \
 	  line_moves_2.c \
 	  lst_tools.c \
 	  main.c \
+	  main_parsing.c \
 	  print.c \
 	  prompt.c \
 	  redirection.c \
@@ -75,40 +81,40 @@ SRC = buffer.c \
 	  ft_tools_back_quote.c	\
 	  ft_error.c
 
-NAME = 42sh
+# FILES
+OBJS	= $(SRC:.c=.o)
+O2		= $(addprefix $(OPATH), $(OBJS))
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+# DIRECTORIES
+LIBFT	= ./libft/
+OPATH	= ./obj/
+INC		= ./includes/
+LIBINC	= $(LIBFT)$(INC)
+LIB		= $(LIBFT)libft.a
 
-LIBDIR = ./libft/
-
-INCLUDES = $(LIBDIR)includes/
-
-LIB = $(LIBDIR)libft.a
-
-OBJ = $(SRC:.c=.o)
-
+# PROCESS
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJ)
-		@gcc $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -ltermcap -o $@
-		@echo "\033[0;32m42sh compilation done !\033[0;m"
+$(NAME): $(OBJS) $(LIB)
+	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $(NAME)
+	@echo "\033[0;32m42sh compilation done !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
-	@make -C $(LIBDIR)
+	@make -C $(LIBFT)
 
 %.o: %.c
-	@gcc $(FLAGS) -c $< -I . -I $(INCLUDES)
+	@gcc $(FLAGS) -c $< -I $(INC) -I $(LIBINC) -o $@
+	@mv $@ $(OPATH)
 
 clean:
-	@rm -f $(OBJ)
+	@rm -f $(O2)
 	@echo "\033[0;32mObject files deleted !\033[0;m"
 
 fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;32mExecutable deleted !\033[0;m"
-	-@make fclean -C $(LIBDIR)
-	-@rm -rf 42sh.dSYM
+	-@make fclean -C $(LIBFT)
 	@echo "\033[0;32mLibft cleaned.\033[0;m"
 
 re: fclean all

@@ -6,11 +6,26 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 13:32:34 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 20:43:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/20 16:59:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+int		history_error(int errnum, char *arg)
+{
+	int	fd;
+
+	fd = STDERR_FILENO;
+	if (errnum == 0)
+		ft_putendl_fd("42sh: fc: too few arguments", fd);
+	else if (errnum == 1)
+	{
+		ft_putstr_fd("42sh: fc: event not found: ", fd);
+		ft_putendl_fd(arg, fd);
+	}
+	return (1);
+}
 
 int		cd_error(int errnum, char *arg)
 {
@@ -92,12 +107,7 @@ int		exit_error(int errnum, char *arg)
 		ft_putstr_fd("exit: too many arguments\n", fd);
 	else if (errnum == 1)
 	{
-		ft_putstr_fd("exit: argument is not numeric: ", fd);
-		ft_putendl_fd(arg, fd);
-	}
-	else if (errnum == 2)
-	{
-		ft_putstr_fd("exit: number is too long: ", fd);
+		ft_putstr_fd("exit: argument is not a valid numeric value: ", fd);
 		ft_putendl_fd(arg, fd);
 	}
 	return (1);
