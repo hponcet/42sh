@@ -72,6 +72,7 @@ SRC = buffer.c \
 	  term_settings.c \
 	  unsetenv.c \
 	  ft_back_quote.c	\
+	  ft_tools_back_quote.c	\
 	  ft_error.c
 
 NAME = 42sh
