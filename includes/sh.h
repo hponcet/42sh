@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 21:33:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/22 15:17:05 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,6 +448,20 @@ t_hash					*hash_newfile(char *name, char *value);
 ** (t_hash**)shell->hash_bin
 */
 t_hash					**hash_bin(t_shell *shell);
+
+/*
+** ft_glob.c
+*/
+void				ft_glob(char **cmd);
+char				*ft_glob_replace(char *cmd);
+t_glob				*ft_glob_makefile(struct dirent *s_dir, char *path);
+char				*ft_glob_tglobtostr(t_glob *lst);
+void				ft_glob_sortchain(t_glob **ret, t_glob *file);
+char				*ft_glob_makestr(char *path, char *find, char *absolute);
+int					ft_glob_compare(char *s1, char *s2);
+int					ft_glob_check(char *str);
+void				ft_glob_path(char **ret);
+void				ft_glob_delchain(t_glob *chain);
 
 //////////////////////////////////////////////////////
 
