@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/22 17:58:33 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/22 19:01:24 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int			ft_glob_check(char *str)
 	len = ft_strlen(str) - 1;
 	while (len >= 0)
 	{
+		if (len > 0 && str[len - 1] == '\\')
+		{
+			len -= 2;
+			continue ;
+		}
 		if (str[len] == '[' || str[len] == '?' || str[len] == '*'
 				|| str[len] == '{')
 			return (1);
