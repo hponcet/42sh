@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 20:54:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:01:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@
 
 // taille des tables de hashage en nb de cases
 # define HASHLEN 5000
+
+// Globing
+typedef struct		s_glob
+{
+	char			*name;
+	char			*path;
+	struct s_glob	*next;
+}					t_glob;
 
 // Table de hashage
 typedef struct			s_hash
@@ -237,9 +245,9 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_input(t_shell *shell); // touche return
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
-int						check_separator(t_input *cmd, char c, int reverse);
+char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
 char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
-char					**parse_cmd(t_btree *cmd); // split en char**, appel des fonctions d'interpretation
+char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
@@ -376,6 +384,8 @@ int						compl_retstrchar(t_compl *tmp, t_shell *shell, int pos,
 ** Fait une liste chainee avec les informations relative au
 ** path courant de la completion.
 */
+char					*compl_name_wesp(char *str);
+char					*compl_path_noesp(char *str);
 t_compl					*compl_makefile(struct dirent *s_dir, char *path);
 t_compl					*compl_makechain(char *path, t_compl *ret, char *find);
 void					compl_sortchain(t_compl **list, t_compl *file);
@@ -438,6 +448,20 @@ t_hash					*hash_newfile(char *name, char *value);
 ** (t_hash**)shell->hash_bin
 */
 t_hash					**hash_bin(t_shell *shell);
+
+/*
+** ft_glob.c
+*/
+void				ft_glob(char **str);
+char				*ft_glob_replace(char *cmd);
+t_glob				*ft_glob_makefile(struct dirent *s_dir, char *path);
+char				*ft_glob_tglobtostr(t_glob *lst);
+void				ft_glob_sortchain(t_glob **ret, t_glob *file);
+char				*ft_glob_makestr(char *path, char *find, char *absolute);
+int					ft_glob_compare(char *s1, char *s2);
+int					ft_glob_check(char *str);
+void				ft_glob_path(char **ret);
+void				ft_glob_delchain(t_glob *chain);
 
 //////////////////////////////////////////////////////
 

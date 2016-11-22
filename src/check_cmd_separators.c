@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_pipes.c                                      :+:      :+:    :+:   */
+/*   check_cmd_separators.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/21 13:19:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 17:34:17 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/11/22 15:54:24 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/11/22 16:06:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,22 @@ static int	check_separator_position(t_input *cmd, int reverse)
 	return (-1);
 }
 
-int			check_separator(t_input *cmd, char c, int reverse)
+char		check_separators(t_input *cmd, int reverse)
 {
-	int		ret;
+	char	c;
+	int		dbl;
 	t_input	*tmp;
+
 
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->c == c)
+		if ((tmp->c == '|' || tm->c == '&') && (c = tmp->c))
 		{
 			if (reverse && tmp->prev && tmp->prev->c == c)
-				;
+				dbl = 1;
 			else if (!reverse && tmp->next && tmp->next->c == c)
-				;
+				dbl = 1;
 			else if ((ret = check_separator_position(tmp, reverse)) != 0)
 				return (ret);
 		}

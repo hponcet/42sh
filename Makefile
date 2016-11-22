@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/20 13:29:56 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/22 15:12:40 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC = buffer.c \
 	  bltn_history_opt.c \
 	  bltn_hsearch.c \
 	  cd.c \
-	  check_pipes.c \
+	  check_cmd_separators.c \
 	  check_redir.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \
@@ -41,8 +41,6 @@ SRC = buffer.c \
 	  env.c \
 	  env_tools.c \
 	  environ.c \
-	  hist_file.c \
-	  hist_check.c \
 	  exec_bin.c \
 	  exit.c \
 	  exit_status.c \
@@ -55,6 +53,8 @@ SRC = buffer.c \
 	  hash_new.c \
 	  heredoc.c \
 	  hist_storage.c \
+	  hist_file.c \
+	  hist_check.c \
 	  history.c \
 	  input_cut_copy.c \
 	  input_delete_keys.c \
