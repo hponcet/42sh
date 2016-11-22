@@ -5,12 +5,8 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2016/11/21 19:48:27 by MrRobot          ###   ########.fr       */
 /*   Updated: 2016/11/22 15:53:41 by MrRobot          ###   ########.fr       */
-=======
-/*   Updated: 2016/11/22 15:17:05 by hponcet          ###   ########.fr       */
->>>>>>> 74e9136f1851037b09b25752fa59a48cdc5b1aa5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -465,11 +461,7 @@ t_hash					**hash_bin(t_shell *shell);
 /*
 ** ft_glob.c
 */
-<<<<<<< HEAD
 void				ft_glob(char **str);
-=======
-void				ft_glob(char **cmd);
->>>>>>> 74e9136f1851037b09b25752fa59a48cdc5b1aa5
 char				*ft_glob_replace(char *cmd);
 t_glob				*ft_glob_makefile(struct dirent *s_dir, char *path);
 char				*ft_glob_tglobtostr(t_glob *lst);
