@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 15:04:33 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/21 19:48:24 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/22 15:50:05 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,17 @@ t_input	*ft_new_link(char c)
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
+}
+
+void	ft_input_add(t_input **curs, char c)
+{
+	t_input	*new;
+
+	new = ft_new_link(c);
+	new->prev = *curs;
+	new->next = (*curs)->next;
+	if ((*curs)->next != NULL)
+		(*curs)->next->prev = new;
+	(*curs)->next = new;
+	*curs = (*curs)->next;
 }

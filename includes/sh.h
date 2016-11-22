@@ -1,5 +1,4 @@
 /* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -134,6 +133,7 @@ size_t					ft_list_size_index(t_input *start, t_input *end);
 void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
 void					ft_back_quote(t_shell *shell);
 void					ft_launch_cmd(t_shell *shell, t_btree *tree);
+void					ft_input_add(t_input **curs, char c);
 t_input					*ft_new_link(char c);
 /// ERREURS ///
 int						ft_put_error(char *error, int action);
