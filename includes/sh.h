@@ -470,6 +470,7 @@ int					ft_glob_compare(char *s1, char *s2);
 int					ft_glob_check(char *str);
 void				ft_glob_path(char **ret);
 void				ft_glob_delchain(t_glob *chain);
+int					ft_glob_captain_crochet(char *s1, char *s2, char c);
 
 //////////////////////////////////////////////////////
 

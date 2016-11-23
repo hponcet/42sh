@@ -6,8 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 21:06:01 by fkoehler         ###   ########.fr       */
-/*   Updated: 2016/11/21 18:50:23 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/23 21:29:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +47,7 @@ int			handle_input(t_shell *shell)
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	if ((ret = check_input(shell)) > 0)
 		return (ret);
-	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
+	if (!(hist_checkdouble(shell)))
 		shell->hist = store_hist(shell);
 	ft_back_quote(shell);
 	shell->curs_pos = get_last_elem(shell->input);
