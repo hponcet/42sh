@@ -6,6 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/11/23 21:06:01 by fkoehler         ###   ########.fr       */
 /*   Updated: 2016/11/21 18:50:23 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -49,21 +50,28 @@ int			handle_input(t_shell *shell)
 		return (ret);
 	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
 		shell->hist = store_hist(shell);
-	// back quote
+	ft_back_quote(shell);
+	shell->curs_pos = get_last_elem(shell->input);
+	shell->input_len = lst_len(shell->input);
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
-	if (check_btree(shell->tree) > 0)
-	{
-		free_btree(shell->tree);
+	if (check_btree(shell->tree) > 0)// jvoulais mettre ca aussi ds la fonction
+	{							// du bas mais jsais pas si tu utilise le ret machin
+		free_btree(shell->tree); // donc a toi de voir flav si tu met le if en bas
 		return (ret);
 	}
+	ft_launch_cmd(shell, shell->tree);
+	return (ret);
+}
+
+void	ft_launch_cmd(t_shell *shell, t_btree *tree)
+{
 	restore_term(shell);
 	signal(SIGTSTP, SIG_DFL);
-	handle_btree(shell, shell->tree);
-	free_btree(shell->tree);
+	handle_btree(shell, tree);
+	free_btree(tree);
 	shell->tree = NULL;
 	reload_term(shell);
 	signal(SIGTSTP, &sig_handler);
-	return (ret);
 }

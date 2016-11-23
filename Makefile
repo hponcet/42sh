@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/22 15:12:40 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/22 17:26:57 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,10 @@ SRC = buffer.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
+	  ft_glob.c \
+	  ft_glob_make.c \
+	  ft_glob_path.c \
+	  ft_glob_sortchain.c \
 	  hash.c \
 	  hash_bin.c \
 	  hash_new.c \
@@ -77,6 +81,8 @@ SRC = buffer.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \
 	  unsetenv.c \
+	  ft_back_quote.c	\
+	  ft_tools_back_quote.c	\
 	  ft_error.c
 
 # FILES

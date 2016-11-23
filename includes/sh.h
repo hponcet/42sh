@@ -1,12 +1,11 @@
 /* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/22 16:01:12 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/22 15:53:41 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +136,17 @@ typedef struct			s_shell
 	struct termios		term_save; // sauvegarde termcaps
 }						t_shell;
 
+// fonction micka
+size_t					ft_list_size_index(t_input *start, t_input *end);
+void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
+void					ft_back_quote(t_shell *shell);
+void					ft_launch_cmd(t_shell *shell, t_btree *tree);
+void					ft_input_add(t_input **curs, char c);
+t_input					*ft_new_link(char c);
 /// ERREURS ///
 int						ft_put_error(char *error, int action);
+
+
 int						exec_error(int errnum, char *arg); // cmd not found, fork, dup
 int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir
 int						cd_error(int errnum, char *arg);

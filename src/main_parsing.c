@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 17:50:57 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 17:17:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/23 20:59:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,23 @@ static int	check_input_form(t_shell *shell)
 	return ((int)c);
 }
 
-static int	free_and_return(t_shell *shell, int ret)
-{
-	if (ret == 0)
-		free_tmp_inputs(shell, 1);
-	else
-		free_tmp_inputs(shell, 0);
-	return (ret);
-}
-
 int			check_input(t_shell *shell)
 {
-	int		ret;
+	char	ret;
 
 	ret = 1;
-	if (!shell->input && !shell->input_save)
-		return (ret);
-	if ((check_separator(shell->input, '|', 1) == -1) && cmd_error(0, '|', NULL))
-		return (free_and_return(shell, ret));
-	if (((ret = check_input_form(shell)) > 0) || lst_is_empty(shell->input))
-		return (free_and_return(shell, ret));
+	if ((!shell->input && !shell->input_save) || lst_is_empty(shell->input))
+		return (1);
+	if (check_separators(shell->input, 1) == -1)
+	{
+		free_tmp_inputs(shell, 0);
+		return (1);
+	}
+	if ((ret = check_input_form(shell)) != 0)
+	{
+		ret > 0 ? free_tmp_inputs(shell, 0) : free_tmp_inputs(shell, 1);
+		return (ret == -1 ? 1 : (int)ret);
+	}
 	return (0);
 }
 
