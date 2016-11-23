@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 16:04:03 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/23 21:00:03 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/23 23:46:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ int			ft_glob_compare(char *s1, char *s2)
 		return (1);
 	else if (*s1 == '?' && *s2)												// ?
 		return (ft_glob_compare(s1 + 1, s2 + 1));
-//	else if (*s1 == '{' && s1[1] == '}')									// { }
-//		return (0);
-//	else if (*s1 == '{' && *s2)												// {
-//		return (ft_glob_captain_accolade(s1 + 1, s2));
 	else if (*s1 == '[' && s1[1] == ']')									// [ ]
 		return (0);
 	else if (*s1 == '[' && *s2)												// [
