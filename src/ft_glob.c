@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/22 17:58:33 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/23 16:04:52 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int			ft_glob_check(char *str)
 	len = ft_strlen(str) - 1;
 	while (len >= 0)
 	{
+		if (len > 0 && str[len - 1] == '\\')
+		{
+			len -= 2;
+			continue ;
+		}
 		if (str[len] == '[' || str[len] == '?' || str[len] == '*'
 				|| str[len] == '{')
 			return (1);
@@ -47,7 +52,7 @@ int			ft_glob_check(char *str)
 
 static void	ft_glob_nomatch(char *nm, char *ret, char **tabl, char ** cmd)
 {
-	ft_putstr_fd("21sh: no matches found: ", STDERR_FILENO);
+	ft_putstr_fd("42sh: no matches found: ", STDERR_FILENO);
 	ft_putendl_fd(nm, STDERR_FILENO);
 	free_tab(cmd);
 	ft_strdel(&nm);
@@ -83,25 +88,4 @@ void		ft_glob(char **tabl)
 	free_tab(cmd);
 	free(tabl[0]);
 	tabl[0] = ret;
-}
-
-int			ft_glob_compare(char *s1, char *s2)
-{
-	if ((!*s1 && !*s2))
-		return (1);
-	else if (*s1 == '?' && *s2)
-		return (ft_glob_compare(s1 + 1, s2 + 1));
-	else if (*s1 == '*' && s1[1] == '*')
-		return (ft_glob_compare(s1 + 1, s2));
-	else if (*s1 == '*' && *s2 == s1[1])
-		return (ft_glob_compare(s1 + 1, s2) || ft_glob_compare(s1, s2 + 1));
-	else if (*s1 == '*' && *s2 != s1[1] && *s2)
-		return (ft_glob_compare(s1, s2 + 1));
-	else if (*s1 == '\\' && (s1[1] == '*'
-				|| s1[1] == '?' || s1[1] == '{'
-				|| s1[1] == '[') && *s2 == s1[1])
-		return (ft_glob_compare(s1 + 2, s2 + 1));
-	else if (*s1 == *s2)
-		return (ft_glob_compare(s1 + 1, s2 + 1));
-	return (0);
 }

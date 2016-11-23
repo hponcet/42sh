@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/22 15:54:10 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/23 15:39:19 by hponcet          ###   ########.fr       */
 /*   Updated: 2016/11/21 18:50:23 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -48,7 +48,7 @@ int			handle_input(t_shell *shell)
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	if ((ret = check_input(shell)) > 0)
 		return (ret);
-	if (!(hist_checkdouble(shell))) // if pour checker les doublons dans l'historique
+	if (!(hist_checkdouble(shell)))
 		shell->hist = store_hist(shell);
 	ft_back_quote(shell);
 	shell->curs_pos = get_last_elem(shell->input);
@@ -56,9 +56,9 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
-	if (check_btree(shell->tree) > 0)// jvoulais mettre ca aussi ds la fonction
-	{							// du bas mais jsais pas si tu utilise le ret machin
-		free_btree(shell->tree); // donc a toi de voir flav si tu met le if en bas
+	if (check_btree(shell->tree) > 0)
+	{
+		free_btree(shell->tree);
 		return (ret);
 	}
 	ft_launch_cmd(shell, shell->tree);
