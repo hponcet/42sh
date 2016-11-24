@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/22 17:34:16 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/24 16:04:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,23 @@ static t_btree	*new_cmd_link(void)
 
 static int		strrchr_logical_op(char *s)
 {
-	int	i;
-	int	j;
+	int		i;
+	char	c;
 
-	if (((i = strrchr_outside_quotes(ft_strdup(s), '&', 0)) > 0)
-		&& (s[i - 1] == s[i]))
-		;
-	else
-		i = -1;
-	if (((j = strrchr_outside_quotes(ft_strdup(s), '|', 0)) > 0)
-		&& (s[j - 1] == s[j]))
-		;
-	else
-		j = -1;
-	return (j > i ? j : i);
+	i = ft_strlen(s) - 1;
+	while (i > 0)
+	{
+		if (ft_isquote(s[i]) && (c = s[i--]))
+		{
+			while (i > 0 && s[i] != c)
+				i--;
+		}
+		else if ((s[i] == '|' || s[i] == '&') && s[i - 1] == s[i])
+			return (i);
+		if (i > 0)
+			i--;
+	}
+	return (-1);
 }
 
 t_btree			*store_cmd(char *str)
@@ -49,12 +52,14 @@ t_btree			*store_cmd(char *str)
 	t_btree	*new;
 
 	new = new_cmd_link();
-	if ((i = strrchr_outside_quotes(ft_strdup(str), ';', 0)) != -1)
+	if ((i = strrchr_outside_quotes(str, ';')) != -1)
 		new->type = SEM;
 	else if ((i = strrchr_logical_op(str)) != -1)
 		new->type = (str[i] == '&') ? AND : OR;
-	else if ((i = strrchr_outside_quotes(ft_strdup(str), '|', 0)) != -1)
+	else if ((i = strrchr_outside_quotes(str, '|')) != -1)
+	{
 		new->type = PIP;
+	}
 	if (i != -1 && ++i)
 	{
 		if (new->type == AND || new->type == OR)

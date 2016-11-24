@@ -175,11 +175,10 @@ t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0
 
 /// OUTILS ///
 int						putchar(int c); // petit putchar des familles, la baaaase !
-int						strrchr_outside_quotes(char *s, char c, char quote); // cherche c dans s en dehors de quote (a partir de la fin)
+int						strrchr_outside_quotes(char *s, char to_find); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
 int						is_str_quoted(char *s); // check si s est entre quote
 char					*strdup_remove_quotes(char *s); // "exemple" ==> exemple (free s)
-char					*str_replace_var(char *s, int start); // jesuis$USER ==> jesuistonpere
 char					**strsplit_args(char const *s); // split arguments
 char					**str_subsplit_arg(char const *s); // split des quotes pour interpretation
 int						lst_is_empty(t_input *lst);
@@ -259,9 +258,10 @@ char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'i
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
-int						replace_backslash(char **s, int i);
-int						replace_tilde(char **s, int i);
-int						replace_exit_value(char **s, int i);
+char					*str_replace_var(char *s, int start, int quote); // jesuis$USER ==> jesuistonpere
+int						replace_backslash(char **s, int i, int quote);
+int						replace_tilde(char **s, int i, int quote);
+int						replace_exit_value(char **s, int i, int quote);
 int						handle_btree(t_shell *shell, t_btree *tree); // parcours de l'arbre binaire pour execution
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked); // appel du parsing, des redirs et execution cmd
