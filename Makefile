@@ -84,6 +84,7 @@ SRC = buffer.c \
 	  unsetenv.c \
 	  ft_back_quote.c	\
 	  ft_tools_back_quote.c	\
+	  ft_read.c	\
 	  ft_error.c
 
 # FILES

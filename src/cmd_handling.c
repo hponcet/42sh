@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 21:30:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/24 20:54:29 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int		builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell)
 		shell->status = ft_unsetenv(cmd, &env_lst);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		shell->status = ft_exit(cmd, shell);
+	else if (ft_strcmp(cmd[0], "read") == 0)
+		shell->status = ft_read(cmd, &shell->env_lst);
 	else
 		return (-1);
 	return (0);
