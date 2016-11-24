@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/22 17:34:16 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/24 18:04:08 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_btree			*store_cmd(char *str)
 	else
 	{
 		new->type = CMD;
+		ft_cursh(&str);
 		ft_glob(&str);
 		new->str = str;
 	}
