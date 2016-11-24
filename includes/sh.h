@@ -472,6 +472,11 @@ void				ft_glob_path(char **ret);
 void				ft_glob_delchain(t_glob *chain);
 int					ft_glob_captain_crochet(char *s1, char *s2, char c);
 
+int					ft_cursh_check(char *str);
+void				ft_cursh(char **tabl);
+void				ft_cursh_proc(char **str, int s, int e);
+void				ft_cursh_replace(char **str);
+
 //////////////////////////////////////////////////////
 
 #endif
