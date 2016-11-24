@@ -12,7 +12,7 @@
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 vpath %.c ./src ./src/builtins
 
@@ -23,7 +23,7 @@ SRC = buffer.c \
 	  bltn_history_opt.c \
 	  bltn_hsearch.c \
 	  cd.c \
-	  check_pipes.c \
+	  check_cmd_separators.c \
 	  check_redir.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \

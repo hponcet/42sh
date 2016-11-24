@@ -5,8 +5,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 19:48:27 by MrRobot          ###   ########.fr       */
-/*   Updated: 2016/11/23 23:47:10 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/22 15:53:41 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +253,7 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_input(t_shell *shell); // touche return
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
-int						check_pipes(t_input *cmd, int reverse);
+char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
 char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
 char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire

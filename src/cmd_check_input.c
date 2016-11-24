@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 15:23:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/23 15:55:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,13 @@ static char	check_quotes(t_input **input, char c, t_input *tmp)
 	return (0);
 }
 
+
 char		valid_input(t_input *input, char c)
 {
-	int		pipe_ret;
 	t_input	*tmp;
 	t_input	*sub_tmp;
 
 	tmp = input;
-	if ((pipe_ret = check_pipes(input, 0)) == -1)
-		return ('|');
-	if (pipe_ret == 1)
-		return (cmd_error(0, '|', NULL));
 	while (tmp)
 	{
 		sub_tmp = tmp;
@@ -100,9 +96,7 @@ char		valid_input(t_input *input, char c)
 			tmp = tmp->next;
 	}
 	tmp = get_last_elem(input);
-	if ((tmp->c == '\\' && (!tmp->prev || tmp->prev->c != '\\'))
-			|| ((tmp->c == '"' || tmp->c == '`') && tmp->prev->c == '\\'
-				&& tmp->prev->prev->c != '\\'))
+	if (tmp->c == '\\' && (!tmp->prev || tmp->prev->c != '\\'))
 		return ('\\');
-	return (0);
+	return (check_separators(input, 0));
 }

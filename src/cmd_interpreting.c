@@ -6,20 +6,20 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 18:56:11 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/23 15:23:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static char	*replace_special_char(char *s)
+static char	*replace_special_char(char *s, int quote)
 {
 	int		i;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\\')
+		if (s[i] == '\\' && quote == 0)
 			i += replace_backslash(&s, i);
 		else if (s[i] == '~')
 			i += replace_tilde(&s, i);
@@ -44,7 +44,7 @@ static char	*interpret_special_char(char *sub_arg)
 		sub_arg = strdup_remove_quotes(sub_arg);
 	if (quote == 1)
 		return (sub_arg);
-	return (replace_special_char(sub_arg));
+	return (replace_special_char(sub_arg, quote));
 }
 
 char		*interpret_cmd_arg(char *cmd_arg)

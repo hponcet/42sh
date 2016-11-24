@@ -6,8 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 15:39:19 by hponcet          ###   ########.fr       */
-/*   Updated: 2016/11/21 18:50:23 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/23 21:29:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +55,9 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
-	if (check_btree(shell->tree) > 0)
-	{
-		free_btree(shell->tree);
+	if (check_btree(shell->tree) > 0)// jvoulais mettre ca aussi ds la fonction
+	{							// du bas mais jsais pas si tu utilise le ret machin
+		free_btree(shell->tree); // donc a toi de voir flav si tu met le if en bas
 		return (ret);
 	}
 	ft_launch_cmd(shell, shell->tree);
