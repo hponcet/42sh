@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/23 23:48:13 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/24 15:53:11 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_glob_count_quote_rev(char *s, int i, char c)
 
 	j = 1;
 	i--;
-	while (s[i] != c && s[i])
+	while (s[i] != c && s[i] && i >= 0)
 	{
 		i--;
 		j++;
