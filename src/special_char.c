@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 18:49:33 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/24 21:36:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:52:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int	replace_exit_value(char **s, int i, int quote)
+int	replace_process_value(char **s, int i, int quote)
 {
 	int		j;
 	t_shell	*shell;
@@ -22,7 +22,10 @@ int	replace_exit_value(char **s, int i, int quote)
 	if (quote == 1)
 		return (1);
 	shell = get_struct(0);
-	tmp1 = ft_itoa(shell->status);
+	if ((*s)[i + 1] == '?')
+		tmp1 = ft_itoa(shell->status);
+	else if ((*s)[i + 1] == '$')
+		tmp1 = ft_itoa(shell->pid);
 	j = ft_strlen(tmp1);
 	tmp2 = ft_replace_str(*s, i, 2, tmp1);
 	ft_strdel(&tmp1);

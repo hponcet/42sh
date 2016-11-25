@@ -12,7 +12,7 @@
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 vpath %.c ./src ./src/builtins
 
@@ -80,6 +80,7 @@ SRC = buffer.c \
 	  signals.c \
 	  special_char.c \
 	  str_tools.c \
+	  str_tools_2.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \

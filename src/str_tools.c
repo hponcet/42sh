@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/24 19:36:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 16:28:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		strrchr_outside_quotes(char *s, char to_find)
 			while (i >= 0 && s[i] != c)
 				i--;
 		}
-		else if (s[i] == to_find)
+		else if (s[i] == to_find && !is_chr_escaped(s, i))
 			return (i);
 		if (i >= 0)
 			i--;

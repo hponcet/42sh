@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/24 22:02:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 16:48:26 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ static int		strrchr_logical_op(char *s)
 	i = ft_strlen(s) - 1;
 	while (i > 0)
 	{
-		if (ft_isquote(s[i]) && (c = s[i--]))
+		if (ft_isquote(s[i]) && !is_chr_escaped(s, i) && (c = s[i--]))
 		{
-			while (i > 0 && s[i] != c)
+			while (i > 0 && (s[i] != c || (s[i] == c && is_chr_escaped(s, i))))
 				i--;
 		}
-		else if ((s[i] == '|' || s[i] == '&') && s[i - 1] == s[i])
+		else if ((s[i] == '|' || s[i] == '&') &&
+				s[i - 1] == s[i] && !is_chr_escaped(s, i - 1))
 			return (i);
 		if (i > 0)
 			i--;
