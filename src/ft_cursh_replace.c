@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 16:16:51 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 21:19:08 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/26 19:52:25 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void			ft_cursh_proc(char **str, int s, int e)
 	int		i;
 
 	i = 0;
-	ft_printf("str_orig: %s    e:%i s:%i\n", str[0], e, s);
 	start = ft_strsub(str[0], 0, s);
-	ft_printf("start: %s\n", start);
 	joined = ft_strsub(str[0], s + 1, e - s - 1);
 	test = ft_strsplit(joined, ',');
 	ft_strdel(&joined);
@@ -68,9 +66,50 @@ void			ft_cursh_proc(char **str, int s, int e)
 	while (test[++i])
 		str[0] = ft_joinf("%xs %s", str[0], test[i]);
 	str[0] = ft_joinf("%xs %s", str[0], joined);
-	ft_printf("str_modded: %s\n", str[0]);
-	sleep(3);
+	ft_strdel(&joined);
 	free_tab(test);
+}
+
+void			ft_cursh_compose(char **str)
+{
+	char	**tmp;
+	char	*dup;
+	char	*last_str;
+	int		i;
+
+	i = 0;
+	ft_cursh_replace(str);
+	tmp = NULL;
+	tmp = ft_strsplit(str[0], ' ');
+	while (tmp[i])
+		i++;
+	last_str = ft_strdup(tmp[i - 1]);
+	if (ft_cursh_check(tmp[i - 1]))
+	{
+		free(tmp[i - 1]);
+		tmp[i - 1] = NULL;
+	}
+	else
+	{
+		free_tab(tmp);
+		ft_strdel(&last_str);
+		return ;
+	}
+	i = -1;
+	while (tmp[++i])
+	{
+		dup = ft_joinf("%s%s", tmp[i], last_str);
+		ft_cursh_compose(&dup);
+		free(tmp[i]);
+		tmp[i] = dup;
+	}
+	i = 0;
+	ft_strdel(&last_str);
+	free(str[0]);
+	str[0] = ft_strnew(0);
+	while (tmp[i])
+		str[0] = ft_joinf("%xs %xs", str[0], tmp[i++]);
+	free(tmp);
 }
 
 void			ft_cursh_replace(char **str)
@@ -90,7 +129,6 @@ void			ft_cursh_replace(char **str)
 		if (cc - oc > 0 && ft_cindex_rev_from(str[0], ',', cc) > oc)
 		{
 			ft_cursh_proc(str, oc, cc);
-			ft_cursh_replace(str);
 			break ;
 		}
 		oc = ft_cindex_rev_from(str[0], '{', oc - 1);
