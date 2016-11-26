@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:30:57 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/26 20:44:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,19 @@ void	store_buffer(t_input **buf, char c)
 int		paste_buffer(t_shell *shell)
 {
 	t_input *tmp;
+	t_input *pos_save;
 
 	if (!shell->buffer)
 		return (-1);
 	tmp = shell->buffer;
+	pos_save = shell->curs_pos;
+	signal(SIGINT, SIG_IGN);
 	while (tmp)
 	{
 		store_input(shell, tmp->c);
-		print_input(shell, shell->curs_pos, shell->p_len);
 		tmp = tmp->next;
 	}
+	pos_save = pos_save ? pos_save->next : shell->input;
+	print_input(shell, pos_save, shell->p_len);
 	return (0);
 }

@@ -103,17 +103,16 @@ LIB		= $(LIBFT)libft.a
 # PROCESS
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIB)
-	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $(NAME)
+$(NAME): $(LIB) $(O2)
+	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $@
 	@echo "\033[0;32m42sh compilation done !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
 	@make -C $(LIBFT)
 
-%.o: %.c
-	@gcc $(FLAGS) -c $< -I $(INC) -I $(LIBINC) -o $@
-	@mv $@ $(OPATH)
+$(OPATH)%.o: %.c
+	@gcc $(FLAGS) -I $(INC) -I $(LIBINC) -o $@ -c $<
 
 clean:
 	@rm -f $(O2)
