@@ -141,8 +141,8 @@ typedef struct			s_shell
 // fonction micka
 size_t					ft_list_size_index(t_input *start, t_input *end);
 void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
-void					ft_back_quote(t_shell *shell);
-void					ft_launch_cmd(t_shell *shell, t_btree *tree);
+int						ft_back_quote(t_shell *shell);
+int						ft_launch_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);
 t_input					*ft_new_link(char c);
 /// ERREURS ///
@@ -256,7 +256,7 @@ int						handle_input(t_shell *shell); // touche return
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
 char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
-char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
+char					valid_input(t_input *input); // check des quotes, parentheses backslash...
 char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
