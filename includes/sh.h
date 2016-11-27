@@ -143,6 +143,11 @@ void					ft_back_quote(t_shell *shell);
 void					ft_launch_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);
 int						ft_read(char **argv, t_env **env);
+int						ft_treat_read(char **argv, char **split, t_env **env, int start);
+int						ft_p_read_option(char **argv, t_env **env);
+int						ft_d_read_option(char **argv, t_env **env);
+
+
 t_input					*ft_new_link(char c);
 /// ERREURS ///
 int						ft_put_error(char *error, int action);

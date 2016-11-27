@@ -85,6 +85,7 @@ SRC = buffer.c \
 	  ft_back_quote.c	\
 	  ft_tools_back_quote.c	\
 	  ft_read.c	\
+	  ft_read_options.c	\
 	  ft_error.c
 
 # FILES

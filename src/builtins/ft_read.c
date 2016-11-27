@@ -6,36 +6,32 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/24 20:54:26 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/27 20:17:34 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static int	ft_read_whitout_options(char **argv, char *line, t_env **env)
+int	ft_treat_read(char **argv, char **split, t_env **env, int start)
 {
-	char	**split;
 	char	*tmp;
 	t_env	*var;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 1;
-	split = ft_strsplit(line, ' ');
 	while (split[i] != NULL)
 	{
-		if (argv[j] != NULL && (var = get_env_ptr(*env, argv[j])) != NULL)
-		{
-			free(var->val);
-			var->val = ft_strdup(split[i]);
-			j++;
-		}
-		else if (argv[j] == NULL)
+		if (argv[start] == NULL)
 		{
 			tmp = ft_strjoin(var->val, split[i]);
 			free(var->val);
 			var->val = tmp;
+		}
+		else if ((var = get_env_ptr(*env, argv[start])) != NULL)
+		{
+			free(var->val);
+			var->val = ft_strdup(split[i]);
+			start++;
 		}
 		i++;
 	}
@@ -43,18 +39,45 @@ static int	ft_read_whitout_options(char **argv, char *line, t_env **env)
 	return (1);
 }
 
+static	int	ft_check_read_opts(char **argv, t_env **env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	if (argv[j][1] == '\0')
+	{
+		ft_putstr(ER_OPT);
+		return (1);
+	}
+	else if (argv[j][1] == 'p')
+		return (ft_p_read_option(argv, env));
+	else if (argv[j][1] == 'd')
+		return (ft_d_read_option(argv, env));
+	return (0);
+}
+// ctrl c pas pris en compte
 int			ft_read(char **argv, t_env **env)
 {
 	char	*line;
 
 	line = NULL;
-	while (get_next_line(0, &line) != -1)
+	if (argv[1] == NULL)
+		get_next_line(0, &line);
+	else if (argv[1][0] == '-')
 	{
-		if (argv[1] == NULL)
+		if (ft_check_read_opts(argv, env) == 1)
+		{
+			ft_strdel(&line);
 			return (1);
-		else if (argv[1][0] != '-')
-			return (ft_read_whitout_options(argv, line, env));
-		ft_strdel(&line);
+		}
 	}
-	return (1);
+	else
+	{
+		get_next_line(0, &line);
+		ft_treat_read(argv, ft_strsplit(line, ' '), env, 1);
+	}
+	ft_strdel(&line);
+	return (0);
 }
