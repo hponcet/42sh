@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/18 10:49:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/28 10:40:44 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 15:47:40 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef	struct			s_getline
 	struct s_getline	*next;
 }						t_getline;
 
-int						ft_get_next_char(int const fd, char **line, char c);
 int						get_next_line(int const fd, char **line);
 int						read_buf(int const fd, t_getline **link, char **line);
 int						fill_line(t_getline **link, char **line,
