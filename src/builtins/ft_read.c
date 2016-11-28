@@ -6,13 +6,13 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 10:20:45 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 12:11:17 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int	ft_treat_read(char **argv, char **split, t_env **env, int start)
+void		ft_treat_read(char **argv, char **split, t_env **env, int start)
 {
 	char	*tmp;
 	t_env	*var;
@@ -36,10 +36,9 @@ int	ft_treat_read(char **argv, char **split, t_env **env, int start)
 		i++;
 	}
 	free_tab(split);
-	return (1);
 }
 
-static	int	ft_check_read_opts(char **argv, t_env **env)
+static int	ft_check_read_opts(char **argv, t_env **env)
 {
 	int	i;
 	int	j;
@@ -52,9 +51,9 @@ static	int	ft_check_read_opts(char **argv, t_env **env)
 		return (1);
 	}
 	else if (argv[j][1] == 'p')
-		return (ft_p_read_option(argv, env));
+		return (ft_p_read_opt(argv, env));
 	else if (argv[j][1] == 'd')
-		return (ft_d_read_option(argv, env));
+		return (ft_d_read_opt(argv, env));
 	return (0);
 }
 // ctrl c pas pris en compte

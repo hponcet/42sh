@@ -95,6 +95,7 @@ SRC = ft_atoi.c \
 	  ft_toupper.c \
 	  free_tab.c \
 	  get_next_line.c \
+	  ft_get_next_char.c \
 ft_printf.c check_flags.c check_modifiers.c conv_wchar.c count_bytes.c \
 count_char_decimal.c ft_put_llong.c ft_put_long.c print.c print_address.c \
 print_char.c print_decimal.c print_decimal1.c print_decimal2.c \
