@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 12:11:04 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 14:41:22 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ static char	*ft_treat_d_opt(char limit)
 	{
 		if (buf[0] == limit)
 			break ;
-		else
+		else if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
 		{
 			if (line == NULL)
 				line = ft_strdup(&buf[0]);
-			else if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
+			else
 			{
 				tmp = ft_strjoin(line, &buf[0]);
 				free(line);
