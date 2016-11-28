@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/27 20:17:27 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 10:16:13 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		ft_d_read_option(char **argv, t_env **env)
 
 	i = 1;
 	line = NULL;
-	ft_strclr(buf);
+	ft_bzero(buf, 7);
 	if (argv[i][2] != '\0')
 		limit = argv[i++][2];
 	else if (argv[++i] != NULL)
@@ -61,27 +61,22 @@ int		ft_d_read_option(char **argv, t_env **env)
 			break ;
 		else
 		{
-			if (buf[0] == 10 && buf[0] == 0)
+			if (line == NULL)
+				line = ft_strdup(&buf[0]);
+			else
 			{
-				if (line == NULL)
-					line = ft_strdup(&buf[0]);
-				else
-				{
-					tmp = ft_strjoin(line, &buf[0]);
-					free(line);
-					line = tmp;
-				}
-				ft_putchar('\n');
+				tmp = ft_strjoin(line, &buf[0]);
+				free(line);
+				line = tmp;
 			}
 			ft_putchar(buf[0]);
 		}
-		ft_strclr(buf);
+		ft_bzero(buf, 7);
 	}
-	ft_putendl(line);
-	exit(1);
 	if (line != NULL)
 	{
-		ft_treat_read(argv, ft_strsplit(line, ' '), env, i);
+		if (argv[i] != NULL)
+			ft_treat_read(argv, ft_strtab(line), env, i);
 		ft_strdel(&line);
 	}
 	return (0);
