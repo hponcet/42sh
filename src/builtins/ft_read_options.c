@@ -6,11 +6,41 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 12:11:04 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 16:28:29 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+static char	*ft_read_termset(char limit)
+{
+	char	*line;
+	char	*tmp;
+	char	buf[7];
+
+	line = NULL;
+	ft_bzero(buf, 7);
+	while (read(0, buf, 6) > 0)
+	{
+		if (buf[0] == limit || (buf[0] == 10 && buf[1] == 0 && limit == -1))
+			break ;
+		if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
+		{
+			if (line == NULL)
+				line = ft_strdup(&buf[0]);
+			else
+			{
+				tmp = ft_strjoin(line, &buf[0]);
+				free(line);
+				line = tmp;
+			}
+			if (limit != -1)
+				ft_putchar(buf[0]);
+		}
+		ft_bzero(buf, 7);
+	}
+	return (line);
+}
 
 int			ft_p_read_opt(char **argv, t_env **env)
 {
@@ -35,33 +65,24 @@ int			ft_p_read_opt(char **argv, t_env **env)
 	return (0);
 }
 
-static char	*ft_treat_d_opt(char limit)
+int			ft_s_read_opt(char **argv, t_env **env)
 {
+	t_shell	*shell;
 	char	*line;
-	char	*tmp;
-	char	buf[7];
+	int		i;
 
+	i = 1;
 	line = NULL;
-	ft_bzero(buf, 7);
-	while (read(0, buf, 6) > 0)
+	shell = get_struct(0);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->termios);
+	if ((line = ft_read_termset(-1)) != NULL)
 	{
-		if (buf[0] == limit)
-			break ;
-		else
-		{
-			if (line == NULL)
-				line = ft_strdup(&buf[0]);
-			else if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
-			{
-				tmp = ft_strjoin(line, &buf[0]);
-				free(line);
-				line = tmp;
-			}
-			ft_putchar(buf[0]);
-		}
-		ft_bzero(buf, 7);
+		if (argv[i] != NULL)
+			ft_treat_read(argv, ft_strsplit(line, ' '), env, 2);
+		ft_strdel(&line);
 	}
-	return (line);
+	restore_term(shell);
+	return (0);
 }
 
 int			ft_d_read_opt(char **argv, t_env **env)
@@ -83,7 +104,7 @@ int			ft_d_read_opt(char **argv, t_env **env)
 	}
 	shell = get_struct(0);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->termios);
-	if ((line = ft_treat_d_opt(limit)) != NULL)
+	if ((line = ft_read_termset(limit)) != NULL)
 	{
 		if (argv[i] != NULL)
 			ft_treat_read(argv, ft_strtab(line), env, i);
