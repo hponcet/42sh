@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/23 18:12:43 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/24 18:19:37 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,8 @@ SRC = buffer.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
+	  ft_cursh.c \
+	  ft_cursh_replace.c \
 	  ft_glob.c \
 	  ft_glob_compare.c \
 	  ft_glob_make.c \
@@ -78,6 +80,7 @@ SRC = buffer.c \
 	  signals.c \
 	  special_char.c \
 	  str_tools.c \
+	  str_tools_2.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \
@@ -102,17 +105,16 @@ LIB		= $(LIBFT)libft.a
 # PROCESS
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIB)
-	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $(NAME)
+$(NAME): $(LIB) $(O2)
+	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $@
 	@echo "\033[0;32m42sh compilation done !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
 	@make -C $(LIBFT)
 
-%.o: %.c
-	@gcc $(FLAGS) -c $< -I $(INC) -I $(LIBINC) -o $@
-	@mv $@ $(OPATH)
+$(OPATH)%.o: %.c
+	@gcc $(FLAGS) -I $(INC) -I $(LIBINC) -o $@ -c $<
 
 clean:
 	@rm -f $(O2)

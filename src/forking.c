@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 18:04:31 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/25 16:55:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		close(fd[1]);
 		if (link->right->type == CMD)
 			handle_cmd(shell, link->right, 1);
+		waitpid(pid, NULL, 0);
 	}
 	return (pid);
 }

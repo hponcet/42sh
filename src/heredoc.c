@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 19:55:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 19:17:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			fill_heredoc(char *delimiter, int *fd)
 	if ((file_fd = open(file_name, O_WRONLY | O_CREAT, 0600)) == -1)
 		return (-1);
 	ft_putstr_fd("heredoc> ", fd[3]);
-	while ((gnl = get_next_line(0, &line)) == 1)
+	while ((gnl = get_next_line(STDIN_FILENO, &line)) == 1)
 	{
 		if ((handle_heredoc_input(line, delimiter, file_fd)) != 0)
 			break ;

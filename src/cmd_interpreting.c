@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 15:23:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 18:08:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ static char	*replace_special_char(char *s, int quote)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\\' && quote == 0)
-			i += replace_backslash(&s, i);
-		else if (s[i] == '~')
-			i += replace_tilde(&s, i);
-		else if (s[i] == '$' && (i == 0 || (s[i - 1] != '\\')) && s[i + 1])
+		if (s[i] == '\\')
+			i += replace_backslash(&s, i, quote);
+		else if (s[i] == '~' && !is_chr_escaped(s, i))
+			i += replace_tilde(&s, i, quote);
+		else if (s[i] == '$' && (!is_chr_escaped(s, i)) && s[i + 1])
 		{
-			if (s[i + 1] == '?')
-				i += replace_exit_value(&s, i);
+			if (s[i + 1] == '?' || s[i + 1] == '$')
+				i += replace_process_value(&s, i, quote);
 			else
-				s = str_replace_var(s, i++);
+				s = str_replace_var(s, i++, quote);
 		}
 		else
 			i++;
@@ -36,20 +36,10 @@ static char	*replace_special_char(char *s, int quote)
 	return (s);
 }
 
-static char	*interpret_special_char(char *sub_arg)
-{
-	int		quote;
-
-	if ((quote = is_str_quoted(sub_arg)))
-		sub_arg = strdup_remove_quotes(sub_arg);
-	if (quote == 1)
-		return (sub_arg);
-	return (replace_special_char(sub_arg, quote));
-}
-
 char		*interpret_cmd_arg(char *cmd_arg)
 {
 	int		i;
+	int		quote;
 	char	*ret;
 	char	**arg_tab;
 
@@ -58,7 +48,9 @@ char		*interpret_cmd_arg(char *cmd_arg)
 	arg_tab = str_subsplit_arg(cmd_arg);
 	while (arg_tab[i])
 	{
-		arg_tab[i] = interpret_special_char(arg_tab[i]);
+		if ((quote = is_str_quoted(arg_tab[i])))
+			arg_tab[i] = strdup_remove_quotes(arg_tab[i]);
+		arg_tab[i] = replace_special_char(arg_tab[i], quote);
 		i++;
 	}
 	ret = ft_multi_strjoin(arg_tab, "");

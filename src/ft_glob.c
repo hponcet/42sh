@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/23 21:29:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/24 22:01:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_glob_count_quote_rev(char *s, int i, char c)
 
 	j = 1;
 	i--;
-	while (s[i] != c && s[i])
+	while (i >= 0 && s[i] && s[i] != c)
 	{
 		i--;
 		j++;
@@ -35,18 +35,13 @@ int			ft_glob_check(char *str)
 	len = ft_strlen(str) - 1;
 	while (len >= 0)
 	{
-		if (len > 0 && str[len] == '?' && str[len - 1] == '$')
+		if (len > 0 && (str[len - 1] == '\\'
+					|| (str[len] == '?' && str[len - 1] == '$')))
 		{
 			len -= 2;
 			continue ;
 		}
-		if (len > 0 && str[len - 1] == '\\')
-		{
-			len -= 2;
-			continue ;
-		}
-		if (str[len] == '[' || str[len] == '?' || str[len] == '*'
-				|| str[len] == '{')
+		if (str[len] == '[' || str[len] == '?' || str[len] == '*')
 			return (1);
 		if (str[len] == '\"' || str[len] == '\'' || str[len] == 96)
 			len -= ft_glob_count_quote_rev(str, len, str[len]);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 16:38:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/25 16:28:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ char	*strsub_env_var(char *s, int start)
 	return (NULL);
 }
 
-char	*str_replace_var(char *s, int start)
+char	*str_replace_var(char *s, int start, int quote)
 {
 	size_t	len;
 	char	*tmp;
 	char	*ret;
 
+	if (quote == 1)
+		return (s);
 	ret = s;
 	if ((tmp = strsub_env_var(s, start)))
 	{
@@ -51,32 +53,25 @@ char	*str_replace_var(char *s, int start)
 	return (ret);
 }
 
-int		strrchr_outside_quotes(char *s, char c, char quote)
+int		strrchr_outside_quotes(char *s, char to_find)
 {
 	int		i;
-	int		j;
+	char	c;
 
-	if (((i = ft_strrchr_index(s, c)) == -1))
+	i = ft_strlen(s) - 1;
+	while (i >= 0)
 	{
-		free(s);
-		return (-1);
+		if (ft_isquote(s[i]) && (c = s[i--]))
+		{
+			while (i >= 0 && s[i] != c)
+				i--;
+		}
+		else if (s[i] == to_find && !is_chr_escaped(s, i))
+			return (i);
+		if (i >= 0)
+			i--;
 	}
-	j = ft_strlen(s);
-	while (--j > i)
-	{
-		if (s[j] == quote)
-			quote = 0;
-		else if (ft_isquote(s[j]) && !quote)
-			quote = s[j];
-	}
-	if (quote && --j)
-	{
-		while (j >= 0 && s[j] != quote)
-			j--;
-		i = (j > 1) ? strrchr_outside_quotes(ft_strsub(s, 0, j), c, 0) : -1;
-	}
-	free(s);
-	return (i);
+	return (-1);
 }
 
 int		is_str_quoted(char *s)
