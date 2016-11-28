@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 18:08:56 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 19:17:30 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	ft_check_read_opts(char **argv, t_env **env)
 	else if (argv[j][1] == 's' && argv[j][2] == 0)
 		return (ft_s_read_opt(argv, env));
 	else if (argv[j][1] == 'n')
-		return (ft_n_read_opt(argv, env));
+		return (ft_n_read_opt(argv, env, 0));
 	else
 	{
 		ft_putstr(ER_OPT);
@@ -65,7 +65,7 @@ static int	ft_check_read_opts(char **argv, t_env **env)
 	}
 	return (0);
 }
-// ctrl c pas pris en compte
+
 int			ft_read(char **argv, t_env **env)
 {
 	char	*line;
@@ -86,6 +86,29 @@ int			ft_read(char **argv, t_env **env)
 		get_next_line(0, &line);
 		ft_treat_read(argv, ft_strsplit(line, ' '), env, 1);
 	}
+	ft_strdel(&line);
+	return (0);
+}
+
+int			ft_p_read_opt(char **argv, t_env **env)
+{
+	char	*line;
+	int		i;
+
+	line = NULL;
+	i = 1;
+	if (argv[i][2] != '\0')
+		ft_putstr(argv[i++] + 2);
+	else if (argv[++i] != NULL)
+		ft_putstr(argv[i++]);
+	else
+	{
+		ft_putstr(ER_ARG);
+		return (1);
+	}
+	get_next_line(0, &line);
+	if (argv[i] != NULL)
+		ft_treat_read(argv, ft_strsplit(line, ' '), env, i);
 	ft_strdel(&line);
 	return (0);
 }
