@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 15:24:25 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 15:30:21 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static int	ft_check_read_opts(char **argv, t_env **env)
 		return (ft_p_read_opt(argv, env));
 	else if (argv[j][1] == 'd')
 		return (ft_d_read_opt(argv, env));
-	else if (argv[j][1] == 's')
-		return (ft_d_read_opt(argv, env));
+//	else if (argv[j][1] == 's')
+//		return (ft_d_read_opt(argv, env));
 	return (0);
 }
 // ctrl c pas pris en compte

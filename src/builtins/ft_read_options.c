@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 14:41:22 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/28 15:45:10 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			ft_p_read_opt(char **argv, t_env **env)
 	return (0);
 }
 
-static char	*ft_treat_d_opt(char limit)
+static char	*ft_read_termset(char limit)
 {
 	char	*line;
 	char	*tmp;
@@ -43,11 +43,9 @@ static char	*ft_treat_d_opt(char limit)
 
 	line = NULL;
 	ft_bzero(buf, 7);
-	while (read(0, buf, 6) > 0)
+	while (read(0, buf, 6) > 0 && buf[0] != limit)
 	{
-		if (buf[0] == limit)
-			break ;
-		else if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
+		if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
 		{
 			if (line == NULL)
 				line = ft_strdup(&buf[0]);
@@ -57,11 +55,30 @@ static char	*ft_treat_d_opt(char limit)
 				free(line);
 				line = tmp;
 			}
-			ft_putchar(buf[0]);
+			if (limit != -1)
+				ft_putchar(buf[0]);
 		}
 		ft_bzero(buf, 7);
 	}
 	return (line);
+}
+
+int			ft_s_read_opt(char **argv, t_env **env)
+{
+	t_shell	*shell;
+	char	*line;
+	int		i;
+
+	i = 1;
+	line = NULL;
+	shell = get_struct(0);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->termios);
+	if (argv[i++][2] == '\0')
+		line = ft_read_termset(-1);
+	if (argv[i] != NULL && line != NULL)
+		ft_treat_read(argv, ft_strsplit(line), env, i);
+	restore_term(shell);
+	return (0);
 }
 
 int			ft_d_read_opt(char **argv, t_env **env)
@@ -83,7 +100,7 @@ int			ft_d_read_opt(char **argv, t_env **env)
 	}
 	shell = get_struct(0);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->termios);
-	if ((line = ft_treat_d_opt(limit)) != NULL)
+	if ((line = ft_read_termset(limit)) != NULL)
 	{
 		if (argv[i] != NULL)
 			ft_treat_read(argv, ft_strtab(line), env, i);
