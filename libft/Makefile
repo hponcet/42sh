@@ -13,6 +13,8 @@
 vpath %.c ./src ./ft_printf
 
 SRC = ft_atoi.c \
+	  ft_strtab.c \
+	  ft_tabnew.c \
 	  ft_atol.c \
 	  ft_bzero.c \
 	  ft_countwords.c \

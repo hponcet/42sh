@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:40:09 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/25 19:31:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ t_shell	*get_struct(t_shell *struc)
 
 void	init_shell(t_shell *shell)
 {
+	shell->stdin_copy = dup(STDIN_FILENO);
 	shell->fd[0] = STDIN_FILENO;
 	shell->fd[1] = STDOUT_FILENO;
 	shell->fd[2] = STDERR_FILENO;
 	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
 		ft_put_error(ER_OFD, 1);
 	shell->col = 0;
+	shell->pid = (int)getpid();
 	shell->status = 0;
 	shell->input_len = 0;
 	shell->p_len = 0;

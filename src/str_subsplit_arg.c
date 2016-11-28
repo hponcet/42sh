@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:41:35 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/25 16:18:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	count_arg_part(char const *s, int i, int n)
 	save = 0;
 	while (s[i])
 	{
-		if (ft_isquote(s[i]) && (i == 0 || s[i - 1] != '\\'))
+		if (ft_isquote(s[i]) && (i == 0 || !is_chr_escaped(s, i)))
 		{
 			save = i;
 			c = s[i++];
-			while (s[i] && ((s[i] != c || (s[i] == c && s[i - 1] == '\\'))))
+			while (s[i] && (s[i] != c || (s[i] == c && is_chr_escaped(s, i))))
 				i++;
 			s[i++] ? n++ : (i = save + 1);
 		}
@@ -33,7 +33,7 @@ static int	count_arg_part(char const *s, int i, int n)
 			if (i != (save + 1))
 				n++;
 			while (s[i] && (!ft_isquote(s[i])
-				|| (ft_isquote(s[i]) && s[i - 1] == '\\')))
+				|| (ft_isquote(s[i]) && is_chr_escaped(s, i))))
 				i++;
 		}
 	}
@@ -48,18 +48,18 @@ static int	arg_part_len(char const *s, int i)
 	c = 0;
 	if (!s[i])
 		return (i);
-	if (ft_isquote(s[i]) && (i == 0 || s[i - 1] != '\\'))
+	if (ft_isquote(s[i]) && (i == 0 || !is_chr_escaped(s, i)))
 	{
 		c = s[i++];
 		save = i;
-		while (s[i] && ((s[i] != c || (s[i] == c && s[i - 1] == '\\'))))
+		while (s[i] && (s[i] != c || (s[i] == c && is_chr_escaped(s, i))))
 			i++;
 		i = s[i] ? i + 1 : arg_part_len(s, save);
 	}
 	else
 	{
 		while (s[i] && (!ft_isquote(s[i])
-			|| (ft_isquote(s[i]) && s[i - 1] == '\\')))
+			|| (ft_isquote(s[i]) && is_chr_escaped(s, i))))
 			i++;
 	}
 	return (i);

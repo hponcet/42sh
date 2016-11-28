@@ -6,18 +6,28 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 15:55:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/24 21:31:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+static int	is_input_char_escaped(t_input *input)
+{
+	int	backslash;
+
+	backslash = 0;
+	while ((input = input->prev) && input->c == '\\')
+		backslash++;
+	return (backslash % 2);
+}
 
 static char	is_quote_closed(t_input *tmp, char c)
 {
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (tmp->c == c && tmp->prev->c != '\\')
+		if (tmp->c == c && !is_input_char_escaped(tmp))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -33,20 +43,20 @@ static char	is_bracket_closed(t_input *tmp, char c)
 	d = (c == '(') ? c + 1 : c + 2;
 	while ((tmp = tmp->next))
 	{
-		if (ft_isquote(tmp->c) && tmp->prev->c != '\\')
+		if (ft_isquote(tmp->c) && !is_input_char_escaped(tmp))
 		{
 			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
 				return (d);
 			d = tmp->c;
 			tmp = tmp->next;
 			while (tmp && (tmp->c != d ||
-				(tmp->c == d && tmp->prev->c == '\\')))
+				(tmp->c == d && is_input_char_escaped(tmp))))
 				tmp = tmp->next;
 			d = (c == '(') ? c + 1 : c + 2;
 		}
-		else if (tmp->c == c && tmp->prev->c != '\\')
+		else if (tmp->c == c && !is_input_char_escaped(tmp))
 			count++;
-		else if (tmp->c == d && tmp->prev->c != '\\' && (--count == 0))
+		else if (tmp->c == d && !is_input_char_escaped(tmp) && (--count == 0))
 			return (0);
 	}
 	return (d);
@@ -54,25 +64,26 @@ static char	is_bracket_closed(t_input *tmp, char c)
 
 static char	check_quotes(t_input **input, char c, t_input *tmp)
 {
-	if (ft_isquote(tmp->c) && (!tmp->prev || tmp->prev->c != '\\'))
+	if (ft_isquote(tmp->c) && !is_input_char_escaped(tmp))
 	{
 		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = tmp->c;
 		tmp = tmp->next;
-		while (tmp && (tmp->c != c || (tmp->c == c && tmp->prev->c == '\\')))
+		while (tmp && (tmp->c != c ||
+			(tmp->c == c && is_input_char_escaped(tmp))))
 			tmp = tmp->next;
 	}
 	else if ((tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
-			&& (!tmp->prev || tmp->prev->c != '\\'))
+			&& !is_input_char_escaped(tmp))
 	{
 		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = (tmp->c == '(') ? tmp->c + 1 : tmp->c + 2;
 		while ((tmp = tmp->next) &&
-				(tmp->c != c || (tmp->c == c && tmp->prev->c == '\\')))
+				(tmp->c != c || (tmp->c == c && is_input_char_escaped(tmp))))
 		{
-			if (ft_isquote(tmp->c) && tmp->prev->c != '\\')
+			if (ft_isquote(tmp->c) && !is_input_char_escaped(tmp))
 				c = tmp->c;
 		}
 	}
@@ -96,7 +107,7 @@ char		valid_input(t_input *input, char c)
 			tmp = tmp->next;
 	}
 	tmp = get_last_elem(input);
-	if (tmp->c == '\\' && (!tmp->prev || tmp->prev->c != '\\'))
+	if (tmp->c == '\\' && !is_input_char_escaped(tmp))
 		return ('\\');
 	return (check_separators(input, 0));
 }

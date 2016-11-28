@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_check.c                                   :+:      :+:    :+:   */
+/*   str_tools_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/04 17:51:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/24 20:02:05 by MrRobot          ###   ########.fr       */
+/*   Created: 2016/11/25 16:16:34 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/11/25 16:17:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		is_builtin(char *cmd)
+int	is_chr_escaped(char const *s, int i)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") ||
-		!ft_strcmp(cmd, "history") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "setenv") || !ft_strcmp(cmd, "unsetenv") ||
-		!ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "read"))
-		return (1);
-	return (0);
+	int	backslash;
+
+	backslash = 0;
+	while (--i >= 0 && s[i] == '\\')
+		backslash++;
+	return (backslash % 2);
 }
