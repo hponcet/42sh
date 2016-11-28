@@ -148,6 +148,7 @@ int						ft_read(char **argv, t_env **env);
 void					ft_treat_read(char **argv, char **split, t_env **env, int start);
 int						ft_p_read_opt(char **argv, t_env **env);
 int						ft_s_read_opt(char **argv, t_env **env);
+int						ft_n_read_opt(char **argv, t_env **env);
 int						ft_d_read_opt(char **argv, t_env **env);
 
 
