@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/24 18:19:37 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/11/28 16:41:04 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC = buffer.c \
 	  free_btree.c \
 	  ft_cursh.c \
 	  ft_cursh_replace.c \
+	  ft_cursh_compose.c \
 	  ft_glob.c \
 	  ft_glob_compare.c \
 	  ft_glob_make.c \
