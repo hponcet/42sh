@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 19:17:30 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/29 17:19:08 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int			ft_read(char **argv, t_env **env)
 	else
 	{
 		get_next_line(0, &line);
-		ft_treat_read(argv, ft_strsplit(line, ' '), env, 1);
+		if (line != NULL)
+			ft_treat_read(argv, ft_strsplit(line, ' '), env, 1);
 	}
 	ft_strdel(&line);
 	return (0);
