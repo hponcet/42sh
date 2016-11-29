@@ -486,7 +486,7 @@ void				ft_cursh(char **tabl);
 void				ft_cursh_compose(char **tabl);
 void				ft_cursh_proc(char **str, int s, int e);
 void				ft_cursh_replace(char **str);
-
+void				ft_cursh_compose_end(char **str);
 //////////////////////////////////////////////////////
 
 #endif
