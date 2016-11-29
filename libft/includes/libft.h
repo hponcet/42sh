@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 16:08:30 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/28 10:19:26 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strstr(const char *big, const char *little);
+char				**ft_strtab(char *str);
+char				**ft_tabnew(size_t size);
 int					ft_strstr_index(const char *big, const char *little);
 char				*ft_strnstr(const char *s1, const char *s2, size_t len);
 char				*ft_strnew(size_t size);

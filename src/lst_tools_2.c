@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_check.c                                   :+:      :+:    :+:   */
+/*   lst_tools_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/04 17:51:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/29 20:22:13 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/11/29 20:04:05 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/11/29 20:19:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		is_builtin(char *cmd)
+t_env	*get_last_env_elem(t_env *lst)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") ||
-		!ft_strcmp(cmd, "history") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "setenv") || !ft_strcmp(cmd, "unsetenv") ||
-		!ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "read") ||
-		!ft_strcmp(cmd, "export"))
-		return (1);
-	return (0);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
