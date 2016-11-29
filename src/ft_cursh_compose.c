@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 16:34:00 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/29 14:35:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/29 15:11:04 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void			ft_cursh_compose_end(char **str)
 
 	ecursh = ft_cindex_rev(str[0], '}') + 1;
 	start = ft_strsub(str[0], 0, ecursh);
-	end = ft_strsub(str[0], ecursh, ft_strlen(str[0]));
+	end = ft_strsub(str[0], ecursh, ft_strlen(str[0]) - ecursh);
 	ret = ft_joinf("%s{%s,}", start, end);
 	ft_strdel(&end);
 	ft_strdel(&start);
