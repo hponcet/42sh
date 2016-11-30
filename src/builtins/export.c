@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 12:12:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/29 21:23:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 19:54:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	put_export_vars(t_env *env_lst)
 	}
 }
 
-static void	store_export_var(t_env **env_lst, char *var, char *val)
+void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
 {
 	t_env	*new;
 	t_env	*last;
@@ -57,10 +57,10 @@ static void	store_export_var(t_env **env_lst, char *var, char *val)
 		else if ((last = get_last_env_elem(*env_lst)))
 			last->next = new;
 	}
-	new->local = 0;
+	new->local = local;
 }
 
-static void	parse_export_var(t_env *env_lst, char *arg)
+void		set_shell_var(t_env *env_lst, char *arg, int local)
 {
 	int		i;
 	char	*var;
@@ -79,7 +79,7 @@ static void	parse_export_var(t_env *env_lst, char *arg)
 		else
 			val = ft_strsub(arg, i + 1, (ft_strlen(arg) - i - 1));
 	}
-	store_export_var(&env_lst, var, val);
+	store_shell_var(&env_lst, var, val, local);
 }
 
 int			ft_export(char **cmd, t_env *env_lst)
@@ -102,7 +102,7 @@ int			ft_export(char **cmd, t_env *env_lst)
 			export_error(1, NULL);
 			return (1);
 		}
-		parse_export_var(env_lst, cmd[i++]);
+		set_shell_var(env_lst, cmd[i++], 0);
 	}
 	if (print)
 		put_export_vars(env_lst);

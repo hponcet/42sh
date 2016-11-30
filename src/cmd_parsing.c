@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/27 20:12:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 21:33:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-char		**parse_cmd(t_btree *link)
+char		**parse_cmd(t_env *env_lst, t_btree *link)
 {
 	int		i;
 	char	*tmp;
@@ -22,15 +22,22 @@ char		**parse_cmd(t_btree *link)
 	tmp = remove_cmd_redir(ft_strtrim(link->str), link->redir);
 	free(link->str);
 	link->str = tmp;
-	cmd_tab = strsplit_args(link->str);
-	if (!cmd_tab[0])
-	{
-		free_tab(cmd_tab);
+	if (!(cmd_tab = strsplit_args(link->str)) || !cmd_tab[0])
 		return (NULL);
-	}
 	while (cmd_tab[i])
 	{
-		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
+		if (i == 0 && (strchr_outside_quotes(cmd_tab[i], '=') != -1)
+			&& (set_local_variable(env_lst, &cmd_tab[i]) == 0))
+			{
+				tmp = *cmd_tab;
+				cmd_tab++;
+				free(tmp);
+				if (!(cmd_tab[0]))
+					return (NULL);
+				continue;
+			}
+		else
+			cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
 	return (cmd_tab);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/25 18:08:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 20:12:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ char		*interpret_cmd_arg(char *cmd_arg)
 	free_tab(arg_tab);
 	free(cmd_arg);
 	return (ret);
+}
+
+int		set_local_variable(t_env *env_lst, char **cmd)
+{
+	*cmd = interpret_cmd_arg(*cmd);
+	if (check_env_var(*cmd, NULL) == -1)
+		return (1);
+	set_shell_var(env_lst, *cmd, 1);
+	return (0);
 }
 
 char		*remove_cmd_redir(char *cmd, t_redir *redir)

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 12:57:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 19:04:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int		check_env_var(char *env_var, char *cmd)
 	i = 0;
 	if (!env_var[i] || env_var[i] == '=')
 	{
-		env_var_error(1, cmd, env_var);
+		cmd != NULL ? env_var_error(1, cmd, env_var) : (0);
 		return (-1);
 	}
 	while (env_var[i] && env_var[i] != '=')
 	{
 		if (!ft_isalnum(env_var[i]) && env_var[i] != '_')
 		{
-			env_var_error(1, cmd, env_var);
+			cmd != NULL ? env_var_error(1, cmd, env_var) : (0);
 			return (-1);
 		}
 		i++;

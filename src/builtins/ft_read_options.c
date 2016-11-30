@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/28 19:17:38 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/30 17:47:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static char	*ft_read_termset(char limit, char *line)
 	ft_bzero(buf, 7);
 	while (read(0, buf, 6) > 0)
 	{
-		if (buf[0] == limit || (buf[0] == 10 && buf[1] == 0 && limit == -1))
+		if (buf[0] == limit || buf[0] == 4 ||
+			(buf[0] == 10 && buf[1] == 0 && limit == -1))
 			break ;
 		if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
 		{
@@ -48,7 +49,7 @@ static char	*ft_read_nchar(int nb, char *line)
 
 	i = 0;
 	ft_bzero(buf, 7);
-	while (i < nb && read(0, buf, 6) > 0)
+	while (i < nb && read(0, buf, 6) > 0 && buf[0] != 4)
 	{
 		if (ft_isprint(buf[0]) == 1 || buf[0] == '\n')
 		{
