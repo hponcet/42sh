@@ -144,6 +144,7 @@ size_t					ft_list_size_index(t_input *start, t_input *end);
 void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
 int						ft_back_quote(t_shell *shell);
 int						ft_launch_cmd(t_shell *shell, t_btree *tree);
+int						ft_prepare_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);
 int						ft_read(char **argv, t_env **env);
 void					ft_treat_read(char **argv, char **split, t_env **env, int start);
