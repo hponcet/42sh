@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 20:45:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/29 21:09:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static int	put_env(t_env *env_lst)
 {
-	t_env	*tmp;
-
-	if (env_lst)
+	while (env_lst)
 	{
-		tmp = env_lst;
-		while (tmp)
+		if (!env_lst->local && env_lst->val)
 		{
-			ft_putstr(tmp->var);
+			ft_putstr(env_lst->var);
 			ft_putchar('=');
-			ft_putendl(tmp->val);
-			tmp = tmp->next;
+			if (env_lst->val[0])
+				ft_putendl(env_lst->val);
+			else
+				ft_putchar('\n');
 		}
+		env_lst = env_lst->next;
 	}
 	return (0);
 }

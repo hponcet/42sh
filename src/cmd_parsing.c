@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 21:29:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/27 20:12:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int			handle_input(t_shell *shell)
 	int		ret;
 	char	*cmd_str;
 
-	ret = 0;
 	cmd_str = NULL;
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
@@ -49,23 +48,27 @@ int			handle_input(t_shell *shell)
 		return (ret);
 	if (!(hist_checkdouble(shell)))
 		shell->hist = store_hist(shell);
-	ft_back_quote(shell);
+	if (ft_back_quote(shell) != 0)
+	{
+		free_tmp_inputs(shell, 1);
+		return (0);
+	}
 	shell->curs_pos = get_last_elem(shell->input);
 	shell->input_len = lst_len(shell->input);
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
-	if (check_btree(shell->tree) > 0)// jvoulais mettre ca aussi ds la fonction
-	{							// du bas mais jsais pas si tu utilise le ret machin
-		free_btree(shell->tree); // donc a toi de voir flav si tu met le if en bas
-		return (ret);
-	}
 	ft_launch_cmd(shell, shell->tree);
-	return (ret);
+	return (0);
 }
 
-void	ft_launch_cmd(t_shell *shell, t_btree *tree)
+int		ft_launch_cmd(t_shell *shell, t_btree *tree)
 {
+	if (check_btree(tree) > 0)
+	{
+		free_btree(tree);
+		return (1);
+	}
 	restore_term(shell);
 	signal(SIGTSTP, SIG_DFL);
 	handle_btree(shell, tree);
@@ -73,4 +76,5 @@ void	ft_launch_cmd(t_shell *shell, t_btree *tree)
 	shell->tree = NULL;
 	reload_term(shell);
 	signal(SIGTSTP, &sig_handler);
+	return (0);
 }

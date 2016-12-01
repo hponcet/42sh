@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/17 15:33:07 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/29 21:21:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 int		dup_env_lst(t_env *env_lst, t_env **env_lst_cpy)
 {
-	t_env	*tmp;
-
-	tmp = env_lst;
-	while (tmp)
+	while (env_lst)
 	{
-		store_env_var(env_lst_cpy, ft_strdup(tmp->var),
-				ft_strdup(tmp->val));
-		tmp = tmp->next;
+		if (env_lst->local == 0 && env_lst->val != NULL)
+			store_env_var(env_lst_cpy, ft_strdup(env_lst->var),
+			ft_strdup(env_lst->val));
+		env_lst = env_lst->next;
 	}
 	return (0);
 }
@@ -64,6 +62,7 @@ int		store_env_var(t_env **env_lst, char *var, char *val)
 		free(var);
 		free(tmp->val);
 		tmp->val = val;
+		tmp->local = 0;
 		return (0);
 	}
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
@@ -75,11 +74,10 @@ int		store_env_var(t_env **env_lst, char *var, char *val)
 		*env_lst = new;
 	else
 	{
-		tmp = *env_lst;
-		while (tmp->next)
-			tmp = tmp->next;
+		tmp = get_last_env_elem(*env_lst);
 		tmp->next = new;
 	}
+	new->local = 0;
 	return (0);
 }
 
