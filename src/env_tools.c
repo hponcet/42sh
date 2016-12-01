@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 19:04:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/01 19:43:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ char	*env_var_to_value(char *var)
 
 	shell = get_struct(0);
 	value = NULL;
-	if ((env_var = (get_env_ptr(shell->env_lst, var))))
-		value = ft_strdup(env_var->val);
-	free(var);
+	if ((env_var = get_env_ptr(shell->env_lst, var)))
+	{
+		if (env_var->val)
+			value = ft_strdup(env_var->val);
+		else
+			value = ft_strdup("");
+	}
 	return (value);
 }
 

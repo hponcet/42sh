@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 16:16:34 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 18:35:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/01 19:45:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,25 @@ char	*strsub_env_var(char *s, int start)
 char	*str_replace_var(char *s, int start, int quote)
 {
 	size_t	len;
-	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 	char	*ret;
 
 	if (quote == 1)
 		return (s);
 	ret = s;
-	if ((tmp = strsub_env_var(s, start)))
+	if ((tmp1 = strsub_env_var(s, start)))
 	{
-		len = ft_strlen(tmp);
-		if ((tmp = env_var_to_value(tmp)))
+		len = ft_strlen(tmp1);
+		if ((tmp2 = env_var_to_value(tmp1)))
 		{
-			ret = ft_replace_str(s, start, (len + 1), tmp);
-			free(tmp);
+			free(tmp1);
+			ret = ft_replace_str(s, start, (len + 1), tmp2);
+			free(tmp2);
 			free(s);
 		}
 		else
-			free(tmp);
+			free(tmp1);
 	}
 	return (ret);
 }
