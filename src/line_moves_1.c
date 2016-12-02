@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 17:27:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 17:17:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/02 21:15:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,23 @@ int		move_right(t_shell *shell)
 
 int		move_line_start(t_shell *shell)
 {
-	while (shell->curs_pos)
+	size_t	i;
+	int		j;
+
+	if (!shell->curs_pos)
+		return (-1);
+	i = input_part_len(shell->input, shell->curs_pos) + 1;
+	j = 0;
+	while (i > shell->col && (i -= shell->col))
+		j++;
+	if (j)
+	{
+		tputs(tgoto(tgetstr("UP", NULL), 0, j), shell->fd[3], &putchar);
+		j *= shell->col;
+		while (j--)
+			shell->curs_pos = shell->curs_pos->prev;
+	}
+	while (i--)
 	{
 		replace_cursor(shell, 0, 1);
 		shell->curs_pos = shell->curs_pos->prev;
@@ -43,16 +59,31 @@ int		move_line_start(t_shell *shell)
 	return (0);
 }
 
-int		move_line_end(t_shell *shell)
+int		move_line_end(t_shell *shell, size_t win_col)
 {
+	size_t	i;
+	size_t	j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	(void)win_col;
 	if (!shell->curs_pos && !shell->input)
 		return (-1);
-	else if (!shell->curs_pos)
-	{
-		shell->curs_pos = shell->input;
+	if (!shell->curs_pos && (shell->curs_pos = shell->input))
 		replace_cursor(shell, 0, 0);
+	i = lst_len(shell->curs_pos) - 1;
+	while (i > shell->col && (i -= shell->col))
+		j++;
+	if (j)
+	{
+		k = j >= shell->row ? shell->row - 1 : j;
+		tputs(tgoto(tgetstr("DO", NULL), 0, k), shell->fd[3], &putchar);
+		j *= shell->col;
+		while (j--)
+			shell->curs_pos = shell->curs_pos->next;
 	}
-	while (shell->curs_pos->next)
+	while (i--)
 	{
 		shell->curs_pos = shell->curs_pos->next;
 		replace_cursor(shell, 0, 0);

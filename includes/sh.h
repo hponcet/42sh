@@ -39,6 +39,9 @@
 # define BREDIR 3 // <
 # define HEREDOC 4 // <<
 
+// taille buffer de lecture
+# define BUF_SIZE 4096
+
 // taille des tables de hashage en nb de cases
 # define HASHLEN 5000
 
@@ -154,6 +157,7 @@ int						ft_d_read_opt(char **argv, t_env **env);
 
 
 t_input					*ft_new_link(char c);
+
 /// ERREURS ///
 int						ft_put_error(char *error, int action);
 
@@ -197,6 +201,7 @@ char					**strsplit_args(char const *s); // split arguments
 char					**str_subsplit_arg(char const *s); // split des quotes pour interpretation
 int						lst_is_empty(t_input *lst);
 size_t					lst_len(t_input *lst);
+size_t					input_part_len(t_input *start, t_input *end);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst); // retourne le dernier caractere de l'input
@@ -226,9 +231,9 @@ void					print_prompt(t_shell *shell, int special_prompt); // affiche un prompt 
 void					read_input(t_shell *shell); // boucle de lecture
 void					print_input(t_shell *shell, t_input *curs_pos, // affiche l'input a partir du maillon curs_pos
 						size_t p_len);
-int						parse_input(t_shell *shell, char *buf,
-						size_t buf_len, size_t p_len); // parsing des touches par categorie
+int						parse_input(t_shell *shell, char *buf, size_t buf_len); // parsing des touches par categorie
 void					store_input(t_shell *shell, char c); // ajoute un caractere dans l'input
+void					insert_read_buf(t_shell *shell, char *buf, size_t len);
 void					delete_input(t_input **lst, t_input *input,
 						t_shell *shell, int back); // supprime un caractere, shell et back optionnels
 void					clear_input(t_shell *shell); // replace le curseur en debut de commande et supprime l'input
@@ -243,7 +248,7 @@ int						move_left_word(t_shell *shell);
 int						move_right(t_shell *shell);
 int						move_right_word(t_shell *shell);
 int						move_line_start(t_shell *shell);
-int						move_line_end(t_shell *shell);
+int						move_line_end(t_shell *shell, size_t win_col);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
 int						backspace(t_shell *shell);

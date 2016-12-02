@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/26 19:21:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/02 20:11:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	sig_int_handler(t_shell *shell)
 {
 	if (shell->input || shell->input_save)
 	{
-		move_line_end(shell);
+		move_line_end(shell, shell->col);
 		free_tmp_inputs(shell, 1);
 	}
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
@@ -61,7 +61,7 @@ void		sig_handler(int signum)
 		sig_int_handler(shell);
 	else if (signum == SIGTSTP)
 	{
-		move_line_end(shell);
+		move_line_end(shell, shell->col);
 		signal(SIGTSTP, SIG_DFL);
 		restore_term(shell);
 		ioctl(0, TIOCSTI, &suspend);
