@@ -188,6 +188,7 @@ t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0
 
 /// OUTILS ///
 int						putchar(int c); // petit putchar des familles, la baaaase !
+int						strchr_outside_quotes(char *s, char to_find); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strrchr_outside_quotes(char *s, char to_find); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
 int						is_chr_escaped(char const *s, int i);
@@ -206,12 +207,14 @@ int						is_builtin(char *cmd); // gros if de porc (desole micka)
 /// ENVIRONNEMENT ///
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
-int						del_env_var(t_env **env_lst, char *var);
+int						del_env_var(t_env **env_lst, char *var, int local);
 int						dup_env_lst(t_env *env_lst, t_env **env_lst_cpy);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 char					**env_lst_to_array(t_env *env_lst);
-
 int						check_env_var(char *env_var, char *cmd);
+void					set_shell_var(t_env *env_lst, char *arg, int local);
+void					store_shell_var(t_env **env_lst, char *var,
+						char *val, int local);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);
 
@@ -269,9 +272,10 @@ int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
 char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
 char					valid_input(t_input *input); // check des quotes, parentheses backslash...
-char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
+char					**parse_cmd(t_env *env_lst, t_btree *link);
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
-char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
+char					*interpret_cmd_arg(char *cmd_arg);
+int						set_local_variable(t_env *env_lst, char **cmd);
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 char					*str_replace_var(char *s, int start, int quote); // jesuis$USER ==> jesuistonpere
 int						replace_backslash(char **s, int i, int quote);
@@ -300,6 +304,7 @@ int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
 int						ft_export(char **cmd, t_env *env_lst);
+int						ft_unset(char **cmd, t_env **env_lst);
 
 /// EXECUCTION BINAIRES ///
 int						binary_cmd(char **cmd, char **env_array,

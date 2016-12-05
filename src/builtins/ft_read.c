@@ -6,12 +6,20 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/30 10:31:08 by MrRobot          ###   ########.fr       */
-/*   Updated: 2016/11/29 17:25:22 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/30 17:39:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+static void	sig_handler_read(int signum)
+{
+	t_shell	*shell;
+
+	shell = get_struct(0);
+	if (signum == SIGINT)
+		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+}
 
 void		ft_treat_read(char **argv, char **split, t_env **env, int start)
 {
@@ -69,14 +77,19 @@ int			ft_read(char **argv, t_env **env)
 {
 	char	*line;
 
+	signal(SIGINT, &sig_handler_read);
 	line = NULL;
 	if (argv[1] == NULL)
-		get_next_line(0, &line);
+	{
+		if (get_next_line(0, &line) < 0)
+			return(0);
+	}
 	else if (argv[1][0] == '-')
 	{
 		if (ft_check_read_opts(argv, env) == 1)
 		{
 			ft_strdel(&line);
+			signal(SIGINT, &sig_handler1);
 			return (1);
 		}
 	}
@@ -87,6 +100,7 @@ int			ft_read(char **argv, t_env **env)
 			ft_treat_read(argv, ft_strsplit(line, ' '), env, 1);
 	}
 	ft_strdel(&line);
+	signal(SIGINT, &sig_handler1);
 	return (0);
 }
 
