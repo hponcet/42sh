@@ -45,10 +45,10 @@
 // Globing
 typedef struct		s_glob
 {
-	char			*name;
-	char			*path;
-	struct s_glob	*next;
-}					t_glob;
+	char				*name;
+	char				*path;
+	struct s_glob		*next;
+}						t_glob;
 
 // Table de hashage
 typedef struct			s_hash
@@ -487,6 +487,11 @@ void				ft_cursh_compose(char **tabl);
 void				ft_cursh_proc(char **str, int s, int e);
 void				ft_cursh_replace(char **str);
 void				ft_cursh_compose_end(char **str);
+
+ char				**ft_glob_make_pathfind(char *cmd);
+ void			    ft_glob_addpath(t_glob **tree, char *path);
+ void				ft_glob_maketree(char *curpath, char **paths, t_glob **tree, int i);
+ t_glob				*ft_glob_pathtree(char *cmd);
 //////////////////////////////////////////////////////
 
 #endif

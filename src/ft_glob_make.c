@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 15:19:12 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 12:36:08 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 
 char	*ft_glob_replace(char *cmd)
 {
-	char	**pth_cmd;
+	char	**cmd_decomp;
+	t_glob	*pathlist;
+	t_glob	*tmp;
 	char	*ret;
 
-	pth_cmd = (char**)malloc(sizeof(char*) * 4);
-	pth_cmd[3] = NULL;
-	pth_cmd[2] = NULL;
-	pth_cmd[0] = NULL;
-	pth_cmd[1] = ft_strdup(cmd);
-	ft_glob_path(pth_cmd);
-	ret = ft_glob_makestr(pth_cmd[0], pth_cmd[1], pth_cmd[2]);
-	ft_strdel(&pth_cmd[0]);
-	ft_strdel(&pth_cmd[1]);
-	ft_strdel(&pth_cmd[2]);
-	free(pth_cmd);
-	pth_cmd = NULL;
+	cmd_decomp = ft_glob_make_pathfind(cmd); 
+	ft_glob_path(cmd_decomp);
+	pathlist = ft_glob_pathtree(cmd_decomp[2]);
+	tmp = pathlist;
+	ret = ft_strnew(0);
+	while (tmp)
+	{
+		ret = ft_joinf("%xs %xs", ret, ft_glob_makestr(cmd_decomp[0],
+					cmd_decomp[1], tmp->path));
+		tmp = tmp->next;
+	}
+	ft_glob_delchain(pathlist);
+	ft_strdel(&cmd_decomp[0]); // path
+	ft_strdel(&cmd_decomp[1]); // find
+	ft_strdel(&cmd_decomp[2]); // absolute path
+	free(cmd_decomp);
+	cmd_decomp = NULL;
 	return (ret);
 }
 
