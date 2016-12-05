@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 16:37:29 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 12:40:28 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 16:42:54 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_glob_addpath(t_glob **tree, char *path)
 	new->path = ft_strdup(path);
 	new->next = NULL;
 	tmp = *tree;
-	if (!tmp)
+	if (!(*tree))
 	{
 		*tree = new ;
 		return ;
@@ -50,6 +50,7 @@ void	ft_glob_maketree(char *curpath, char **paths, t_glob **tree, int i)
 	DIR				*dirp;
 	struct dirent	*s_dir;
 
+	path = NULL;
 	if (!paths[i])
 	{
 		ft_glob_addpath(tree, curpath);
@@ -59,9 +60,11 @@ void	ft_glob_maketree(char *curpath, char **paths, t_glob **tree, int i)
 		return ;
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
-		if (ft_glob_compare(s_dir->d_name, paths[i]) == 1)
+		if (s_dir->d_type == 4 && ft_strcmp(s_dir->d_name, ".") != 0
+				&& ft_strcmp(s_dir->d_name, "..") != 0
+				&& ft_glob_compare(paths[i], s_dir->d_name) != 0)
 		{
-			path = ft_joinf("%s%s/", curpath, paths[i]);
+			path = ft_joinf("%s%s/", curpath, s_dir->d_name);
 			ft_glob_maketree(path, paths, tree, i + 1);
 			ft_strdel(&path);
 		}
@@ -76,6 +79,7 @@ t_glob	*ft_glob_pathtree(char *cmd)
 
 	if (!cmd)
 		return (NULL);
+	tree = NULL;
 	paths = ft_strsplit(cmd, '/');
 	ft_glob_maketree("/", paths, &tree, 0);
 	return (tree);

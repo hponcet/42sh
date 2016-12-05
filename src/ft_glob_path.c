@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:45:24 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/22 17:40:21 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 16:40:34 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void		ft_glob_path(char **ret)
 	if (ret[0] && ret[0][0] == '/')
 		ret[2] = ft_strdup(ret[0]);
 	else if (ret[0] && ret[0][0] != '/')
-		ret[2] = ft_joinf("%s/%s", pwd, ret[0]);
+		ret[2] = ft_joinf("%s", ret[0]);
 	else
 	{
 		ret[0] = ft_strjoin(pwd, "/");

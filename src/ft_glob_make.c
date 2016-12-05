@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 12:36:08 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 16:33:47 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,21 @@ char	*ft_glob_replace(char *cmd)
 	char	**cmd_decomp;
 	t_glob	*pathlist;
 	t_glob	*tmp;
+	char	*tmp2;
 	char	*ret;
 
-	cmd_decomp = ft_glob_make_pathfind(cmd); 
+	cmd_decomp = ft_glob_make_pathfind(cmd);
 	ft_glob_path(cmd_decomp);
 	pathlist = ft_glob_pathtree(cmd_decomp[2]);
 	tmp = pathlist;
+	if (!tmp)
+		return (NULL);
 	ret = ft_strnew(0);
 	while (tmp)
 	{
-		ret = ft_joinf("%xs %xs", ret, ft_glob_makestr(cmd_decomp[0],
-					cmd_decomp[1], tmp->path));
+		tmp2 = ft_glob_makestr(tmp->path, cmd_decomp[1], tmp->path);
+		if (tmp2)
+			ret = ft_joinf("%s %s", ret, tmp2);
 		tmp = tmp->next;
 	}
 	ft_glob_delchain(pathlist);
@@ -59,6 +63,8 @@ char	*ft_glob_tglobtostr(t_glob *lst)
 
 	list = lst;
 	ret = NULL;
+	if (!lst)
+		return (NULL);
 	while (list)
 	{
 		if (!ret)
@@ -103,7 +109,7 @@ char	*ft_glob_makestr(char *path, char *find, char *absolute)
 		return (NULL);
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
-		if (ft_strcmp(s_dir->d_name, "..") == 0
+		if (ft_strcmp(s_dir->d_name, "..") == 0 || ft_strcmp(s_dir->d_name, ".") == 0
 				|| (ft_strncmp(s_dir->d_name, ".", 1) == 0 && find[0] != '.'))
 			continue ;
 		if (ft_glob_compare(find, s_dir->d_name) != 0

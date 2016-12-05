@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 12:27:22 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 16:34:12 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void		ft_glob(char **tabl)
 	while (cmd[++i])
 	{
 		find = ft_strdup(cmd[i]);
-		if (ft_glob_check(cmd[i]) == 1 && (tmp = ft_glob_replace(cmd[i])))
+		if (ft_glob_check(cmd[i]) == 1 && (tmp = ft_glob_replace(cmd[i])) && tmp[0])
 			ret = ft_joinf("%xs %s", ret, tmp);
-		else if (ft_glob_check(cmd[i]) == 1 && !tmp)
+		else if (ft_glob_check(cmd[i]) == 1 && (!tmp || !tmp[0]))
 			return (ft_glob_nomatch(find, ret, tabl, cmd));
 		else
 			ret = ft_joinf("%xs %s", ret, cmd[i]);
