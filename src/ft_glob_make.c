@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 16:33:47 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 17:02:46 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,28 @@ char	*ft_glob_tglobtostr(t_glob *lst)
 {
 	char	*ret;
 	t_glob	*list;
+	char	*pwd;
+	int		i;
 
 	list = lst;
 	ret = NULL;
+	pwd = NULL;
 	if (!lst)
 		return (NULL);
+	pwd = getcwd(pwd, MAXPATHLEN);
+	i = ft_strlen(pwd) + 1;
+	if (ft_strncmp(pwd, list->path, i - 1) != 0)
+		i = 0;
+	free(pwd);
 	while (list)
 	{
 		if (!ret)
 		{
-			ret = ft_strdup(list->path);
+			ret = ft_strdup(list->path + i);
 			list = list->next;
 			continue ;
 		}
-		ret = ft_joinf("%xs %s", ret, list->path);
+		ret = ft_joinf("%xs %s", ret, list->path + i);
 		list = list->next;
 	}
 	return (ret);
