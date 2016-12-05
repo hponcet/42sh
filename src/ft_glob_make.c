@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 17:02:46 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 18:30:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_glob_replace(char *cmd)
 	{
 		tmp2 = ft_glob_makestr(tmp->path, cmd_decomp[1], tmp->path);
 		if (tmp2)
-			ret = ft_joinf("%s %s", ret, tmp2);
+			ret = ft_joinf("%xs %xs", ret, tmp2);
 		tmp = tmp->next;
 	}
 	ft_glob_delchain(pathlist);
@@ -40,6 +40,8 @@ char	*ft_glob_replace(char *cmd)
 	ft_strdel(&cmd_decomp[2]); // absolute path
 	free(cmd_decomp);
 	cmd_decomp = NULL;
+	if (!ret[0])
+		ft_strdel(&ret);
 	return (ret);
 }
 
@@ -113,6 +115,8 @@ char	*ft_glob_makestr(char *path, char *find, char *absolute)
 	char			*str;
 
 	ret = NULL;
+	if (!find[0])
+		return (str = ft_strdup(path));
 	if ((dirp = opendir(absolute)) == NULL)
 		return (NULL);
 	while ((s_dir = readdir(dirp)) != NULL)

@@ -41,10 +41,8 @@ void		ft_treat_read(char **argv, char **split, t_env **env, int start)
 
 static int	ft_check_read_opts(char **argv, t_env **env)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	j = 1;
 	if (argv[j][1] == '\0')
 	{

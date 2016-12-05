@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 16:37:29 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 16:42:54 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/05 17:50:55 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ t_glob	*ft_glob_pathtree(char *cmd)
 	tree = NULL;
 	paths = ft_strsplit(cmd, '/');
 	ft_glob_maketree("/", paths, &tree, 0);
+	free_tab(paths);
 	return (tree);
 }
