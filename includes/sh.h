@@ -82,6 +82,7 @@ typedef struct			s_env
 {
 	char				*var;
 	char				*val;
+	int					local;
 	struct s_env		*next;
 }						t_env;
 
@@ -141,12 +142,15 @@ typedef struct			s_shell
 // fonction micka
 size_t					ft_list_size_index(t_input *start, t_input *end);
 void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
-void					ft_back_quote(t_shell *shell);
-void					ft_launch_cmd(t_shell *shell, t_btree *tree);
+int						ft_back_quote(t_shell *shell);
+int						ft_launch_cmd(t_shell *shell, t_btree *tree);
+int						ft_prepare_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);
 int						ft_read(char **argv, t_env **env);
 void					ft_treat_read(char **argv, char **split, t_env **env, int start);
 int						ft_p_read_opt(char **argv, t_env **env);
+int						ft_s_read_opt(char **argv, t_env **env);
+int						ft_n_read_opt(char **argv, t_env **env, int nb);
 int						ft_d_read_opt(char **argv, t_env **env);
 
 
@@ -160,6 +164,7 @@ int						cmd_error(int errnum, char c, char *s); // parsing pipe/redir
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);
 void					env_var_error(int errnum, char *cmd, char *arg);
+int						export_error(int errnum, char *arg);
 int						exit_error(int errnum, char *arg);
 
 /// FREE ///
@@ -195,6 +200,7 @@ size_t					lst_len(t_input *lst);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst); // retourne le dernier caractere de l'input
+t_env					*get_last_env_elem(t_env *lst);
 int						is_builtin(char *cmd); // gros if de porc (desole micka)
 
 /// ENVIRONNEMENT ///
@@ -262,7 +268,7 @@ int						handle_input(t_shell *shell); // touche return
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
 char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
-char					valid_input(t_input *input, char c); // check des quotes, parentheses backslash...
+char					valid_input(t_input *input); // check des quotes, parentheses backslash...
 char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
 char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
@@ -293,6 +299,7 @@ int						ft_echo(char **cmd);
 int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
+int						ft_export(char **cmd, t_env *env_lst);
 
 /// EXECUCTION BINAIRES ///
 int						binary_cmd(char **cmd, char **env_array,

@@ -18,6 +18,7 @@ vpath %.c ./src ./src/builtins
 
 SRC = buffer.c \
 	  builtins_error.c \
+	  builtins_error_2.c \
 	  builtins_check.c \
 	  bltn_history.c \
 	  bltn_history_opt.c \
@@ -44,6 +45,7 @@ SRC = buffer.c \
 	  exec_bin.c \
 	  exit.c \
 	  exit_status.c \
+	  export.c \
 	  fd_handling.c \
 	  forking.c \
 	  free.c \
@@ -73,6 +75,7 @@ SRC = buffer.c \
 	  line_moves_1.c \
 	  line_moves_2.c \
 	  lst_tools.c \
+	  lst_tools_2.c \
 	  main.c \
 	  main_parsing.c \
 	  print.c \

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/28 11:13:52 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/11/29 21:32:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ int		builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell)
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		shell->status = ft_exit(cmd, shell);
 	else if (ft_strcmp(cmd[0], "read") == 0)
+	{
+		signal(SIGINT, &sig_handler);
 		shell->status = ft_read(cmd, &shell->env_lst);
+		signal(SIGINT, &sig_handler1);
+	}
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		shell->status = ft_export(cmd, shell->env_lst);
 	else
 		return (-1);
 	return (0);
