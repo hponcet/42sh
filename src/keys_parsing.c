@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/02 20:11:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 17:50:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		parse_keys1(t_shell *shell, char *buf)
 		else if (buf[2] == 72)
 			move_line_start(shell);
 		else if (buf[2] == 70)
-			move_line_end(shell, shell->col);
+			move_line_end(shell);
 		else if (buf[2] == 65)
 			history_prev(shell);
 		else if (buf[2] == 66)

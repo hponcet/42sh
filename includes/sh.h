@@ -48,10 +48,10 @@
 // Globing
 typedef struct		s_glob
 {
-	char			*name;
-	char			*path;
-	struct s_glob	*next;
-}					t_glob;
+	char				*name;
+	char				*path;
+	struct s_glob		*next;
+}						t_glob;
 
 // Table de hashage
 typedef struct			s_hash
@@ -123,8 +123,8 @@ typedef struct			s_shell
 	int					fd[4]; // stin, stdout, stderr, tty, tty fantome
 	int					pid; // pid du shell
 	int					status; // valeur de retour du dernier processus fils
-	size_t				col; // nb colonnes fenetre
-	size_t				row; // nb lignes
+	int					col; // nb colonnes fenetre
+	int					row; // nb lignes
 	size_t				winsize; // lignes * colonnes
 	size_t				input_len; // longueur de l'input
 	size_t				p_len; // longueur du prompt
@@ -147,6 +147,7 @@ size_t					ft_list_size_index(t_input *start, t_input *end);
 void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
 int						ft_back_quote(t_shell *shell);
 int						ft_launch_cmd(t_shell *shell, t_btree *tree);
+int						ft_prepare_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);
 int						ft_read(char **argv, t_env **env);
 void					ft_treat_read(char **argv, char **split, t_env **env, int start);
@@ -248,7 +249,7 @@ int						move_left_word(t_shell *shell);
 int						move_right(t_shell *shell);
 int						move_right_word(t_shell *shell);
 int						move_line_start(t_shell *shell);
-int						move_line_end(t_shell *shell, size_t win_col);
+int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
 int						backspace(t_shell *shell);
@@ -499,9 +500,15 @@ int					ft_glob_captain_crochet(char *s1, char *s2, char c);
 
 int					ft_cursh_check(char *str);
 void				ft_cursh(char **tabl);
+void				ft_cursh_compose(char **tabl);
 void				ft_cursh_proc(char **str, int s, int e);
 void				ft_cursh_replace(char **str);
+void				ft_cursh_compose_end(char **str);
 
+ char				**ft_glob_make_pathfind(char *cmd);
+ void			    ft_glob_addpath(t_glob **tree, char *path);
+ void				ft_glob_maketree(char *curpath, char **paths, t_glob **tree, int i);
+ t_glob				*ft_glob_pathtree(char *cmd);
 //////////////////////////////////////////////////////
 
 #endif

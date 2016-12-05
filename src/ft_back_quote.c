@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/29 21:30:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 16:12:35 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_input	*ft_treat_back_quote(t_shell *shell, t_input **curs, char *str)
 	fd = open("/tmp/back_quote.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	shell->fd[1] = fd;
 	tree = store_cmd(str);
-	if (ft_launch_cmd(shell, tree) == 1)
+	if (ft_prepare_cmd(shell, tree) == 1)
 		return (NULL);
 	close(fd);
 	close_and_reset_fd(shell->fd);

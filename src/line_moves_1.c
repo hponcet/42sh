@@ -6,11 +6,20 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 17:27:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/02 21:15:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 18:44:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+static int	get_input_len(t_shell *shell)
+{
+	if (!shell->curs_pos && !shell->input)
+		return (-1);
+	if (!shell->curs_pos && (shell->curs_pos = shell->input))
+		replace_cursor(shell, 0, 0);
+	return (lst_len(shell->curs_pos) - 1);
+}
 
 int		move_left(t_shell *shell)
 {
@@ -35,7 +44,7 @@ int		move_right(t_shell *shell)
 
 int		move_line_start(t_shell *shell)
 {
-	size_t	i;
+	int		i;
 	int		j;
 
 	if (!shell->curs_pos)
@@ -59,27 +68,24 @@ int		move_line_start(t_shell *shell)
 	return (0);
 }
 
-int		move_line_end(t_shell *shell, size_t win_col)
+int		move_line_end(t_shell *shell)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	int		k;
 
 	j = 0;
-	k = 0;
-	(void)win_col;
-	if (!shell->curs_pos && !shell->input)
+	if ((i = get_input_len(shell)) < 0)
 		return (-1);
-	if (!shell->curs_pos && (shell->curs_pos = shell->input))
-		replace_cursor(shell, 0, 0);
-	i = lst_len(shell->curs_pos) - 1;
 	while (i > shell->col && (i -= shell->col))
 		j++;
-	if (j)
+	if (j && (k = j) && (j *= shell->col))
 	{
-		k = j >= shell->row ? shell->row - 1 : j;
+		if ((k > shell->row - 2) && (i >= (shell->col - (int)shell->p_len - 1)))
+			k = shell->row - 2;
+		else if (k > shell->row - 2)
+			k = shell->row - 1;
 		tputs(tgoto(tgetstr("DO", NULL), 0, k), shell->fd[3], &putchar);
-		j *= shell->col;
 		while (j--)
 			shell->curs_pos = shell->curs_pos->next;
 	}

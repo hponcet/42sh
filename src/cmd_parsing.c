@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/02 20:10:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 17:49:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			handle_input(t_shell *shell)
 	char	*cmd_str;
 
 	cmd_str = NULL;
-	move_line_end(shell, shell->col);
+	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	if ((ret = check_input(shell)) > 0)
 		return (ret);
