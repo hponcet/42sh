@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/01 19:30:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 17:49:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int		ft_launch_cmd(t_shell *shell, t_btree *tree)
 	}
 	restore_term(shell);
 	signal(SIGTSTP, SIG_DFL);
+	signal(SIGINT, &sig_handler1);
 	handle_btree(shell, tree);
 	free_btree(tree);
 	shell->tree = NULL;

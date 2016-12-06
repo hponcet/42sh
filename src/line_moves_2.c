@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/30 17:07:36 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 17:19:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 18:49:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			move_right_word(t_shell *shell)
 
 int			move_line_up(t_shell *shell)
 {
-	size_t	i;
+	int	i;
 
 	i = shell->col;
 	while (shell->curs_pos && i--)

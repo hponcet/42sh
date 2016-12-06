@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/26 19:20:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 20:53:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ static void	print_input_buf(t_shell *shell)
 	shell->hist_end = 1;
 	if (shell->input_buf)
 	{
-		while (shell->input_buf && shell->input_buf[i])
-		{
+		while (shell->input_buf[i])
 			store_input(shell, shell->input_buf[i++]);
-			print_input(shell, shell->curs_pos, shell->p_len);
-		}
+		print_input(shell, shell->input, shell->p_len);
 		free(shell->input_buf);
 		shell->input_buf = NULL;
 	}
@@ -66,9 +64,9 @@ int			history_prev(t_shell *shell)
 	while (tmp)
 	{
 		store_input(shell, tmp->c);
-		print_input(shell, shell->curs_pos, shell->p_len);
 		tmp = tmp->next;
 	}
+	print_input(shell, shell->input, shell->p_len);
 	return (0);
 }
 
@@ -89,9 +87,9 @@ int			history_next(t_shell *shell)
 		while (tmp)
 		{
 			store_input(shell, tmp->c);
-			print_input(shell, shell->curs_pos, shell->p_len);
 			tmp = tmp->next;
 		}
+		print_input(shell, shell->input, shell->p_len);
 	}
 	return (0);
 }
