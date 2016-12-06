@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:21:48 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/26 18:08:14 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/06 17:28:26 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			ft_cursh_check(char *str)
 	return (0);
 }
 
-void		ft_cursh(char **tabl)
+int			ft_cursh(char **tabl)
 {
 	int		i;
 	char	**cmd;
@@ -73,4 +73,5 @@ void		ft_cursh(char **tabl)
 	free_tab(cmd);
 	free(tabl[0]);
 	tabl[0] = ret;
+	return (0);
 }

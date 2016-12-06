@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 18:16:58 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/06 17:27:41 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ft_glob_check(char *str)
 	return (0);
 }
 
-static void	ft_glob_nomatch(char *nm, char *ret, char **tabl, char ** cmd)
+int			ft_glob_nomatch(char *nm, char *ret, char **tabl, char ** cmd)
 {
 	ft_putstr_fd("42sh: no matches found: ", STDERR_FILENO);
 	ft_putendl_fd(nm, STDERR_FILENO);
@@ -59,9 +59,10 @@ static void	ft_glob_nomatch(char *nm, char *ret, char **tabl, char ** cmd)
 	ft_strdel(&ret);
 	free(tabl[0]);
 	tabl[0] = ft_strdup(" ");
+	return (1);
 }
 
-void		ft_glob(char **tabl)
+int			ft_glob(char **tabl)
 {
 	int		i;
 	char	**cmd;
@@ -88,4 +89,5 @@ void		ft_glob(char **tabl)
 	free_tab(cmd);
 	free(tabl[0]);
 	tabl[0] = ret;
+	return (0);
 }

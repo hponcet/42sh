@@ -481,7 +481,7 @@ t_hash					**hash_bin(t_shell *shell);
 /*
 ** ft_glob.c
 */
-void				ft_glob(char **str);
+int					ft_glob(char **str);
 char				*ft_glob_replace(char *cmd);
 t_glob				*ft_glob_makefile(struct dirent *s_dir, char *path);
 char				*ft_glob_tglobtostr(t_glob *lst);
@@ -494,7 +494,7 @@ void				ft_glob_delchain(t_glob *chain);
 int					ft_glob_captain_crochet(char *s1, char *s2, char c);
 
 int					ft_cursh_check(char *str);
-void				ft_cursh(char **tabl);
+int					ft_cursh(char **tabl);
 void				ft_cursh_compose(char **tabl);
 void				ft_cursh_proc(char **str, int s, int e);
 void				ft_cursh_replace(char **str);
