@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 15:53:40 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 15:10:42 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/30 17:47:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static char	*ft_read_nchar(int nb, char *line)
 				free(line);
 				line = tmp;
 			}
-			if (limit != -1)
-				ft_putchar(buf[0]);
+			ft_putchar(buf[0]);
 		}
 		ft_bzero(buf, 7);
 		i++;
