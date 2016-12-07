@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/24 21:31:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/27 18:00:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,19 @@ static char	check_quotes(t_input **input, char c, t_input *tmp)
 }
 
 
-char		valid_input(t_input *input, char c)
+char		valid_input(t_input *input)
 {
+	char	ret;
 	t_input	*tmp;
 	t_input	*sub_tmp;
 
+	ret = 0;
 	tmp = input;
 	while (tmp)
 	{
 		sub_tmp = tmp;
-		if ((c = check_quotes(&tmp, tmp->c, sub_tmp)) != 0)
-			return (c);
+		if ((ret = check_quotes(&tmp, tmp->c, sub_tmp)) != 0)
+			return (ret);
 		if (tmp)
 			tmp = tmp->next;
 	}

@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_check.c                                   :+:      :+:    :+:   */
+/*   lst_tools_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/04 17:51:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 16:43:40 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/11/29 20:04:05 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/12/02 18:09:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		is_builtin(char *cmd)
+t_env	*get_last_env_elem(t_env *lst)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") ||
-		!ft_strcmp(cmd, "history") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "setenv") || !ft_strcmp(cmd, "unsetenv") ||
-		!ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "read") ||
-		!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
-		return (1);
-	return (0);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+size_t	input_part_len(t_input *start, t_input *end)
+{
+	int	i;
+
+	i = 0;
+	while (start && start != end)
+	{
+		start = start->next;
+		i++;
+	}
+	return (i);
 }

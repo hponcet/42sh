@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_check.c                                   :+:      :+:    :+:   */
+/*   builtins_error_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/04 17:51:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 16:43:40 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/11/29 14:58:58 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/11/30 17:05:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		is_builtin(char *cmd)
+int		export_error(int errnum, char *arg)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") ||
-		!ft_strcmp(cmd, "history") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "setenv") || !ft_strcmp(cmd, "unsetenv") ||
-		!ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "read") ||
-		!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
-		return (1);
-	return (0);
+	if (errnum == 0)
+	{
+		ft_putstr_fd("export: illegal option -- ", STDERR_FILENO);
+		ft_putstr_fd(++arg, STDERR_FILENO);
+	}
+	ft_putstr_fd("\nusage: export [-p] [name[=value]]...\n", STDERR_FILENO);
+	return (1);
 }

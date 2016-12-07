@@ -6,22 +6,39 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 15:04:33 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/22 15:50:05 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/06 19:07:02 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+int		ft_prepare_cmd(t_shell *shell, t_btree *tree)
+{
+	t_env	*new_env;
+	t_env	*tmp;
+	int		ret;
+
+	tmp = shell->env_lst;
+	new_env = NULL;
+	dup_env_lst(shell->env_lst, &new_env);
+	shell->env_lst = new_env;
+	ret = ft_launch_cmd(shell, tree);
+	free_env_lst(&shell->env_lst);
+	shell->env_lst = tmp;
+	return (ret);
+}
 
 size_t	ft_list_size_index(t_input *start, t_input *end)
 {
 	size_t size;
 
 	size = 0;
-	while (start != end->next)
+	while (start != end)
 	{
 		start = start->next;
 		size++;
 	}
+	size++;
 	return (size);
 }
 

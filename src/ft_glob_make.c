@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 15:19:12 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/07 13:31:39 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,34 @@
 
 char	*ft_glob_replace(char *cmd)
 {
-	char	**pth_cmd;
+	char	**cmd_decomp;
+	t_glob	*pathlist;
+	t_glob	*tmp;
+	char	*tmp2;
 	char	*ret;
 
-	pth_cmd = (char**)malloc(sizeof(char*) * 4);
-	pth_cmd[3] = NULL;
-	pth_cmd[2] = NULL;
-	pth_cmd[0] = NULL;
-	pth_cmd[1] = ft_strdup(cmd);
-	ft_glob_path(pth_cmd);
-	ret = ft_glob_makestr(pth_cmd[0], pth_cmd[1], pth_cmd[2]);
-	ft_strdel(&pth_cmd[0]);
-	ft_strdel(&pth_cmd[1]);
-	ft_strdel(&pth_cmd[2]);
-	free(pth_cmd);
-	pth_cmd = NULL;
+	cmd_decomp = ft_glob_make_pathfind(cmd);
+	ft_glob_path(cmd_decomp);
+	pathlist = ft_glob_pathtree(cmd_decomp[2]);
+	tmp = pathlist;
+	if (!tmp)
+		return (NULL);
+	ret = ft_strnew(0);
+	while (tmp)
+	{
+		tmp2 = ft_glob_makestr(tmp->path, cmd_decomp[1], tmp->path);
+		if (tmp2)
+			ret = ft_joinf("%xs %xs", ret, tmp2);
+		tmp = tmp->next;
+	}
+	ft_glob_delchain(pathlist);
+	ft_strdel(&cmd_decomp[0]); // path
+	ft_strdel(&cmd_decomp[1]); // find
+	ft_strdel(&cmd_decomp[2]); // absolute path
+	free(cmd_decomp);
+	cmd_decomp = NULL;
+	if (!ret[0])
+		ft_strdel(&ret);
 	return (ret);
 }
 
@@ -49,18 +62,28 @@ char	*ft_glob_tglobtostr(t_glob *lst)
 {
 	char	*ret;
 	t_glob	*list;
+	char	*pwd;
+	int		i;
 
 	list = lst;
 	ret = NULL;
+	pwd = NULL;
+	if (!lst)
+		return (NULL);
+	pwd = getcwd(pwd, MAXPATHLEN);
+	i = ft_strlen(pwd) + 1;
+	if (ft_strncmp(pwd, list->path, i - 1) != 0)
+		i = 0;
+	free(pwd);
 	while (list)
 	{
 		if (!ret)
 		{
-			ret = ft_strdup(list->path);
+			ret = ft_strdup(list->path + i);
 			list = list->next;
 			continue ;
 		}
-		ret = ft_joinf("%xs %s", ret, list->path);
+		ret = ft_joinf("%xs %s", ret, list->path + i);
 		list = list->next;
 	}
 	return (ret);
@@ -92,11 +115,13 @@ char	*ft_glob_makestr(char *path, char *find, char *absolute)
 	char			*str;
 
 	ret = NULL;
+	if (!find[0])
+		return (str = ft_strdup(path));
 	if ((dirp = opendir(absolute)) == NULL)
 		return (NULL);
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
-		if (ft_strcmp(s_dir->d_name, "..") == 0
+		if (ft_strcmp(s_dir->d_name, "..") == 0 || ft_strcmp(s_dir->d_name, ".") == 0
 				|| (ft_strncmp(s_dir->d_name, ".", 1) == 0 && find[0] != '.'))
 			continue ;
 		if (ft_glob_compare(find, s_dir->d_name) != 0

@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 16:16:51 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 21:19:08 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/11/29 14:04:17 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,30 @@ static int		ft_cindex_rev_from(char *str, char c, int i)
 
 void			ft_cursh_proc(char **str, int s, int e)
 {
-	char	*joined;
 	char	**test;
 	char	*tmp;
 	char	*start;
 	int		i;
 
-	i = 0;
-	ft_printf("str_orig: %s    e:%i s:%i\n", str[0], e, s);
+	start = ft_strsub(str[0], s + 1, e - s - 1);
+	test = ft_strsplit(start, ',');
+	ft_strdel(&start);
 	start = ft_strsub(str[0], 0, s);
-	ft_printf("start: %s\n", start);
-	joined = ft_strsub(str[0], s + 1, e - s - 1);
-	test = ft_strsplit(joined, ',');
-	ft_strdel(&joined);
-	joined = ft_strdup(str[0] + e + 1);
-	while (test[i])
+	i = -1;
+	while (test[++i])
 	{
 		tmp = ft_strdup(test[i]);
 		free(test[i]);
 		test[i] = ft_joinf("%s%xs", start, tmp);
-		i++;
 	}
-	i = -1;
 	ft_strdel(&start);
+	start = ft_strdup(str[0] + e + 1);
 	free(str[0]);
 	str[0] = ft_strnew(0);
+	i = -1;
 	while (test[++i])
 		str[0] = ft_joinf("%xs %s", str[0], test[i]);
-	str[0] = ft_joinf("%xs %s", str[0], joined);
-	ft_printf("str_modded: %s\n", str[0]);
-	sleep(3);
+	str[0] = ft_joinf("%xs %xs", str[0], start);
 	free_tab(test);
 }
 
@@ -77,9 +71,11 @@ void			ft_cursh_replace(char **str)
 {
 	int		oc;
 	int		cc;
-
+	
 	oc = ft_cindex_rev(str[0], '{');
 	cc = ft_cindex(str[0], '}');
+	if (str[0][strlen(str[0]) - 1] != '}')
+		ft_cursh_compose_end(str);
 	while (cc >= 0 && cc <= (int)ft_strlen(str[0]))
 	{
 		if (oc < 0)
@@ -90,7 +86,6 @@ void			ft_cursh_replace(char **str)
 		if (cc - oc > 0 && ft_cindex_rev_from(str[0], ',', cc) > oc)
 		{
 			ft_cursh_proc(str, oc, cc);
-			ft_cursh_replace(str);
 			break ;
 		}
 		oc = ft_cindex_rev_from(str[0], '{', oc - 1);

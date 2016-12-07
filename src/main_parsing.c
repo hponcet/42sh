@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 17:50:57 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/23 20:59:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/27 18:01:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	check_input_form(t_shell *shell)
 			shell->input->prev = tmp;
 		shell->input = shell->input_save;
 	}
-	if ((c = valid_input(shell->input, c)) > 0)
+	if ((c = valid_input(shell->input)) > 0)
 	{
 		c == '\\' ? delete_input(&(shell->input), shell->curs_pos, shell, 0)
 		: store_input(shell, '\n');

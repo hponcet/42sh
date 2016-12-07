@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/26 19:24:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 20:10:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ int			putchar(int c)
 	shell = get_struct(0);
 	write(shell->fd[3], &c, 1);
 	return (0);
+}
+
+static void	cursor_back_to_pos(t_shell *shell, int i)
+{
+	int	j;
+
+	j = 0;
+	while (i > shell->col && (i -= shell->col))
+		j++;
+	if (j)
+		tputs(tgoto(tgetstr("UP", NULL), 0, j), shell->fd[3], &putchar);
+	while (i--)
+		replace_cursor(shell, 1, 1);
 }
 
 static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
@@ -47,10 +60,7 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
 		replace_cursor(shell, 1, 0);
 	}
 	else
-	{
-		while (--i)
-			replace_cursor(shell, 1, 1);
-	}
+		cursor_back_to_pos(shell, i - 1);
 }
 
 static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)

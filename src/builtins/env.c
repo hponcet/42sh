@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/15 20:45:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/11/30 16:43:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static int	put_env(t_env *env_lst)
 {
-	t_env	*tmp;
-
-	if (env_lst)
+	while (env_lst)
 	{
-		tmp = env_lst;
-		while (tmp)
+		if (!env_lst->local && env_lst->val)
 		{
-			ft_putstr(tmp->var);
+			ft_putstr(env_lst->var);
 			ft_putchar('=');
-			ft_putendl(tmp->val);
-			tmp = tmp->next;
+			if (env_lst->val[0])
+				ft_putendl(env_lst->val);
+			else
+				ft_putchar('\n');
 		}
+		env_lst = env_lst->next;
 	}
 	return (0);
 }
@@ -42,12 +42,12 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 	}
 	else if ((*cmd)[1] == 'u' && (*cmd)[2])
 	{
-		del_env_var(env_lst, ft_strdup(*cmd + 2));
+		del_env_var(env_lst, (*cmd + 2), 0);
 		return (1);
 	}
 	else if ((*cmd)[1] == 'u' && *(cmd + 1))
 	{
-		del_env_var(env_lst, ft_strdup(*(cmd + 1)));
+		del_env_var(env_lst, (*(cmd + 1)), 0);
 		return (2);
 	}
 	else if ((*cmd)[1] == 'u' && !(*(cmd + 1)))

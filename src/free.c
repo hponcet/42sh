@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 15:58:38 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/25 19:52:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 19:24:04 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	free_tmp_inputs(t_shell *shell, int reset_save)
 {
 	if (shell->input)
 		free_input_list(&(shell->input), &(shell->input_len));
-	if (shell->buffer)
-		free_input_list(&(shell->buffer), NULL);
 	if (shell->input_buf)
 	{
 		free(shell->input_buf);

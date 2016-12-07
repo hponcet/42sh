@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:21:48 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 18:15:04 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/06 17:28:26 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			ft_cursh_check(char *str)
 	return (0);
 }
 
-void		ft_cursh(char **tabl)
+int			ft_cursh(char **tabl)
 {
 	int		i;
 	char	**cmd;
@@ -67,14 +67,11 @@ void		ft_cursh(char **tabl)
 	while (cmd[++i])
 	{
 		if (ft_cursh_check(cmd[i]) == 1)
-		{
-			ft_cursh_replace(&cmd[i]);
-			ret = ft_joinf("%xs %s", ret, cmd[i]);
-		}
-		else
-			ret = ft_joinf("%xs %s", ret, cmd[i]);
+			ft_cursh_compose(&cmd[i]);
+		ret = ft_joinf("%xs %s", ret, cmd[i]);
 	}
 	free_tab(cmd);
 	free(tabl[0]);
 	tabl[0] = ret;
+	return (0);
 }

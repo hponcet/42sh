@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/26 20:44:12 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/02 13:27:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		paste_buffer(t_shell *shell)
 		return (-1);
 	tmp = shell->buffer;
 	pos_save = shell->curs_pos;
-	signal(SIGINT, SIG_IGN);
 	while (tmp)
 	{
 		store_input(shell, tmp->c);
@@ -54,4 +53,17 @@ int		paste_buffer(t_shell *shell)
 	pos_save = pos_save ? pos_save->next : shell->input;
 	print_input(shell, pos_save, shell->p_len);
 	return (0);
+}
+
+void	insert_read_buf(t_shell *shell, char *buf, size_t len)
+{
+	size_t	i;
+	t_input	*pos_save;
+
+	i = 0;
+	pos_save = shell->curs_pos;
+	while (i < len && buf[i])
+		store_input(shell, buf[i++]);
+	pos_save = pos_save ? pos_save->next : shell->input;
+	print_input(shell, pos_save, shell->p_len);
 }

@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/24 18:19:37 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/12/06 18:24:56 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ vpath %.c ./src ./src/builtins
 
 SRC = buffer.c \
 	  builtins_error.c \
+	  builtins_error_2.c \
 	  builtins_check.c \
 	  bltn_history.c \
 	  bltn_history_opt.c \
@@ -44,13 +45,16 @@ SRC = buffer.c \
 	  exec_bin.c \
 	  exit.c \
 	  exit_status.c \
+	  export.c \
 	  fd_handling.c \
 	  forking.c \
 	  free.c \
 	  free_btree.c \
 	  ft_cursh.c \
 	  ft_cursh_replace.c \
+	  ft_cursh_compose.c \
 	  ft_glob.c \
+	  ft_glob_path_globed.c \
 	  ft_glob_compare.c \
 	  ft_glob_make.c \
 	  ft_glob_path.c \
@@ -71,6 +75,7 @@ SRC = buffer.c \
 	  line_moves_1.c \
 	  line_moves_2.c \
 	  lst_tools.c \
+	  lst_tools_2.c \
 	  main.c \
 	  main_parsing.c \
 	  print.c \
@@ -84,6 +89,7 @@ SRC = buffer.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \
+	  unset.c \
 	  unsetenv.c \
 	  ft_back_quote.c	\
 	  ft_tools_back_quote.c	\
@@ -103,11 +109,12 @@ LIBINC	= $(LIBFT)$(INC)
 LIB		= $(LIBFT)libft.a
 
 # PROCESS
-all: $(NAME)
 
 $(NAME): $(LIB) $(O2)
 	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $@
 	@echo "\033[0;32m42sh compilation done !\033[0;m"
+
+all: $(NAME)
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
