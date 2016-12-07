@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/30 17:39:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 15:35:01 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			ft_read(char **argv, t_env **env)
 
 	signal(SIGINT, &sig_handler_read);
 	line = NULL;
-	if (argv[1] == NULL)
+	if (argv[1] == NULL || ft_strcmp(argv[1], "-r") == 0)
 	{
 		if (get_next_line(0, &line) < 0)
 			return(0);

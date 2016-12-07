@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/02 21:05:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 16:04:52 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int		main(int ac, char **av, char **environ)
 {
 	t_shell		*shell;
 
-	(void)ac;
-	(void)av;
+	ac = 0;;
+	av = NULL;
 	if (!(shell = (t_shell *)malloc(sizeof(*shell))))
 		ft_put_error(ER_MEM, 1);
 	set_sig_handler();
