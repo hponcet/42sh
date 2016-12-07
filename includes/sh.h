@@ -304,7 +304,7 @@ int						fill_heredoc(char *delimiter, int *fd);
 int						builtins_cmd(char **cmd, t_env *env_lst, t_shell *shell); // execution builtin
 int						ft_exit(char **cmd, t_shell *shell);
 int						ft_cd(char **cmd, t_env *env_lst);
-int						ft_echo(char **cmd);
+int						ft_echo(char **cmd, int fd);
 int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
