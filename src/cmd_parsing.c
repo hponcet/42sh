@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/05 17:49:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 17:52:45 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ int			handle_input(t_shell *shell)
 		return (ret);
 	if (!(hist_checkdouble(shell)))
 		shell->hist = store_hist(shell);
-	if (ft_back_quote(shell) != 0)
+	ft_back_quote(shell);
+	if (!(shell->curs_pos = get_last_elem(shell->input)))
 	{
 		free_tmp_inputs(shell, 1);
 		return (0);
 	}
-	shell->curs_pos = get_last_elem(shell->input);
 	shell->input_len = lst_len(shell->input);
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);

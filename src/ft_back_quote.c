@@ -6,8 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 17:21:14 by MrRobot          ###   ########.fr       */
-/*   Updated: 2016/12/07 10:37:58 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 17:49:34 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +50,7 @@ static void		ft_output_insert(t_shell *shell, t_input **curs, int fd)
 		if ((ret = get_next_line(fd, &line)) == 1)
 			ft_input_add(curs, ' ');
 	}
+	delete_input(&shell->input, *curs, NULL, 0);
 }
 
 static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
@@ -64,7 +64,7 @@ static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
 	{
 		ft_strdel(&str);
 		free_input_list(&input, NULL);
-		return (NULL);
+		return (*curs);
 	}
 	free_input_list(&input, NULL);
 	fd = open("/tmp/back_quote.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);

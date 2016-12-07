@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/24 13:46:18 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/06 21:03:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	file_to_hist(t_shell *shell)
 		input_to_hist(shell, input, timestamp);
 		ft_strdel(&buf);
 		ft_strdel(&timestamp);
+		free_input_list(&input, NULL);
 	}
 	ft_strdel(&histpath);
 	close(fd);
