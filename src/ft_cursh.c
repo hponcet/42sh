@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:21:48 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/06 17:28:26 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/07 17:30:27 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int			ft_cursh(char **tabl)
 	char	*ret;
 
 	i = -1;
+	if (!tabl[0] || !tabl[0][0])
+		return (1);
 	ret = ft_strnew(0);
 	cmd = ft_strsplit(tabl[0], ' ');
 	while (cmd[++i])

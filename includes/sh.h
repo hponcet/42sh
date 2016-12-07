@@ -296,7 +296,7 @@ pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
 int						handle_redirs(t_shell *shell, t_btree *link,
-						char **cmd, int forked); // traitement des redirections
+						char **cmd); // traitement des redirections
 int						exec_redir_cmd(t_shell *shell, char **cmd);
 int						fill_heredoc(char *delimiter, int *fd);
 
