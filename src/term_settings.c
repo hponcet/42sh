@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/27 19:33:56 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/05 18:42:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static int	check_termcaps(void)
 		return (-1);
 	if (!(tgetstr("rc", NULL)))
 		return (-1);
-	if (!(tgetstr("mr", NULL)))
+	if (!(tgetstr("UP", NULL)))
 		return (-1);
-	if (!(tgetstr("me", NULL)))
+	if (!(tgetstr("DO", NULL)))
 		return (-1);
 	return (0);
 }

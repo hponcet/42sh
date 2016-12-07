@@ -89,6 +89,7 @@ SRC = buffer.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
 	  term_settings.c \
+	  unset.c \
 	  unsetenv.c \
 	  ft_back_quote.c	\
 	  ft_tools_back_quote.c	\

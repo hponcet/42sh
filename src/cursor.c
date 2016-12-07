@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/11 16:06:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/02 20:41:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	replace_cursor(t_shell *shell, int print, int back)
 
 	col = shell->col;
 	x_pos = get_cursor_x_pos(shell->input, shell->curs_pos, shell->p_len);
-	overflow = lst_len(shell->curs_pos) - shell->winsize + shell->col;;
+	overflow = lst_len(shell->curs_pos) - shell->winsize + shell->col;
 	if ((!print && back && ((x_pos % col) == 0)) || (print == 42))
 	{
 		tputs(tgetstr("up", NULL), shell->fd[3], &putchar);

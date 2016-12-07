@@ -39,6 +39,9 @@
 # define BREDIR 3 // <
 # define HEREDOC 4 // <<
 
+// taille buffer de lecture
+# define BUF_SIZE 4096
+
 // taille des tables de hashage en nb de cases
 # define HASHLEN 5000
 
@@ -120,8 +123,8 @@ typedef struct			s_shell
 	int					fd[4]; // stin, stdout, stderr, tty, tty fantome
 	int					pid; // pid du shell
 	int					status; // valeur de retour du dernier processus fils
-	size_t				col; // nb colonnes fenetre
-	size_t				row; // nb lignes
+	int					col; // nb colonnes fenetre
+	int					row; // nb lignes
 	size_t				winsize; // lignes * colonnes
 	size_t				input_len; // longueur de l'input
 	size_t				p_len; // longueur du prompt
@@ -155,6 +158,7 @@ int						ft_d_read_opt(char **argv, t_env **env);
 
 
 t_input					*ft_new_link(char c);
+
 /// ERREURS ///
 int						ft_put_error(char *error, int action);
 
@@ -188,6 +192,7 @@ t_shell					*get_struct(t_shell *struc); // renvoie la structure t_shell (avec 0
 
 /// OUTILS ///
 int						putchar(int c); // petit putchar des familles, la baaaase !
+int						strchr_outside_quotes(char *s, char to_find); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strrchr_outside_quotes(char *s, char to_find); // cherche c dans s en dehors de quote (a partir de la fin)
 int						strchr_redir(t_btree *link);
 int						is_chr_escaped(char const *s, int i);
@@ -197,6 +202,7 @@ char					**strsplit_args(char const *s); // split arguments
 char					**str_subsplit_arg(char const *s); // split des quotes pour interpretation
 int						lst_is_empty(t_input *lst);
 size_t					lst_len(t_input *lst);
+size_t					input_part_len(t_input *start, t_input *end);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst); // retourne le dernier caractere de l'input
@@ -206,12 +212,14 @@ int						is_builtin(char *cmd); // gros if de porc (desole micka)
 /// ENVIRONNEMENT ///
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
-int						del_env_var(t_env **env_lst, char *var);
+int						del_env_var(t_env **env_lst, char *var, int local);
 int						dup_env_lst(t_env *env_lst, t_env **env_lst_cpy);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 char					**env_lst_to_array(t_env *env_lst);
-
 int						check_env_var(char *env_var, char *cmd);
+void					set_shell_var(t_env *env_lst, char *arg, int local);
+void					store_shell_var(t_env **env_lst, char *var,
+						char *val, int local);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);
 
@@ -224,9 +232,9 @@ void					print_prompt(t_shell *shell, int special_prompt); // affiche un prompt 
 void					read_input(t_shell *shell); // boucle de lecture
 void					print_input(t_shell *shell, t_input *curs_pos, // affiche l'input a partir du maillon curs_pos
 						size_t p_len);
-int						parse_input(t_shell *shell, char *buf,
-						size_t buf_len, size_t p_len); // parsing des touches par categorie
+int						parse_input(t_shell *shell, char *buf, size_t buf_len); // parsing des touches par categorie
 void					store_input(t_shell *shell, char c); // ajoute un caractere dans l'input
+void					insert_read_buf(t_shell *shell, char *buf, size_t len);
 void					delete_input(t_input **lst, t_input *input,
 						t_shell *shell, int back); // supprime un caractere, shell et back optionnels
 void					clear_input(t_shell *shell); // replace le curseur en debut de commande et supprime l'input
@@ -269,9 +277,10 @@ int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
 char					check_separators(t_input *cmd, int reverse); // parsing pipes + &&
 char					valid_input(t_input *input); // check des quotes, parentheses backslash...
-char					**parse_cmd(t_btree *link); // split en char**, appel des fonctions d'interpretation
+char					**parse_cmd(t_env *env_lst, t_btree *link);
 t_btree					*store_cmd(char *str); // creer l'arbre binaire
-char					*interpret_cmd_arg(char *cmd_arg); // interpretation des sous-argument de la cmd
+char					*interpret_cmd_arg(char *cmd_arg);
+int						set_local_variable(t_env *env_lst, char **cmd);
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 char					*str_replace_var(char *s, int start, int quote); // jesuis$USER ==> jesuistonpere
 int						replace_backslash(char **s, int i, int quote);
@@ -300,6 +309,7 @@ int						ft_env(char **cmd, t_env *env_lst, int i, t_shell *shell);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
 int						ft_export(char **cmd, t_env *env_lst);
+int						ft_unset(char **cmd, t_env **env_lst);
 
 /// EXECUCTION BINAIRES ///
 int						binary_cmd(char **cmd, char **env_array,
@@ -476,7 +486,7 @@ t_hash					**hash_bin(t_shell *shell);
 /*
 ** ft_glob.c
 */
-void				ft_glob(char **str);
+int					ft_glob(char **str);
 char				*ft_glob_replace(char *cmd);
 t_glob				*ft_glob_makefile(struct dirent *s_dir, char *path);
 char				*ft_glob_tglobtostr(t_glob *lst);
@@ -489,7 +499,7 @@ void				ft_glob_delchain(t_glob *chain);
 int					ft_glob_captain_crochet(char *s1, char *s2, char c);
 
 int					ft_cursh_check(char *str);
-void				ft_cursh(char **tabl);
+int					ft_cursh(char **tabl);
 void				ft_cursh_compose(char **tabl);
 void				ft_cursh_proc(char **str, int s, int e);
 void				ft_cursh_replace(char **str);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/21 16:08:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/01 21:25:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,14 @@ static char	*get_relative_path(t_env *home, t_env *pwd)
 
 char		*get_prompt(t_env *env_lst)
 {
+	int			i;
 	static char	*prompt = NULL;
+	char		*tmp;
 	t_env		*home;
 	t_env		*pwd;
 
+	i = 0;
+	tmp = NULL;
 	if (prompt != NULL)
 		free(prompt);
 	home = get_env_ptr(env_lst, "HOME");
@@ -46,6 +50,12 @@ char		*get_prompt(t_env *env_lst)
 		prompt = ft_strdup(pwd->val);
 	else
 		prompt = get_relative_path(home, pwd);
+	if ((i = ft_strchr_index(prompt, '\n')) != -1)
+	{
+		tmp = ft_replace_str(prompt, i, 1, "\\n");
+		free(prompt);
+		prompt = tmp;
+	}
 	return (prompt);
 }
 

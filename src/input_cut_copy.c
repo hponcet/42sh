@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:29:43 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 15:47:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/05 19:35:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int		copy_eol(t_shell *shell)
 {
 	t_input *tmp;
 
-	if (shell->buffer)
-		free_input_list(&(shell->buffer), NULL);
 	if (!shell->input || (shell->curs_pos && !shell->curs_pos->next))
 		return (-1);
+	if (shell->buffer)
+		free_input_list(&(shell->buffer), NULL);
 	if (!(tmp = shell->curs_pos))
 		copy_all(shell);
 	else
@@ -38,10 +38,10 @@ int		copy_all(t_shell *shell)
 {
 	t_input *tmp;
 
-	if (shell->buffer)
-		free_input_list(&(shell->buffer), NULL);
 	if (!(tmp = shell->input))
 		return (-1);
+	if (shell->buffer)
+		free_input_list(&(shell->buffer), NULL);
 	while (tmp)
 	{
 		store_buffer(&(shell->buffer), tmp->c);
