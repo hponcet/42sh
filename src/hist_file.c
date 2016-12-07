@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/06 21:03:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 16:26:08 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void	file_to_hist(t_shell *shell)
 
 	histpath = hist_get_histpath(shell);
 	if ((fd = open(histpath, O_RDONLY, 0644)) == -1)
+	{
+		ft_strdel(&histpath);
 		return ;
+	}
 	while (get_next_line(fd, &buf))
 	{
 		timestamp = ft_strsub(buf, 0, ft_cindex(buf, ':'));
@@ -110,7 +113,6 @@ void	file_to_hist(t_shell *shell)
 		input_to_hist(shell, input, timestamp);
 		ft_strdel(&buf);
 		ft_strdel(&timestamp);
-		free_input_list(&input, NULL);
 	}
 	ft_strdel(&histpath);
 	close(fd);
