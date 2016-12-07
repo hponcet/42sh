@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 12:06:16 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 16:27:14 by MrRobot          ###   ########.fr       */
 /*   Updated: 2016/12/07 10:37:58 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -48,7 +48,8 @@ static void	ft_output_insert(t_shell *shell, t_input **curs, int fd)
 		ft_strdel(&line);
 		ft_input_add(curs, ' ');
 	}
-	delete_input(&shell->input, *curs, NULL, 0);
+	if (*curs != NULL && (*curs)->c == ' ')
+		delete_input(&shell->input, *curs, NULL, 0);
 }
 
 static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
