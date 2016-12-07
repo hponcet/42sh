@@ -80,6 +80,7 @@ SRC = buffer.c \
 	  main_parsing.c \
 	  print.c \
 	  prompt.c \
+	  putchar.c \
 	  redirection.c \
 	  setenv.c \
 	  signals.c \
