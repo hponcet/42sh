@@ -6,14 +6,14 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 16:34:13 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 17:21:14 by MrRobot          ###   ########.fr       */
 /*   Updated: 2016/12/07 10:37:58 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static int	ft_check_input(t_input *input)
+static int		ft_check_input(t_input *input)
 {
 	char	ret;
 
@@ -25,13 +25,15 @@ static int	ft_check_input(t_input *input)
 	return (0);
 }
 
-static void	ft_output_insert(t_shell *shell, t_input **curs, int fd)
+static void		ft_output_insert(t_shell *shell, t_input **curs, int fd)
 {
 	char	*line;
 	int		i;
+	int		ret;
 
 	line = NULL;
-	while (get_next_line(fd, &line) == 1)
+	ret = get_next_line(fd, &line);
+	while (ret == 1)
 	{
 		i = 0;
 		while (line[i] != 0)
@@ -46,10 +48,9 @@ static void	ft_output_insert(t_shell *shell, t_input **curs, int fd)
 			i++;
 		}
 		ft_strdel(&line);
-		ft_input_add(curs, ' ');
+		if ((ret = get_next_line(fd, &line)) == 1)
+			ft_input_add(curs, ' ');
 	}
-	if (*curs != NULL && (*curs)->c == ' ')
-		delete_input(&shell->input, *curs, NULL, 0);
 }
 
 static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
