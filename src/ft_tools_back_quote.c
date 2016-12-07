@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 15:04:33 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/30 16:12:23 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/06 19:07:02 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ size_t	ft_list_size_index(t_input *start, t_input *end)
 	size_t size;
 
 	size = 0;
-	while (start != end->next)
+	while (start != end)
 	{
 		start = start->next;
 		size++;
 	}
+	size++;
 	return (size);
 }
 

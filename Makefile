@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/12/05 12:38:19 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/12/06 18:24:56 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,11 +109,12 @@ LIBINC	= $(LIBFT)$(INC)
 LIB		= $(LIBFT)libft.a
 
 # PROCESS
-all: $(NAME)
 
 $(NAME): $(LIB) $(O2)
 	@gcc $(FLAGS) $(O2) -L$(LIBFT) -lft -ltermcap -I$(INC) -o $@
 	@echo "\033[0;32m42sh compilation done !\033[0;m"
+
+all: $(NAME)
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"

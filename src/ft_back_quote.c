@@ -6,7 +6,8 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/30 16:12:35 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 12:06:16 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 10:37:58 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +48,10 @@ static void	ft_output_insert(t_shell *shell, t_input **curs, int fd)
 		ft_strdel(&line);
 		ft_input_add(curs, ' ');
 	}
+	delete_input(&shell->input, *curs, NULL, 0);
 }
 
-static t_input	*ft_treat_back_quote(t_shell *shell, t_input **curs, char *str)
+static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
 {
 	t_btree	*tree;
 	t_input	*input;
@@ -59,8 +61,10 @@ static t_input	*ft_treat_back_quote(t_shell *shell, t_input **curs, char *str)
 	if (ft_check_input(input) != 0)
 	{
 		ft_strdel(&str);
+		free_input_list(&input, NULL);
 		return (NULL);
 	}
+	free_input_list(&input, NULL);
 	fd = open("/tmp/back_quote.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	shell->fd[1] = fd;
 	tree = store_cmd(str);
@@ -111,10 +115,7 @@ int			ft_back_quote(t_shell *shell)
 			start->prev != NULL ? (curs = start->prev) : (curs = end->next);
 			cmd = ft_lst_to_str_index(start->next, end->prev);
 			ft_lst_del(shell, start, end);
-			if (cmd == NULL)
-				return (0);
-			if (curs && !(start = ft_treat_back_quote(shell, &curs, cmd)))
-				return (1);
+			cmd == NULL ? start = curs : (start = ft_tbq(shell, &curs, cmd));
 		}
 		else
 			start = start->next;
