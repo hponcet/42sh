@@ -144,8 +144,8 @@ typedef struct			s_shell
 
 // fonction micka
 size_t					ft_list_size_index(t_input *start, t_input *end);
-void					ft_lst_del(t_shell *shell, t_input *strt, t_input *end);
-int						ft_back_quote(t_shell *shell);
+void					ft_lst_del(t_input **input, t_input *strt, t_input *end);
+char					*ft_back_quote(t_shell *shell, char *str);
 int						ft_launch_cmd(t_shell *shell, t_btree *tree);
 int						ft_prepare_cmd(t_shell *shell, t_btree *tree);
 void					ft_input_add(t_input **curs, char c);

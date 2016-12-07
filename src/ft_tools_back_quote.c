@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 15:04:33 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 16:48:30 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 18:53:12 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,18 @@ size_t	ft_list_size_index(t_input *start, t_input *end)
 	return (size);
 }
 
-void	ft_lst_del(t_shell *shell, t_input *start, t_input *end)
+void	ft_lst_del(t_input **input, t_input *start, t_input *end)
 {
 	t_input	*tmp;
 
 	while (start != end)
 	{
 		tmp = start->next;
-		delete_input(&shell->input, start, NULL, 0);
+		delete_input(input, start, NULL, 0);
 		start = tmp;
 	}
-	delete_input(&shell->input, start, NULL, 0);
+	if (start != NULL)
+		delete_input(input, start, NULL, 0);
 }
 
 t_input	*ft_new_link(char c)

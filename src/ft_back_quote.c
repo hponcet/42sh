@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 18:04:51 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/07 18:53:10 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		ft_check_input(t_input *input)
 	return (0);
 }
 
-static void		ft_output_insert(t_shell *shell, t_input **curs, int fd)
+static void		ft_output_insert(t_input **curs, int fd, t_input **tmp)
 {
 	char	*line;
 	int		i;
@@ -39,8 +39,8 @@ static void		ft_output_insert(t_shell *shell, t_input **curs, int fd)
 		{
 			if (*curs == NULL)
 			{
-				shell->input = ft_new_link(line[i]);
-				*curs = shell->input;
+				*tmp = ft_new_link(line[i]);
+				*curs = *tmp;
 			}
 			else
 				ft_input_add(curs, line[i]);
@@ -52,7 +52,7 @@ static void		ft_output_insert(t_shell *shell, t_input **curs, int fd)
 	}
 }
 
-static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
+static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str, t_input **tmp)
 {
 	t_btree	*tree;
 	t_input	*input;
@@ -74,7 +74,7 @@ static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str)
 	close(fd);
 	close_and_reset_fd(shell->fd);
 	fd = open("/tmp/back_quote.txt", O_RDONLY);
-	ft_output_insert(shell, curs, fd);
+	ft_output_insert(curs, fd, tmp);
 	close(fd);
 	return (*curs);
 }
@@ -98,14 +98,17 @@ static char		*ft_lst_to_str_index(t_input *start, t_input *end)
 	return (cmd);
 }
 
-int			ft_back_quote(t_shell *shell)
+char		*ft_back_quote(t_shell *shell, char *str)
 {
 	t_input	*start;
 	t_input	*end;
+	t_input	*tmp;
 	t_input	*curs;
 	char	*cmd;
 
-	start = shell->input;
+	start = char_to_input(str);
+	tmp = start;
+	free(str);
 	while (start != NULL)
 	{
 		if (start->c == '`')
@@ -115,11 +118,13 @@ int			ft_back_quote(t_shell *shell)
 				end = end->next;
 			start->prev != NULL ? (curs = start->prev) : (curs = end->next);
 			cmd = ft_lst_to_str_index(start->next, end->prev);
-			ft_lst_del(shell, start, end);
-			cmd == NULL ? start = curs : (start = ft_tbq(shell, &curs, cmd));
+			ft_lst_del(&tmp, start, end);
+			cmd == NULL ? start = curs : (start = ft_tbq(shell, &curs, cmd, &tmp));
 		}
 		else
 			start = start->next;
 	}
-	return (0);
+	str = lst_to_str(tmp);
+	ft_lst_del(&tmp, tmp, NULL);
+	return (str);
 }

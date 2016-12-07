@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/25 16:48:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 18:53:17 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ static int		strrchr_logical_op(char *s)
 t_btree			*store_cmd(char *str)
 {
 	int		i;
+	t_shell	*shell;
 	t_btree	*new;
 
+	shell = get_struct(0);
 	new = new_cmd_link();
 	if ((i = strrchr_outside_quotes(str, ';')) != -1)
 		new->type = SEM;
@@ -73,6 +75,7 @@ t_btree			*store_cmd(char *str)
 	else
 	{
 		new->type = CMD;
+		str = ft_back_quote(shell, str);
 		ft_cursh(&str);
 		ft_glob(&str);
 		new->str = str;
