@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 21:51:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/09 22:36:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell)
 	if (pid == 0)
 	{
 		if (dup_std_fd(shell->fd) != 0)
-		{
-			ft_putchar('A');
 			exit(EXIT_FAILURE);
-		}
 		binary_cmd(cmd, env_array, env_lst, shell->hash_bin);
 		exit(shell->status);
 	}
