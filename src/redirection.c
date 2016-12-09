@@ -5,12 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/25 19:55:21 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/12/07 16:28:01 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/12/07 16:28:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+static int	redir_exec(t_shell *shell, char **cmd)
+{
+	char	**env_array;
+
+	env_array = NULL;
+	if (dup_std_fd(shell->fd) != 0)
+		return (-1);
+	if (is_builtin(cmd[0]))
+		builtins_cmd(cmd, shell->env_lst, shell);
+	else
+	{
+		env_array = env_lst_to_array(shell->env_lst);
+		binary_cmd(cmd, env_array, shell->env_lst, shell->hash_bin);
+		free_tab(env_array);
+	}
+	return (0);
+}
 
 static int	open_file(char *file, int redir_type, int *fd, int stdin_copy)
 {
@@ -63,7 +81,7 @@ static int	parse_redir(t_redir *redir, t_shell *shell, int fd1, int i)
 	return (0);
 }
 
-int			handle_redirs(t_shell *shell, t_btree *link, char **cmd)
+int			handle_redirs(t_shell *shell, t_btree *link, char **cmd, int forked)
 {
 	int		i;
 	int		fd1;
@@ -85,5 +103,5 @@ int			handle_redirs(t_shell *shell, t_btree *link, char **cmd)
 		}
 		redir = redir->next;
 	}
-	return (redir_fork(cmd, shell));
+	return (forked ? redir_exec(shell, cmd) : redir_fork(cmd, shell));
 }

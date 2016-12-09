@@ -6,20 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/05 20:10:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/07 21:34:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-int			putchar(int c)
-{
-	t_shell	*shell;
-
-	shell = get_struct(0);
-	write(shell->fd[3], &c, 1);
-	return (0);
-}
 
 static void	cursor_back_to_pos(t_shell *shell, int i)
 {
@@ -31,10 +22,27 @@ static void	cursor_back_to_pos(t_shell *shell, int i)
 	if (j)
 		tputs(tgoto(tgetstr("UP", NULL), 0, j), shell->fd[3], &putchar);
 	while (i--)
-		replace_cursor(shell, 1, 1);
+		replace_cursor(shell, 0, 1);
 }
 
-static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
+static void	cursor_back_overflow(t_shell *shell, t_input *curs)
+{
+	int		i;
+	t_input	*tmp;
+
+	i = input_part_len(curs, shell->curs_pos);
+	tmp = shell->curs_pos;
+	tputs(tgetstr("rc", NULL), shell->fd[3], &putchar);
+	shell->curs_pos = curs;
+	while (i--)
+	{
+		replace_cursor(shell, 1, 0);
+		shell->curs_pos = shell->curs_pos->next;
+	}
+	shell->curs_pos = tmp;
+}
+
+static void	print_eol(t_shell *shell, char *buf, t_input *curs, int overflow)
 {
 	t_input *tmp;
 	int		i;
@@ -46,7 +54,7 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
 		i++;
 		tmp = tmp->next;
 	}
-	if (((shell->input_len + p_len) % shell->col) == 0 && i--)
+	if (((shell->input_len + shell->p_len) % shell->col) == 0 && --i)
 	{
 		ft_putstr_fd(buf, shell->fd[1]);
 		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
@@ -55,15 +63,14 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len, int overflow)
 	else
 		ft_putstr_fd(buf, shell->fd[1]);
 	if (overflow)
-	{
-		tputs(tgetstr("rc", NULL), shell->fd[3], &putchar);
-		replace_cursor(shell, 1, 0);
-	}
+		cursor_back_overflow(shell, curs);
+	else if (i-- == 0)
+		replace_cursor(shell, 1, 1);
 	else
-		cursor_back_to_pos(shell, i - 1);
+		cursor_back_to_pos(shell, i);
 }
 
-static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)
+static void	clear_and_print(t_shell *shell, t_input *curs_pos)
 {
 	int		i;
 	int		overflow;
@@ -88,7 +95,7 @@ static void	clear_and_print(t_shell *shell, t_input *curs_pos, size_t p_len)
 	}
 	while (tmp && (buf[i++] = tmp->c))
 		tmp = tmp->next;
-	print_eol(shell, buf, p_len, overflow);
+	print_eol(shell, buf, curs_pos, overflow);
 }
 
 void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
@@ -102,5 +109,5 @@ void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
 	else if (!curs_pos->next)
 		ft_putchar_fd(curs_pos->c, shell->fd[1]);
 	else
-		clear_and_print(shell, curs_pos, p_len);
+		clear_and_print(shell, curs_pos);
 }

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_tools_2.c                                      :+:      :+:    :+:   */
+/*   putchar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/29 20:04:05 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/07 16:30:34 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/12/07 21:31:26 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-t_env	*get_last_env_elem(t_env *lst)
+int			putchar(int c)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
+	t_shell	*shell;
 
-size_t	input_part_len(t_input *start, t_input *end)
-{
-	int	i;
-
-	i = 0;
-	while (start && ++i && start != end)
-		start = start->next;
-	return (i);
+	shell = get_struct(0);
+	write(shell->fd[3], &c, 1);
+	return (0);
 }
