@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/01 19:24:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/09 20:20:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ static char	*replace_special_char(char *s, int quote)
 			if (s[i + 1] == '?' || s[i + 1] == '$')
 				i += replace_process_value(&s, i, quote);
 			else
-				s = str_replace_var(s, i++, quote);
+			{
+				s = str_replace_var(s, i, quote);
+				if (s[i])
+					i++;
+			}
 		}
 		else
 			i++;
@@ -59,7 +63,7 @@ char		*interpret_cmd_arg(char *cmd_arg)
 	return (ret);
 }
 
-int		set_local_variable(t_env *env_lst, char **cmd)
+int			set_local_variable(t_env *env_lst, char **cmd)
 {
 	*cmd = interpret_cmd_arg(*cmd);
 	if (check_env_var(*cmd, NULL) == -1)

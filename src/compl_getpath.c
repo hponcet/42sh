@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/15 14:37:08 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/21 21:23:13 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/09 20:33:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	getpath(char **ret, char *pwd)
 	ret[1] = find;
 }
 
-static void gethomepath(t_shell *shell, char **cmd)
+static void	gethomepath(t_shell *shell, char **cmd)
 {
 	t_env	*homeenv;
 	char	*tmp;

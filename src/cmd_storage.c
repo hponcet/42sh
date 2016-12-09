@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 14:14:38 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/09 20:30:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ static int		strrchr_logical_op(char *s)
 	return (-1);
 }
 
+static void		set_str_link(t_shell *shell, t_btree **link, char *str)
+{
+	(*link)->type = CMD;
+	str = ft_back_quote(shell, str);
+	ft_cursh(&str);
+	ft_glob(&str);
+	(*link)->str = str;
+}
+
 t_btree			*store_cmd(char *str)
 {
 	int		i;
@@ -60,9 +69,7 @@ t_btree			*store_cmd(char *str)
 	else if ((i = strrchr_logical_op(str)) != -1)
 		new->type = (str[i] == '&') ? AND : OR;
 	else if ((i = strrchr_outside_quotes(str, '|')) != -1)
-	{
 		new->type = PIP;
-	}
 	if (i != -1 && ++i)
 	{
 		if (new->type == AND || new->type == OR)
@@ -73,12 +80,6 @@ t_btree			*store_cmd(char *str)
 		free(str);
 	}
 	else
-	{
-		new->type = CMD;
-		str = ft_back_quote(shell, str);
-		ft_cursh(&str);
-		ft_glob(&str);
-		new->str = str;
-	}
+		set_str_link(shell, &new, str);
 	return (new);
 }

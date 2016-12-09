@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/07 18:53:15 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/09 22:12:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ char		**parse_cmd(t_env *env_lst, t_btree *link)
 	while (cmd_tab[i])
 	{
 		if (i == 0 && (strchr_outside_quotes(cmd_tab[i], '=') != -1))
-			{
-				if (set_local_variable(env_lst, &cmd_tab[i]) != 0)
-					i++;
-				else if (!(cmd_tab = move_cmd_start(cmd_tab)))
-						return (NULL);
-				continue;
-			}
+		{
+			if (set_local_variable(env_lst, &cmd_tab[i]) != 0)
+				i++;
+			else if (!(cmd_tab = move_cmd_start(cmd_tab)))
+				return (NULL);
+			continue;
+		}
 		else
 			cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
@@ -76,7 +76,6 @@ int			handle_input(t_shell *shell)
 		return (ret);
 	if (!(hist_checkdouble(shell)))
 		shell->hist = store_hist(shell);
-	get_last_elem(shell->input);
 	shell->input_len = lst_len(shell->input);
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
@@ -85,11 +84,12 @@ int			handle_input(t_shell *shell)
 	return (0);
 }
 
-int		ft_launch_cmd(t_shell *shell, t_btree *tree)
+int			ft_launch_cmd(t_shell *shell, t_btree *tree)
 {
 	if (check_btree(tree) > 0)
 	{
 		free_btree(tree);
+		shell->tree = NULL;
 		return (1);
 	}
 	restore_term(shell);

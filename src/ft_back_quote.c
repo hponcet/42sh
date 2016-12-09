@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 18:53:10 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/09 22:14:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 static int		ft_check_input(t_input *input)
 {
 	char	ret;
+	t_input	*tmp = get_last_elem(input);
 
 	ret = 0;
 	if (check_separators(input, 1) == -1)
 		return (1);
 	if ((ret = valid_input(input)) != 0)
 		return (ret == -1 ? 1 : cmd_error(0, ret, NULL));
+	if (tmp->c == '`')
+		return 1;
 	return (0);
 }
 

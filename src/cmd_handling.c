@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 14:13:48 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/09 22:21:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		binary_cmd(char **cmd, char **env_array, t_env *env_lst, t_hash **htbl)
 	char	*bin_path;
 	t_env	*home;
 
+	ft_putendl(cmd[0]);
 	abs_path = 0;
 	bin_path = NULL;
 	if (ft_strchr(cmd[0], '/') != NULL && cmd[0][0] == '~' && ++abs_path)
@@ -28,7 +29,6 @@ int		binary_cmd(char **cmd, char **env_array, t_env *env_lst, t_hash **htbl)
 	}
 	else if (ft_strchr(cmd[0], '/') != NULL && ++abs_path)
 		bin_path = ft_strdup(cmd[0]);
-	// gus: recherche dans la table de hashage si le path existe.
 	else if ((bin_path = hash_search(htbl, cmd[0], HASHLEN)))
 		;
 	else if (!(bin_path = get_bin_path(cmd[0], env_lst)))
@@ -99,8 +99,8 @@ int		handle_btree(t_shell *shell, t_btree *link)
 	{
 		handle_btree(shell, link->left);
 		if (link->type == SEM || (link->type == AND && shell->status == 0)
-			|| (link->type == OR && shell->status != 0))
-		handle_btree(shell, link->right);
+		|| (link->type == OR && shell->status != 0))
+			handle_btree(shell, link->right);
 	}
 	else if (link->type == PIP)
 	{

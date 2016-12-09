@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 13:39:14 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/11/20 18:10:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/09 13:04:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		exec_error(int errnum, char *arg)
 	else if (errnum == 7)
 		ft_putstr_fd(": error on file descriptor closure\n", fd);
 	else if (errnum == 8)
-		ft_putstr_fd("error on file creation/opening\n", fd);
+		ft_putstr_fd("no such file or directory\n", fd);
 	return (-1);
 }
 

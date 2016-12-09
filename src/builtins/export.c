@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 12:12:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 19:54:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/09 14:34:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,20 @@ static void	put_export_vars(t_env *env_lst)
 {
 	while (env_lst)
 	{
-		ft_putstr("declare -x ");
-		ft_putstr(env_lst->var);
-		if (env_lst->val)
+		if (!(env_lst->local))
 		{
-			ft_putstr("=\"");
-			if (env_lst->val[0])
-				ft_putstr(env_lst->val);
-			ft_putstr("\"\n");
+			ft_putstr("declare -x ");
+			ft_putstr(env_lst->var);
+			if (env_lst->val)
+			{
+				ft_putstr("=\"");
+				if (env_lst->val[0])
+					ft_putstr(env_lst->val);
+				ft_putstr("\"\n");
+			}
+			else
+				ft_putchar('\n');
 		}
-		else
-			ft_putchar('\n');
 		env_lst = env_lst->next;
 	}
 }
@@ -44,6 +47,8 @@ void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
 			free(new->val);
 			new->val = val;
 		}
+		if (new->local && !local)
+			new->local = local;
 	}
 	else
 	{
@@ -56,8 +61,8 @@ void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
 			*env_lst = new;
 		else if ((last = get_last_env_elem(*env_lst)))
 			last->next = new;
+		new->local = local;
 	}
-	new->local = local;
 }
 
 void		set_shell_var(t_env *env_lst, char *arg, int local)
