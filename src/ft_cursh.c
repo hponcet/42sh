@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:21:48 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/07 17:30:27 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/09 23:32:43 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int			ft_cursh(char **tabl)
 	}
 	free_tab(cmd);
 	free(tabl[0]);
-	tabl[0] = ret;
+	if (ret)
+		tabl[0] = ft_strdup(ret + 1);
+	ft_strdel(&ret);
 	return (0);
 }
