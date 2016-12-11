@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/07 16:04:52 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:23:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		main(int ac, char **av, char **environ)
 {
 	t_shell		*shell;
 
-	ac = 0;;
+	ac = 0;
 	av = NULL;
 	if (!(shell = (t_shell *)malloc(sizeof(*shell))))
 		ft_put_error(ER_MEM, 1);
@@ -60,9 +60,7 @@ int		main(int ac, char **av, char **environ)
 	init_shell(shell);
 	init_term(shell);
 	store_environ(shell, environ);
-	// fichier ~/.42_history vers historique
 	file_to_hist(shell);
-	// binaires vers table de hash
 	shell->hash_bin = hash_bin(shell);
 	read_input(shell);
 	return (0);

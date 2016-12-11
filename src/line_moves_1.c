@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 17:27:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 19:16:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:22:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	get_input_len(t_shell *shell)
 	return (lst_len(shell->curs_pos) - 1);
 }
 
-int		move_left(t_shell *shell)
+int			move_left(t_shell *shell)
 {
 	if (!(shell->input) || !(shell->curs_pos))
 		return (-1);
@@ -30,7 +30,7 @@ int		move_left(t_shell *shell)
 	return (0);
 }
 
-int		move_right(t_shell *shell)
+int			move_right(t_shell *shell)
 {
 	if (!(shell->input) || (shell->curs_pos && !(shell->curs_pos->next)))
 		return (-1);
@@ -42,7 +42,7 @@ int		move_right(t_shell *shell)
 	return (0);
 }
 
-int		move_line_start(t_shell *shell)
+int			move_line_start(t_shell *shell)
 {
 	int		i;
 	int		j;
@@ -68,7 +68,7 @@ int		move_line_start(t_shell *shell)
 	return (0);
 }
 
-int		move_line_end(t_shell *shell)
+int			move_line_end(t_shell *shell)
 {
 	int		i;
 	int		j;

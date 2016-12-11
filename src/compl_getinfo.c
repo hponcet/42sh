@@ -6,39 +6,11 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:01:19 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/21 21:34:40 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:06:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-char		*compl_name_wesp(char *str)
-{
-	char	*ret;
-	int		i;
-	int		j;
-	int		nb;
-
-	i = 0;
-	nb = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ' && i > 0 && str[i - 1] != '\\')
-			nb++;
-		i++;
-	}
-	ret = ft_strnew(ft_strlen(str) + nb);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if ((str[i] == ' ' && i > 0 && str[i - 1] != '\\')
-				|| (str[i] == ' ' && i == 0))
-			ret[j++] = '\\';
-		ret[j++] = str[i++];
-	}
-	return (ret);
-}
 
 t_compl		*compl_makefile(struct dirent *s_dir, char *path)
 {

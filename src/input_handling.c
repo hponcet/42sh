@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/02 16:08:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:21:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_buffer_print(char *buf, size_t len)
 	return (1);
 }
 
-void	store_input(t_shell *shell, char c)
+void		store_input(t_shell *shell, char c)
 {
 	t_input	*new;
 
@@ -55,7 +55,8 @@ void	store_input(t_shell *shell, char c)
 	shell->input_len++;
 }
 
-void	delete_input(t_input **lst, t_input *input, t_shell *shell, int back)
+void		delete_input(t_input **lst, t_input *input, t_shell *shell,
+			int back)
 {
 	if (!input->prev && !input->next)
 		*lst = NULL;
@@ -78,7 +79,7 @@ void	delete_input(t_input **lst, t_input *input, t_shell *shell, int back)
 	free(input);
 }
 
-void	read_input(t_shell *shell)
+void		read_input(t_shell *shell)
 {
 	int		parse;
 	char	buf[BUF_SIZE];
@@ -100,9 +101,9 @@ void	read_input(t_shell *shell)
 	}
 }
 
-int		parse_input(t_shell *shell, char *buf, size_t buf_len)
+int			parse_input(t_shell *shell, char *buf, size_t buf_len)
 {
-	if (buf[0] == '!') // recherche dans l'historique avec !...
+	if (buf[0] == '!')
 		bltn_hsearch(shell);
 	else if (is_buffer_print(buf, (size_t)BUF_SIZE))
 		insert_read_buf(shell, buf, (size_t)BUF_SIZE);
@@ -111,7 +112,7 @@ int		parse_input(t_shell *shell, char *buf, size_t buf_len)
 	else if (buf_len == 6)
 		parse_keys2(shell, buf);
 	else if (buf[0] == 9 && buf[1] == 0 && shell->input && shell->curs_pos
-			&& shell->curs_pos->next == NULL) // Completion
+			&& shell->curs_pos->next == NULL)
 		compl(shell);
 	else
 		return (parse_keys3(shell, buf, buf_len));

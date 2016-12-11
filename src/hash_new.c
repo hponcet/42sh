@@ -6,13 +6,13 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 21:20:22 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/14 17:06:00 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:19:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-t_hash		**hash_newtbl(int nb_case)
+t_hash	**hash_newtbl(int nb_case)
 {
 	t_hash	**htbl;
 	int		i;

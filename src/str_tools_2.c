@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 16:16:34 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/01 19:45:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:25:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int	is_chr_escaped(char const *s, int i)
+int		is_chr_escaped(char const *s, int i)
 {
 	int	backslash;
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 22:36:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:19:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 			return ((pid_t)exec_error(6, "dup2"));
 		close(fd[1]);
-		if (link->right->type == CMD)
-			handle_cmd(shell, link->right, 1);
+		link->right->type == CMD ? handle_cmd(shell, link->right, 1) : (0);
 		waitpid(pid, NULL, 0);
 	}
 	return (pid);

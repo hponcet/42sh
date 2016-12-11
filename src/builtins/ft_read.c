@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 15:44:55 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 17:39:59 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:50:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,15 @@ int			ft_read(char **argv, t_env **env)
 	if (argv[1] == NULL || ft_strcmp(argv[1], "-r") == 0)
 	{
 		if (get_next_line(0, &line) < 0)
-			return(0);
+			return (0);
 	}
-	else if (argv[1][0] == '-')
+	else if ((argv[1][0] == '-') && (ft_check_read_opts(argv, env) == 1))
 	{
-		if (ft_check_read_opts(argv, env) == 1)
-		{
-			ft_strdel(&line);
-			signal(SIGINT, &sig_handler1);
-			return (1);
-		}
+		ft_strdel(&line);
+		signal(SIGINT, &sig_handler1);
+		return (1);
 	}
-	else
+	else if (argv[1][0] != '-')
 	{
 		get_next_line(0, &line);
 		if (line != NULL)

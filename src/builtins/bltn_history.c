@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 02:31:17 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/20 14:15:06 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:38:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	ft_histproc(t_hist *hist)
 int			ft_history(char **cmd, t_shell *shell)
 {
 	t_hist	*hist;
-	int	 	index;
+	int		index;
 
 	if (!(shell->hist))
 		return (1);

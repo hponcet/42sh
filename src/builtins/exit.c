@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/21 20:39:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/20 17:01:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:38:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void ft_exit_foot(t_shell *shell)
+static void	ft_exit_foot(t_shell *shell)
 {
 	restore_term(get_struct(0));
 	hash_delhtbl(shell->hash_bin, HASHLEN);

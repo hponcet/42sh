@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/05 18:42:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:36:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void		init_term(t_shell *shell)
 	struct winsize	w;
 
 	if (!(term_name = getenv("TERM")))
-	{
-		ft_putstr_fd("21sh: unable to get the terminal name\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
+		ft_put_error(ER_GETTERM, 1);
 	if ((ret = tgetent(NULL, term_name)) <= 0)
 		ft_put_error(ER_GETENT, 1);
 	if ((tcgetattr(STDIN_FILENO, &(shell->term_save))) == -1)

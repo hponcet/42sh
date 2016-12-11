@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 15:52:29 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:00:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			ft_launch_cmd(t_shell *shell, t_btree *tree)
 	if (check_btree(tree) > 0)
 	{
 		free_btree(tree);
-		shell->tree = NULL;
+		tree = NULL;
 		return (1);
 	}
 	restore_term(shell);
@@ -97,7 +97,7 @@ int			ft_launch_cmd(t_shell *shell, t_btree *tree)
 	signal(SIGINT, &sig_handler1);
 	handle_btree(shell, tree);
 	free_btree(tree);
-	shell->tree = NULL;
+	tree = NULL;
 	reload_term(shell);
 	signal(SIGTSTP, &sig_handler);
 	return (0);

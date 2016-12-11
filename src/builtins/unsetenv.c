@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/30 16:42:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:37:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		del_env_var(t_env **env_lst, char *var, int local)
 
 	if (!(tmp1 = *env_lst))
 		return (-1);
-	if (!(ft_strcmp(tmp1->var, var)) &&	(!tmp1->local || local))
+	if (!(ft_strcmp(tmp1->var, var)) && (!tmp1->local || local))
 	{
 		*env_lst = tmp1->next;
 		free_env_var(tmp1);

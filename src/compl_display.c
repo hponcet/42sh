@@ -6,11 +6,23 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 11:20:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/26 19:20:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 17:12:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+void		compl_addstr(t_shell *shell, char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		store_input(shell, str[i]);
+		ft_putchar(str[i++]);
+	}
+}
 
 int			compl_countfile(t_compl *print)
 {

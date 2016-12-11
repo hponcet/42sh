@@ -6,13 +6,25 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 12:12:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 14:34:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 18:08:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	put_export_vars(t_env *env_lst)
+static t_env	*create_env_var(char *var, char *val)
+{
+	t_env	*new;
+
+	if (!(new = (t_env*)malloc(sizeof(t_env))))
+		ft_put_error(ER_MEM, 1);
+	new->var = var;
+	new->val = val;
+	new->next = NULL;
+	return (new);
+}
+
+static void		put_export_vars(t_env *env_lst)
 {
 	while (env_lst)
 	{
@@ -34,7 +46,8 @@ static void	put_export_vars(t_env *env_lst)
 	}
 }
 
-void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
+void			store_shell_var(t_env **env_lst, char *var, char *val,
+				int local)
 {
 	t_env	*new;
 	t_env	*last;
@@ -50,13 +63,8 @@ void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
 		if (new->local && !local)
 			new->local = local;
 	}
-	else
+	else if ((new = create_env_var(var, val)))
 	{
-		if (!(new = (t_env*)malloc(sizeof(t_env))))
-			ft_put_error(ER_MEM, 1);
-		new->var = var;
-		new->val = val;
-		new->next = NULL;
 		if (!(*env_lst))
 			*env_lst = new;
 		else if ((last = get_last_env_elem(*env_lst)))
@@ -65,7 +73,7 @@ void		store_shell_var(t_env **env_lst, char *var, char *val, int local)
 	}
 }
 
-void		set_shell_var(t_env *env_lst, char *arg, int local)
+void			set_shell_var(t_env *env_lst, char *arg, int local)
 {
 	int		i;
 	char	*var;
@@ -87,7 +95,7 @@ void		set_shell_var(t_env *env_lst, char *arg, int local)
 	store_shell_var(&env_lst, var, val, local);
 }
 
-int			ft_export(char **cmd, t_env *env_lst)
+int				ft_export(char **cmd, t_env *env_lst)
 {
 	int	i;
 	int	print;
@@ -95,7 +103,7 @@ int			ft_export(char **cmd, t_env *env_lst)
 	i = 1;
 	print = 0;
 	if (!cmd[i])
-	   put_export_vars(env_lst);
+		put_export_vars(env_lst);
 	else if (!ft_strcmp(cmd[i], "-p") && ++print)
 		i++;
 	else if (cmd[i][0] == '-')
