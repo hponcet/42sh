@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 15:14:45 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:00:33 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ int						handle_input(t_shell *shell);
 int						check_input(t_shell *shell);
 int						check_btree(t_btree *link);
 char					check_separators(t_input *cmd, int reverse);
-char					*ft_back_quote(t_shell *shell, char *str);
+char					*ft_back_q(t_shell *shell, t_input *start, char *cmd);
 char					valid_input(t_input *input);
 char					**parse_cmd(t_env *env_lst, t_btree *link);
 int						ft_launch_cmd(t_shell *shell, t_btree *tree);

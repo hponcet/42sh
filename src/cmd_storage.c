@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 15:51:49 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:36:05 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ static int		strrchr_logical_op(char *s)
 
 static void		set_str_link(t_shell *shell, t_btree **link, char *str)
 {
+	char	*cmd;
+
 	(*link)->type = CMD;
-	str = ft_back_quote(shell, str);
-	ft_cursh(&str);
-	ft_glob(&str);
-	(*link)->str = str;
+	cmd = ft_back_q(shell, char_to_input(str), NULL);
+	free(str);
+	ft_cursh(&cmd);
+	ft_glob(&cmd);
+	(*link)->str = cmd;
 }
 
 t_btree			*store_cmd(char *str)
