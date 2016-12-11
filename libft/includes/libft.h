@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/11/28 10:19:26 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:06:16 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
-/* //////////// GUS /////////////
-**
-** // ft_joinf.c
+/*
+** //////////// GUS /////////////
+** ft_joinf.c
 ** Fonction permetant de faire des join massif, tres adapte
 ** pour les path requierant deux variable et un slash var/var.
 ** ex: ft_joinf("%s/%xs du blabla", str1, str2);
@@ -121,7 +121,8 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 char				*ft_joinf(char *format, ...);
 int					ft_strinstr(char *orig, char *find);
 
-/* // ft_cindex.c
+/*
+** ft_cindex.c
 ** Recherche un caractere dans une str et renvoi son index.
 */
 int					ft_cindex(char *str, char c);
