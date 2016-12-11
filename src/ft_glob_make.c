@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/07 13:31:39 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:36:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ char	*ft_glob_replace(char *cmd)
 		tmp = tmp->next;
 	}
 	ft_glob_delchain(pathlist);
-	ft_strdel(&cmd_decomp[0]); // path
-	ft_strdel(&cmd_decomp[1]); // find
-	ft_strdel(&cmd_decomp[2]); // absolute path
-	free(cmd_decomp);
-	cmd_decomp = NULL;
+	free_tab(cmd_decomp);
+	//ft_strdel(&cmd_decomp[0]);
+	//ft_strdel(&cmd_decomp[1]);
+	//ft_strdel(&cmd_decomp[2]);
+	//free(cmd_decomp);
+	//cmd_decomp = NULL;
 	if (!ret[0])
 		ft_strdel(&ret);
 	return (ret);
@@ -61,30 +62,28 @@ t_glob	*ft_glob_makefile(struct dirent *s_dir, char *path)
 char	*ft_glob_tglobtostr(t_glob *lst)
 {
 	char	*ret;
-	t_glob	*list;
 	char	*pwd;
 	int		i;
 
-	list = lst;
 	ret = NULL;
 	pwd = NULL;
 	if (!lst)
 		return (NULL);
 	pwd = getcwd(pwd, MAXPATHLEN);
 	i = ft_strlen(pwd) + 1;
-	if (ft_strncmp(pwd, list->path, i - 1) != 0)
+	if (ft_strncmp(pwd, lst->path, i - 1) != 0)
 		i = 0;
 	free(pwd);
-	while (list)
+	while (lst)
 	{
 		if (!ret)
 		{
-			ret = ft_strdup(list->path + i);
-			list = list->next;
+			ret = ft_strdup(lst->path + i);
+			lst = lst->next;
 			continue ;
 		}
-		ret = ft_joinf("%xs %s", ret, list->path + i);
-		list = list->next;
+		ret = ft_joinf("%xs %s", ret, lst->path + i);
+		lst = lst->next;
 	}
 	return (ret);
 }

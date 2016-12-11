@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 16:37:29 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/05 17:50:55 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:28:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_glob_addpath(t_glob **tree, char *path)
 	tmp = *tree;
 	if (!(*tree))
 	{
-		*tree = new ;
+		*tree = new;
 		return ;
 	}
 	while (tmp->next)

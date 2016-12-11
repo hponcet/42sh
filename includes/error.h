@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 12:07:03 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/11 18:10:35 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:41:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 # define ER_IOCTL "ioctl: unable to get the terminal state infos\n"
 # define ER_OPT "42sh: Invalid option\n"
 # define ER_ARG "42sh: Option requires an argument\n"
+# define ER_PATH "environment variable PATH not set or empty\n"
 
 #endif

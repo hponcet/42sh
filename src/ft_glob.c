@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/09 23:34:23 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/11 18:30:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ft_glob_check(char *str)
 	return (0);
 }
 
-int			ft_glob_nomatch(char *nm, char *ret, char **tabl, char ** cmd)
+int			ft_glob_nomatch(char *nm, char *ret, char **tabl, char **cmd)
 {
 	t_shell *shell;
 
