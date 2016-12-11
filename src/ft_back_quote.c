@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 18:59:56 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/09 22:14:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 15:52:11 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,12 @@ static void		ft_output_insert(t_input **curs, int fd, t_input **tmp)
 		i = 0;
 		while (line[i] != 0)
 		{
-			if (*curs == NULL)
-			{
-				*tmp = ft_new_link(line[i]);
-				*curs = *tmp;
-			}
-			else
-				ft_input_add(curs, line[i]);
+			ft_input_add(curs, tmp, line[i]);
 			i++;
 		}
 		ft_strdel(&line);
 		if ((ret = get_next_line(fd, &line)) == 1)
-			ft_input_add(curs, ' ');
+			ft_input_add(curs, tmp, ' ');
 	}
 }
 
@@ -66,17 +60,25 @@ static t_input	*ft_tbq(t_shell *shell, t_input **curs, char *str, t_input **tmp)
 	{
 		ft_strdel(&str);
 		free_input_list(&input, NULL);
+		if (*curs == NULL)
+			return (*tmp);
 		return (*curs);
 	}
 	free_input_list(&input, NULL);
-	fd = open("/tmp/back_quote.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open("/tmp/ft_back_quote.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	shell->fd[1] = fd;
 	tree = store_cmd(str);
 	if (ft_prepare_cmd(shell, tree) == 1)
-		return (NULL);
+	{
+		close_and_reset_fd(shell->fd);
+		close(fd);
+		if (*curs == NULL)
+			return (*tmp);
+		return (*curs);
+	}
 	close(fd);
 	close_and_reset_fd(shell->fd);
-	fd = open("/tmp/back_quote.txt", O_RDONLY);
+	fd = open("/tmp/ft_back_quote.txt", O_RDONLY);
 	ft_output_insert(curs, fd, tmp);
 	close(fd);
 	return (*curs);
@@ -119,10 +121,18 @@ char		*ft_back_quote(t_shell *shell, char *str)
 			end = start->next;
 			while (end->c != '`')
 				end = end->next;
-			start->prev != NULL ? (curs = start->prev) : (curs = end->next);
+			curs = start->prev;
 			cmd = ft_lst_to_str_index(start->next, end->prev);
 			ft_lst_del(&tmp, start, end);
-			cmd == NULL ? start = curs : (start = ft_tbq(shell, &curs, cmd, &tmp));
+			if (cmd == NULL)
+			{
+				if (curs == NULL)
+					start = tmp;
+				else
+					start = curs;
+			}
+			else
+				start = ft_tbq(shell, &curs, cmd, &tmp);
 		}
 		else
 			start = start->next;

@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 15:04:33 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/07 18:53:12 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/09 21:41:20 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,30 @@ t_input	*ft_new_link(char c)
 	return (new);
 }
 
-void	ft_input_add(t_input **curs, char c)
+void	ft_input_add(t_input **curs, t_input **tmp, char c)
 {
 	t_input	*new;
 
 	new = ft_new_link(c);
-	new->prev = *curs;
-	new->next = (*curs)->next;
-	if ((*curs)->next != NULL)
-		(*curs)->next->prev = new;
-	(*curs)->next = new;
-	*curs = (*curs)->next;
+	if (*tmp == NULL)
+	{
+		*tmp = new;
+		*curs = *tmp;
+	}
+	else if (*curs == NULL)
+	{
+		*curs = new;
+		(*curs)->next = *tmp;
+		(*tmp)->prev = *curs;
+		*tmp = *curs;
+	}
+	else
+	{
+		new->prev = *curs;
+		new->next = (*curs)->next;
+		if ((*curs)->next != NULL)
+			(*curs)->next->prev = new;
+		(*curs)->next = new;
+		*curs = (*curs)->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/09 20:29:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/11 15:14:45 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ void					read_input(t_shell *shell);
 void					print_input(t_shell *shell, t_input *curs_pos,
 						size_t p_len);
 t_input					*ft_new_link(char c);
-void					ft_input_add(t_input **curs, char c);
+void					ft_input_add(t_input **curs, t_input ** tmp, char c);
 int						parse_input(t_shell *shell, char *buf, size_t buf_len);
 void					store_input(t_shell *shell, char c);
 void					insert_read_buf(t_shell *shell, char *buf, size_t len);
