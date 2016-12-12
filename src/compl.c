@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 15:36:51 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/12 13:13:40 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/12 13:18:28 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void		compl_file(t_shell *shell, char *str)
 	ret[1] = compl_getfind(str);
 	if (compl_getpath(shell, ret) == 1)
 	{
-		ft_strdel(&ret[0]);
 		ft_strdel(&ret[1]);
 		free(ret);
 		return ;
