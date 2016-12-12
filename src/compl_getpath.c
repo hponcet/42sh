@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/15 14:37:08 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 17:14:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/12 12:54:49 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void		compl_getpath(t_shell *shell, char **ret)
 	if (!ret[1])
 	{
 		ret[1] = ft_strnew(0);
-		ret[0] = ft_strdup(pwd);
+		if (pwd)
+			ret[0] = ft_strdup(pwd);
 		ft_strdel(&pwd);
 		return ;
 	}

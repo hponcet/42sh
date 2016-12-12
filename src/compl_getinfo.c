@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:01:19 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 17:06:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/12 12:55:08 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char		*compl_path_noesp(char *str)
 
 	i = 0;
 	j = 0;
+	if (!str)
+		return (NULL);
 	ret = ft_strnew(ft_strlen(str));
 	while (str[i])
 	{
