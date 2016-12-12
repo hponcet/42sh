@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 13:39:14 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/11 18:23:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/12 12:48:25 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		exec_error(int errnum, char *arg)
 	else if (errnum == 1 && (shell->status = 127))
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	else if (errnum == 2)
-		ft_putstr_fd(ER_PATH, STDERR_FILENO);
+		ft_putstr_fd(ERR_PATH, STDERR_FILENO);
 	else if (errnum == 3 && (shell->status = 126))
 		ft_putstr_fd(": permission denied\n", STDERR_FILENO);
 	else if (errnum == 4)
