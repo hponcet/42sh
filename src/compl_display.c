@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 11:20:47 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 17:12:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/12 13:39:25 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			compl_initprompt(t_shell *shell, int i)
 	if (i == 27)
 	{
 		tputs(tgetstr("cr", 0), 1, putchar);
+		tputs(tgetstr("ce", 0), 1, putchar);
 		print_prompt(shell, 1);
 		print_input(shell, shell->input, shell->p_len);
 		return (1);
