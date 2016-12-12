@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:01:19 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/12 12:55:08 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/12 13:35:38 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ t_compl		*compl_makechain(char *path, t_compl *ret, char *find)
 
 	realpath = compl_path_noesp(path);
 	if ((dirp = opendir(realpath)) == NULL)
+	{
+		ft_strdel(&realpath);
 		return (NULL);
+	}
 	ft_strdel(&realpath);
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
