@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 15:36:51 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/21 21:20:33 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/12 13:13:40 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,13 @@ void		compl_file(t_shell *shell, char *str)
 	ret = (char**)malloc(sizeof(char*) * 3);
 	ret[2] = NULL;
 	ret[1] = compl_getfind(str);
-	compl_getpath(shell, ret);
+	if (compl_getpath(shell, ret) == 1)
+	{
+		ft_strdel(&ret[0]);
+		ft_strdel(&ret[1]);
+		free(ret);
+		return ;
+	}
 	dir = compl_makechain(ret[0], dir, ret[1]);
 	if (!ret[1])
 		ret[1] = ft_strdup("");

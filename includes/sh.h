@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 18:11:02 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/12 13:14:47 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -498,7 +498,7 @@ void					compl(t_shell *shell);
 ** Fonctions de gestion des paths. (ex: ~/42sh, /tmp,
 ** 42sh, ./ls, /bin/ls)
 */
-void					compl_getpath(t_shell *shell, char **ret);
+int						compl_getpath(t_shell *shell, char **ret);
 char					**compl_pathbin(t_shell *shell);
 
 /*
