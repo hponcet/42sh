@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:19:23 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 18:30:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/13 13:14:48 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,45 @@ int			ft_glob_nomatch(char *nm, char *ret, char **tabl, char **cmd)
 	return (1);
 }
 
-int			ft_glob(char **tabl)
+static char	*ft_glob_join(char **cmd, char **tabl)
 {
-	int		i;
-	char	**cmd;
 	char	*find;
-	char	*ret;
 	char	*tmp;
+	char	*ret;
+	int		i;
 
 	i = -1;
-	if (!tabl[0] || !tabl[0][0])
-		return (1);
 	ret = ft_strnew(0);
 	tmp = NULL;
-	cmd = ft_strsplit(tabl[0], ' ');
 	while (cmd[++i])
 	{
 		find = ft_strdup(cmd[i]);
-		if (ft_glob_check(cmd[i]) == 1 && (tmp = ft_glob_replace(cmd[i])) && tmp[0])
+		if (ft_glob_check(cmd[i]) == 1 && (tmp = ft_glob_replace(cmd[i]))
+				&& tmp[0])
 			ret = ft_joinf("%xs %s", ret, tmp);
 		else if (ft_glob_check(cmd[i]) == 1 && (!tmp || !tmp[0]))
-			return (ft_glob_nomatch(find, ret, tabl, cmd));
+		{
+			ft_glob_nomatch(find, ret, tabl, cmd);
+			return (NULL);
+		}
 		else
 			ret = ft_joinf("%xs %s", ret, cmd[i]);
 		ft_strdel(&tmp);
 		ft_strdel(&find);
 	}
+	return (ret);
+}
+
+int			ft_glob(char **tabl)
+{
+	char	**cmd;
+	char	*ret;
+
+	if (!tabl[0] || !tabl[0][0])
+		return (1);
+	cmd = ft_strsplit(tabl[0], ' ');
+	if (!(ret = ft_glob_join(cmd, tabl)))
+		return (1);
 	free_tab(cmd);
 	free(tabl[0]);
 	tabl[0] = NULL;

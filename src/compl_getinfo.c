@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:01:19 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/12 13:35:38 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/13 13:40:40 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void		compl_sortchain(t_compl **list, t_compl *file)
 {
 	t_compl	*tmp;
 
-	tmp = list[0];
-	if (!tmp)
+	if (!list || !list[0])
 	{
 		*list = file;
 		file->id = 1;
 		return ;
 	}
+	tmp = list[0];
 	if (tmp == tmp->next)
 	{
 		file->next = tmp;

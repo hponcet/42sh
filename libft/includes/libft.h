@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 18:06:16 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/13 11:52:55 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 */
 char				*ft_joinf(char *format, ...);
 int					ft_strinstr(char *orig, char *find);
+void				free_tabnb(char **tb, int nb);
 
 /*
 ** ft_cindex.c

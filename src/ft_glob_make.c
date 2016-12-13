@@ -6,13 +6,13 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 22:12:13 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 18:36:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/13 13:47:41 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-char	*ft_glob_replace(char *cmd)
+char		*ft_glob_replace(char *cmd)
 {
 	char	**cmd_decomp;
 	t_glob	*pathlist;
@@ -25,7 +25,7 @@ char	*ft_glob_replace(char *cmd)
 	pathlist = ft_glob_pathtree(cmd_decomp[2]);
 	tmp = pathlist;
 	if (!tmp)
-		return (NULL);
+		ft_putain_de_norme_de_merde(cmd_decomp, 3);
 	ret = ft_strnew(0);
 	while (tmp)
 	{
@@ -35,18 +35,13 @@ char	*ft_glob_replace(char *cmd)
 		tmp = tmp->next;
 	}
 	ft_glob_delchain(pathlist);
-	free_tab(cmd_decomp);
-	//ft_strdel(&cmd_decomp[0]);
-	//ft_strdel(&cmd_decomp[1]);
-	//ft_strdel(&cmd_decomp[2]);
-	//free(cmd_decomp);
-	//cmd_decomp = NULL;
+	free_tabnb(cmd_decomp, 3);
 	if (!ret[0])
 		ft_strdel(&ret);
 	return (ret);
 }
 
-t_glob	*ft_glob_makefile(struct dirent *s_dir, char *path)
+t_glob		*ft_glob_makefile(struct dirent *s_dir, char *path)
 {
 	t_glob			*file;
 
@@ -59,7 +54,7 @@ t_glob	*ft_glob_makefile(struct dirent *s_dir, char *path)
 	return (file);
 }
 
-char	*ft_glob_tglobtostr(t_glob *lst)
+char		*ft_glob_tglobtostr(t_glob *lst)
 {
 	char	*ret;
 	char	*pwd;
@@ -88,7 +83,7 @@ char	*ft_glob_tglobtostr(t_glob *lst)
 	return (ret);
 }
 
-void	ft_glob_delchain(t_glob *chain)
+void		ft_glob_delchain(t_glob *chain)
 {
 	t_glob	*tmp;
 	t_glob	*prev;
@@ -105,7 +100,7 @@ void	ft_glob_delchain(t_glob *chain)
 	}
 }
 
-char	*ft_glob_makestr(char *path, char *find, char *absolute)
+char		*ft_glob_makestr(char *path, char *find, char *absolute)
 {
 	DIR				*dirp;
 	struct dirent	*s_dir;
@@ -120,7 +115,8 @@ char	*ft_glob_makestr(char *path, char *find, char *absolute)
 		return (NULL);
 	while ((s_dir = readdir(dirp)) != NULL)
 	{
-		if (ft_strcmp(s_dir->d_name, "..") == 0 || ft_strcmp(s_dir->d_name, ".") == 0
+		if (ft_strcmp(s_dir->d_name, "..") == 0
+				|| ft_strcmp(s_dir->d_name, ".") == 0
 				|| (ft_strncmp(s_dir->d_name, ".", 1) == 0 && find[0] != '.'))
 			continue ;
 		if (ft_glob_compare(find, s_dir->d_name) != 0
@@ -130,7 +126,5 @@ char	*ft_glob_makestr(char *path, char *find, char *absolute)
 	closedir(dirp);
 	if (!ret)
 		return (NULL);
-	str = ft_glob_tglobtostr(ret);
-	ft_glob_delchain(ret);
-	return (str);
+	return (str = ft_glob_makestr_return(ret));
 }

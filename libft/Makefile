@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/11/15 16:08:48 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/12/13 11:54:00 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,6 +94,7 @@ SRC = ft_atoi.c \
 	  ft_tolower.c \
 	  ft_toupper.c \
 	  free_tab.c \
+	  free_tabnb.c \
 	  get_next_line.c \
 ft_printf.c check_flags.c check_modifiers.c conv_wchar.c count_bytes.c \
 count_char_decimal.c ft_put_llong.c ft_put_long.c print.c print_address.c \

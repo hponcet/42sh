@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/15 14:37:08 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/12 13:10:43 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/13 13:31:04 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,7 @@ int			compl_getpath(t_shell *shell, char **ret)
 	if (!(pwd = getcwd(pwd, MAXPATHLEN)))
 		return (1);
 	if (!ret[1])
-	{
-		ret[1] = ft_strnew(0);
-		ret[0] = ft_strdup(pwd);
-		ft_strdel(&pwd);
-		return (0);
-	}
+		return (compl_getnorm(ret, &pwd));
 	i = ft_cindex_rev(ret[1], '/');
 	if (ret[1][0] == '~' && ret[1][1] == '/')
 		gethomepath(shell, ret);
