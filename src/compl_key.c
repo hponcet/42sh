@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 20:20:22 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/16 17:03:03 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/13 11:12:18 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ int			compl_key_dir(char *buf, t_compl **print, t_shell *shell, int pos)
 		tmp = tmp->prev;
 	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 66)
 		tmp = tmp->next;
+	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 67)
+	{
+		move_left(shell);
+		return (compl_retstr(*print, shell, pos, 0));
+	}
+	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 68)
+	{
+		move_right(shell);
+		return (compl_retstr(*print, shell, pos, 0));
+	}
 	else if (buf[0] == 27 && buf[1] == 0)
 		return (compl_retstr(*print, shell, pos, 1));
 	print[0] = tmp;
@@ -36,7 +46,7 @@ int			compl_key(char *buf, t_compl **print, t_shell *shell, int pos)
 		return (compl_retstr(tmp, shell, pos, 1));
 	if (buf[0] == 10)
 		return (compl_retstr(tmp, shell, pos, 1));
-	else if (buf[0] == 27 && compl_key_dir(buf, &tmp, shell, pos) == 1)
+	else if (buf[0] == 27 && compl_key_dir(buf, &tmp, shell, pos))
 		return (1);
 	else if (buf[0] == 9 && buf[1] == 0)
 	{
