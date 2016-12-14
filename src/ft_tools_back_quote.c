@@ -6,7 +6,7 @@
 /*   By: MrRobot <mimazouz@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:44:09 by MrRobot           #+#    #+#             */
-/*   Updated: 2016/12/11 17:44:11 by MrRobot          ###   ########.fr       */
+/*   Updated: 2016/12/14 11:24:32 by MrRobot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,26 @@ int		ft_prepare_cmd(t_shell *shell, t_btree *tree)
 	t_env	*new_env;
 	t_env	*tmp;
 	int		ret;
+	pid_t	father;
 
+	ret = 0;
 	tmp = shell->env_lst;
 	new_env = NULL;
 	dup_env_lst(shell->env_lst, &new_env);
 	shell->env_lst = new_env;
-	ret = ft_launch_cmd(shell, tree);
-	free_env_lst(&shell->env_lst);
-	shell->env_lst = tmp;
-	return (ret);
+	father = fork();
+	if (father == 0)
+	{
+		ret = ft_launch_cmd(shell, tree);
+		free_env_lst(&shell->env_lst);
+		shell->env_lst = tmp;
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		wait(0);
+		return (ret);
+	}
 }
 
 size_t	ft_list_size_index(t_input *start, t_input *end)
