@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/13 16:38:00 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/14 18:04:16 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	file_to_hist(t_shell *shell)
 	}
 	while (get_next_line(fd, &buf))
 	{
+		if (ft_cindex(buf, ':') == -1)
+			continue ;
 		timestamp = ft_strsub(buf, 0, ft_cindex(buf, ':'));
 		input = char_to_input(buf + ft_cindex(buf, ':') + 2);
 		input_to_hist(shell, input, timestamp);
