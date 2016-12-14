@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 16:16:51 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/11 18:23:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:40:38 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			ft_cursh_replace(char **str)
 
 	oc = ft_cindex_rev(str[0], '{');
 	cc = ft_cindex(str[0], '}');
-	if (str[0][strlen(str[0]) - 1] != '}')
+	if (str[0][ft_strlen(str[0]) - 1] != '}')
 		ft_cursh_compose_end(str);
 	while (cc >= 0 && cc <= (int)ft_strlen(str[0]))
 	{

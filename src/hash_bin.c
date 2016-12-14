@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 21:45:34 by hponcet           #+#    #+#             */
-/*   Updated: 2016/11/14 17:19:40 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/14 16:46:39 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_hash		**hash_bin(t_shell *shell)
 	int		i;
 
 	i = 0;
-	if (!(paths = compl_pathbin(shell)))
-		return (NULL);
 	htbl = hash_newtbl(HASHLEN);
+	if (!(paths = compl_pathbin(shell)))
+		return (htbl);
 	while (paths[i])
 	{
 		hash_addpath(htbl, paths[i], HASHLEN);

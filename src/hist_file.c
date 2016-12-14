@@ -6,7 +6,7 @@
 /*   By: hponcet <hponcet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:52:38 by hponcet           #+#    #+#             */
-/*   Updated: 2016/12/07 16:26:08 by hponcet          ###   ########.fr       */
+/*   Updated: 2016/12/13 16:38:00 by hponcet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	input_to_hist(t_shell *shell, t_input *input, char *timestamp)
 	if (!shell->hist)
 	{
 		hist->input = input;
-		hist->timestamp = (unsigned int)atoi(timestamp);
+		hist->timestamp = (unsigned int)ft_atoi(timestamp);
 		hist->prev = NULL;
 		hist->next = NULL;
 		shell->hist = hist;
@@ -85,7 +85,7 @@ void	input_to_hist(t_shell *shell, t_input *input, char *timestamp)
 		while (tmp->prev)
 			tmp = tmp->prev;
 		hist->input = input;
-		hist->timestamp = (unsigned int)atoi(timestamp);
+		hist->timestamp = (unsigned int)ft_atoi(timestamp);
 		hist->prev = NULL;
 		hist->next = tmp;
 		tmp->prev = hist;
