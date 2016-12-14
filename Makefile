@@ -6,13 +6,13 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#*   Updated: 2016/12/13 13:32:20 by hponcet          ###   ########.fr       *#
+#*   Updated: 2016/12/14 16:50:32 by hponcet          ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 42sh
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
 vpath %.c ./src ./src/builtins
 
