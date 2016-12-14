@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/11 17:19:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/14 17:41:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst, t_shell *shell)
 	}
 	else if (pid > 0)
 	{
+		close_and_reset_fd(shell->fd);
 		waitpid(pid, &shell->status, 0);
 		set_status(&shell->status, cmd);
 	}

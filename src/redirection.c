@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 16:28:01 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/12/07 16:28:23 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/12/14 18:13:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	parse_redir(t_redir *redir, t_shell *shell, int fd1, int i)
 		shell->fd[fd1] = -1;
 	else if (redir->s[i] == '&' && redir->type != DREDIR &&
 			redir->type != HEREDOC && ft_isdigit(redir->s[i + 1]))
-		shell->fd[fd1] = (redir->s[i + 1] - 48);
+		shell->fd[fd1] = dup((redir->s[i + 1] - 48));
 	else
 	{
 		redir->s[i] == '&' ? i++ : (0);
